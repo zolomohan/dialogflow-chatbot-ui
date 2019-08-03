@@ -9,7 +9,7 @@
 }
 
 body {
-    background: rgb(39, 119, 180);
+    background: #ccc;
 }
 
 .chatbox {
@@ -21,7 +21,9 @@ body {
     padding: 25px;
     margin: 0px auto 0px auto;
     box-shadow: 0 3px #ccc;
-
+    border: 7px solid rgb(17, 157, 186);
+    border-bottom: 4px solid rgb(17, 157, 186);
+    border-top: none;
 }
 
 .chatlogs {
@@ -39,7 +41,7 @@ body {
 
 .chatlogs::-webkit-scrollbar-thumb{
     border-radius: 5px;
-    background: rgba(0, 0, 0, .1);
+    background: rgba(17, 157, 186, 0.1);
 }
 
 
@@ -51,8 +53,9 @@ body {
 }
 
 .user-photo img{
-    background-color: rgb(39, 119, 180);
-    padding: 8px;
+    background-color: rgb(255, 255, 255);
+    padding: 10px;
+    padding-top:7px; 
     width: 100%;
 }
 
@@ -67,6 +70,7 @@ body {
     height: 60px;
     background: #ccc;
     border-radius: 50%;
+    border :2px solid rgb(17, 157, 186);
     overflow: hidden;
 }
 
@@ -74,7 +78,7 @@ body {
     color: black;
     width: auto;
     max-width: 70%;
-    background: rgb(229, 229, 234);
+    background: rgb(17, 157, 186, 0.1);
     border-radius: 20px 20px 20px 0;
 }
 
@@ -84,7 +88,7 @@ body {
     width: auto;
     margin: 5px 0 5px auto;
     border-radius: 20px 20px 0px 20px;
-    background: rgb(64, 172, 246);
+    background: rgb(17, 157, 186);
     overflow-wrap: break-word;
 }
 
@@ -98,7 +102,7 @@ body {
     flex-flow: row wrap;
     align-items: flex-start;
     margin: 20px auto 0px auto;
-    background: rgb(226, 118, 30);
+    background: rgb(17, 157, 186);
     border-radius: 10px 10px 0px 0px;
 }
 
@@ -125,7 +129,8 @@ body {
     overflow: auto;
     background: rgb(244, 243, 244);
     border-radius: 0 0 10px 10px;
-    border-top: 5px solid rgb(212, 212, 212);
+    border: 7px solid rgb(17, 157, 186);
+    border-top: 3px solid rgb(17, 157, 186);
 
 }
 
@@ -142,7 +147,7 @@ body {
     background: #fbfbfb;
     width: 100%;
     min-height: 5px;
-    border: 2px solid lightblue;
+    border: 2px solid rgb(17, 157, 186);
     border-radius: 20px;
     resize: none;
     font-size: 18px;
@@ -163,8 +168,8 @@ body {
     margin: auto;
 }
 
-/* Old Orange button for speaking, now we have an icon of a microphone*/
-/*.chat-form button {
+/* Old Orange button for speaking, now we have an icon of a microphone */
+/* .chat-form button {
     height: 65px;
     background: rgba(255, 153, 0, .7);;
     padding: 5px 15px;
@@ -175,15 +180,18 @@ body {
     border-radius: 3px;
     box-shadow: 0 3px 0 rgba(255, 153, 0, .7);;
     cursor: pointer;
-}*/
+}
 
 .chat-form button:hover{
     background: rgb(255, 153, 0);
-}
+}*/
+
 
 .gif img {
+    height: 51px;
     margin: 10px;
     border-radius: 20px;
+    background-color: rgba(17, 157, 186,0.1);
 }
 
 
@@ -193,7 +201,7 @@ body {
     width: fit-content;
     margin: 5px 0 5px auto;
     border-radius: 20px 20px 0px 20px;
-    background: rgb(64, 172, 246);
+    background: rgb(17, 157, 186);
     overflow-wrap: break-word;
     font-size: 18px;
     padding: 10px;
@@ -202,7 +210,7 @@ body {
 }
 
 .buttonResponse:hover{
-        background: rgb(100, 200, 255);
+        background: rgb(17, 157, 186);
 }
 
 
@@ -222,5 +230,3 @@ body {
     width: inherit;
 
 }
-
-
