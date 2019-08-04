@@ -207,6 +207,7 @@ body {
     padding: 10px;
     margin: 20px 5px;
     float: left;
+    cursor: pointer;
 }
 
 .buttonResponse:hover{
