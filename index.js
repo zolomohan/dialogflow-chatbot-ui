@@ -38,7 +38,7 @@ var lastRecievedMessage = 1;
 var ButtonClicked = false;
 
 
-var DEFAULT_TIME_DELAY = 30;
+var DEFAULT_TIME_DELAY = 30000000;
 
 // Variable for the chatlogs div
 var $chatlogs = $('.chatlogs');
