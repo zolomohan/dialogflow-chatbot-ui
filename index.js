@@ -200,10 +200,10 @@ function newRecievedMessage(messageText) {
 	}
 
 	// if the message contains only <br then it is a multi line message
-	/*else if (removedQuotes.includes("<br")) 
+	else if (removedQuotes.includes("<br")) 
 	{
 		multiMessage(removedQuotes);
-	} */
+	}
 
 	// There arent multiple messages to be sent, or message with buttons
 	else
