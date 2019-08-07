@@ -203,7 +203,7 @@ function newRecievedMessage(messageText) {
 	else if (removedQuotes.includes("<br")) 
 	{
 		multiMessage(removedQuotes);
-	}
+	} 
 
 	// There arent multiple messages to be sent, or message with buttons
 	else
