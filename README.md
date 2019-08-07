@@ -2,8 +2,10 @@
 
 clone it using "git clone https://github.com/praveenskylark/praveenskylark.github.io.git"
 
-open the code in vscode.
+**download [vscode](https://code.visualstudio.com/)**
 
-host the index.html to use the chatbot.
+**open the code using vscode** 
+
+**Locally host the _index.html_ to use the chatbot.**
 
 
