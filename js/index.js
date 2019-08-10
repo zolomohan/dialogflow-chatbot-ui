@@ -22,9 +22,7 @@ $('document').ready(function() {
 	$('#switchInputType').toggle(); // Hide the switch input type button initially
 	$('#switchInputType').click(() => {
 		// Toggle Alternate Input
-		$('.buttonResponse').is(':visible')
-			? $('#switchInputType').attr('src', 'Images/multipleChoice.png')
-			: $('#switchInputType').attr('src', 'Images/keyboard.png');
+		$('#switchInputType').toggleClass('fa-keyboard').toggleClass('fa-align-justify');
 		$('textarea').toggle();
 		$('.buttonResponse').toggle();
 	});
@@ -149,7 +147,7 @@ function chatResponse(message) {
 	}
 
 	var i = 0,
-			numMessages = listOfMessages.length;
+		numMessages = listOfMessages.length;
 
 	showTypingIndicator();
 	(function theLoop(listOfMessages, i, numMessages) {
@@ -166,7 +164,7 @@ function chatResponse(message) {
 function createNewMessage(message) {
 	// PURPOSE: Method to create a new div showing the text from API
 
-	hideTypingIndicator(); 
+	hideTypingIndicator();
 	speechResponse(message); // take the message and say it back to the user.
 	// Append a new div to the chatlogs body, with an image and the text from API
 	$chatlogs.append(

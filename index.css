@@ -49,17 +49,22 @@ body {
 }
 
 .headerBar {
-	font-size: 25px;
-	color: white;
-	padding: 25px;
-	width: 500px;
-	min-width: 390px;
 	display: flex;
 	flex-flow: row wrap;
 	align-items: flex-start;
+	justify-content: space-between;
+	padding: 10px;
+	width: 500px;
+	min-width: 390px;
 	margin: 20px auto 0px auto;
 	background: rgb(17, 157, 186);
-	border-radius: 10px 10px 0px 0px;
+	color: white;
+	font-size: 25px;
+}
+
+.headerBar i {
+	cursor: pointer;
+	margin-right: 10px;
 }
 
 .headerBar .title {
@@ -159,7 +164,6 @@ body {
 	align-items: flex-start;
 	overflow: auto;
 	background: rgb(255, 255, 255);
-	border-radius: 0 0 10px 10px;
 }
 
 #inputDiv {
@@ -168,6 +172,7 @@ body {
 }
 
 .chat-form textarea {
+	border: none;
 	padding: 5px 5px 5px 15px;
 	background: #fbfbfb;
 	width: 100%;
@@ -219,14 +224,11 @@ body {
 	cursor: pointer;
 }
 
-#switchInputType {
-	max-width: 40px;
-	max-height: 40px;
-}
-
-#rec {
-	max-width: 40px;
-	max-height: 40px;
+#chat-form-buttons i{
+	font-size: 30px;
+	padding: 5px;
+	cursor: pointer;
+	color: #525252;
 }
 
 #buttonDiv {
