@@ -13,13 +13,9 @@ html{
 }
 
 body {
-	background: white; /* fallback for old browsers */
-	background: -webkit-linear-gradient(to right, #243b55, #141e30); /*Chrome 10-25, Safari 5.1-6 */
-	background: linear-gradient(
-		to right,
-		#243b55,
-		#141e30
-	); /*W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	background: #bdc3c7;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 	height: 100%;
 	width: 100%;
 }
@@ -32,7 +28,7 @@ body {
 	left: 93%;
 	width: 70px;
 	height: 70px;
-	background-color: rgb(0, 175, 206);
+	background-color: rgb(66, 66, 66);
 	color: white;
 	border-radius: 100%;
 	-webkit-box-shadow: 3px 9px 31px -9px rgba(0, 0, 0, 0.82);
@@ -66,12 +62,12 @@ body {
 .headerBar {
 	display: flex;
 	flex-flow: row wrap;
-	align-items: flex-start;
+	align-items: center;
 	justify-content: space-between;
 	padding: 10px;
 	min-width: 390px;
 	margin: 20px auto 0px auto;
-	background: rgb(17, 157, 186);
+	background: #222222;
 	color: white;
 	font-size: 25px;
 }
@@ -94,7 +90,7 @@ body {
 }
 
 .chatbox {
-	background-color: white;
+	background-color: #222222;
 	width: 450px;
 	min-width: 390px;
 	height: 70vh;
@@ -104,7 +100,7 @@ body {
 }
 
 .chatlogs {
-	background-color: white;
+	background-color: #222222;
 	padding: 10px;
 	width: 100%;
 	height: 100%;
@@ -139,7 +135,8 @@ body {
 .chat .chat-message {
 	padding: 15px;
 	margin: 5px 10px 0;
-	font-size: 15px;
+	font-size: 16px;
+	border-radius: 8px;
 }
 
 .user-photo {
@@ -151,11 +148,11 @@ body {
 }
 
 .friend .chat-message {
-	color: white;
+	color: rgb(255, 255, 255);
 	width: auto;
 	max-width: 70%;
-	background: rgba(84, 149, 161, 0.514);
-	border-radius: 20px;
+	background: rgb(34, 152, 199, 0.3);
+	border-radius: 8px;
 	border-top-left-radius: 0px;
 }
 
@@ -164,9 +161,8 @@ body {
 	max-width: 80%;
 	width: auto;
 	margin: 5px 0 5px auto;
-	border-radius: 20px;
+	background: #2298c7;
 	border-top-right-radius: 0px;
-	background: rgb(17, 157, 186);
 	overflow-wrap: break-word;
 }
 
@@ -177,7 +173,7 @@ body {
 	min-width: 390px;
 	align-items: flex-start;
 	overflow: auto;
-	background: rgb(255, 255, 255);
+	background: #222222;
 }
 
 #inputDiv {
@@ -186,15 +182,15 @@ body {
 }
 
 .chat-form textarea {
+	color: white;
 	border: none;
 	padding: 5px 5px 5px 15px;
-	background: #fbfbfb;
+	background: #222222;
 	width: 100%;
 	min-height: 5px;
 	border-radius: 20px;
 	resize: none;
 	font-size: 18px;
-	color: #000;
 	margin: 15px 0px 15px 10px;
 	display: block;
 	overflow: hidden;
@@ -202,9 +198,10 @@ body {
 	outline: none;
 }
 
-.chat-form textarea:focus {
-	background: #fff;
+.chat-form textarea::placeholder{
+	color: rgba(255, 255, 255, 0.705);
 }
+
 
 #chat-form-buttons {
 	margin: auto;
@@ -218,13 +215,12 @@ body {
 }
 
 .buttonResponse {
-	color: rgb(17, 157, 186);
+	color: #fff;
 	max-width: 80%;
 	width: fit-content;
 	margin: 5px 0 5px auto;
-	border-radius: 20px;
-	box-shadow: 0px 2px rgba(17, 157, 186, 0.1);
-	background: rgb(17, 157, 186, 0.1);
+	border-radius: 8px;
+	background: rgba(162, 186, 190, 0.219);
 	overflow-wrap: break-word;
 	font-size: 18px;
 	padding: 10px;
@@ -233,8 +229,7 @@ body {
 }
 
 .buttonResponse:hover {
-	color: white;
-	background: rgb(17, 157, 186);
+	background: #2298c7;
 	cursor: pointer;
 }
 
@@ -242,7 +237,7 @@ body {
 	font-size: 30px;
 	padding: 5px;
 	cursor: pointer;
-	color: #525252;
+	color: #ffffff;
 }
 
 #buttonDiv {

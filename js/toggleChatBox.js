@@ -1,3 +1,3 @@
 $('.chatToggle').click(() => {
-	$('.chatContainer').slideToggle();
+	$('.chatContainer').slideToggle(() => $('textarea').focus());
 })
