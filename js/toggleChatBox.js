@@ -1,5 +1,5 @@
 console.log('connected')
-$('#chatBubble').click(() => {
+$('.chatToggle').click(() => {
 	console.log($('.chatbox'))
-	$('.chatContainer').toggle()
+	$('.chatContainer').slideToggle();
 })
