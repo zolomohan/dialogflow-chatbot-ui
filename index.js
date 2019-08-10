@@ -247,55 +247,41 @@ function scrollChatLog() {
 
 //----------------------Voice Message Methods--------------------------------//
 
-var recognition;
+var voiceRecogntion;
 
-function startRecognition() {
-	console.log('Start');
-	recognition = new webkitSpeechRecognition();
-	recognition.onstart = function() {
-		console.log('Update');
-		updateRec();
-	};
-	recognition.onresult = function(event) {
+function switchRecognition() {
+	voiceRecogntion ? stopVoiceRecognition() : startVoiceRecognition();
+}
+
+function startVoiceRecognition() {
+	voiceRecogntion = new webkitSpeechRecognition();
+	voiceRecogntion.onstart = updateRecIcon;
+	voiceRecogntion.onresult = function(event) {
 		var text = '';
 		for (var i = event.resultIndex; i < event.results.length; ++i) 
 			text += event.results[i][0].transcript;
-		setInput(text);
-		stopRecognition();
+		send(text);
+		stopVoiceRecognition();
 	};
-	recognition.onend = function() {
-		stopRecognition();
-	};
-	recognition.lang = 'en-US';
-	recognition.start();
+	voiceRecogntion.onend = stopVoiceRecognition;
+	voiceRecogntion.lang = 'en-US';
+	voiceRecogntion.start();
 }
 
-function stopRecognition() {
-	if (recognition) {
-		console.log('Stop Recog');
-		recognition.stop();
-		recognition = null;
+function stopVoiceRecognition() {
+	if (voiceRecogntion) {
+		voiceRecogntion.stop();
+		voiceRecogntion = null;
 	}
-	updateRec();
+	updateRecIcon();
 }
 
-function switchRecognition() {
-	recognition ? stopRecognition() : startRecognition();
-}
-
-function setInput(text) {
-	$('.input').val(text);
-	send(text);
-	$('.input').val('');
-}
-
-function updateRec() {
-	recognition ? $('#rec').attr('src', 'Images/MicrophoneOff.png') : $('#rec').attr('src', 'Images/microphone.png')
+function updateRecIcon() {
+	voiceRecogntion ? $('#rec').attr('src', 'Images/MicrophoneOff.png') : $('#rec').attr('src', 'Images/microphone.png')
 }
 
 function speechResponse(message) {
 	var msg = new SpeechSynthesisUtterance();
-	// These lines list all of the voices which can be used in speechSynthesis
 	msg.default = false;
 	msg.voiceURI = 'Fiona';
 	msg.name = 'Fiona';
