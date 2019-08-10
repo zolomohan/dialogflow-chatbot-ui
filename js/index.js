@@ -240,7 +240,8 @@ function stopVoiceRecognition() {
 }
 
 function updateRecIcon() {
-	voiceRecogntion ? $('#rec').attr('src', 'Images/MicrophoneOff.png') : $('#rec').attr('src', 'Images/microphone.png');
+	$('#rec').toggleClass('fa-microphone').toggleClass('fa-microphone-slash')
+	$('textarea.input').attr('placeholder', 'Say Something...')
 }
 
 function speechResponse(message) {
