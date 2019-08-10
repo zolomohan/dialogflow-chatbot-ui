@@ -34,7 +34,7 @@ $('document').ready(function() {
 		if (event.which === 13) {
 			event.preventDefault(); // Prevent the default function of the enter key (Dont go to a new line)
 			ButtonClicked = false;
-			send(this.value); // Send Message to AJAX Request Function
+			postUserResponseToAPI(this.value); // Send Message to AJAX Request Function
 			$('.input').attr('rows', '1'); // reset the size of the text area
 			this.value = ''; // Clear the text area
 			if ($('#switchInputType').is(':visible')) {
@@ -49,14 +49,14 @@ $('document').ready(function() {
 	// If the user selects one of the dynamic button responses
 	$('.chat-form').on('click', '.buttonResponse', function() {
 		ButtonClicked = true;
-		send(this.innerText); // Send the text on the button as a user message
+		postUserResponseToAPI(this.innerText); // Send the text on the button as a user message
 		$('textarea').toggle(); // Show text input area
 		$('#switchInputType').hide();
 		$('.buttonResponse').remove(); // Remove the button responses from the div
 	});
 });
 
-function send(text) {
+function postUserResponseToAPI(text) {
 	// PURPOSE: Method which takes the users text and sends an AJAX post request to API and recieves a response message from API
 	// Create a new Chat Message Div with the text that the user typed in
 	$chatlogs.append($('<div/>', { class: 'chat self' }).append($('<p/>', { class: 'chat-message', text: text })));
@@ -225,7 +225,7 @@ function startVoiceRecognition() {
 	voiceRecogntion.onresult = function(event) {
 		var text = '';
 		for (var i = event.resultIndex; i < event.results.length; ++i) text += event.results[i][0].transcript;
-		send(text);
+		postUserResponseToAPI(text);
 		stopVoiceRecognition();
 	};
 	voiceRecogntion.onend = stopVoiceRecognition;
