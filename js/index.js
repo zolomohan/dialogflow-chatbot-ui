@@ -169,7 +169,7 @@ function createNewMessage(message) {
 	// Append a new div to the chatlogs body, with an image and the text from API
 	$chatlogs.append(
 		$('<div/>', { class: 'chat friend' }).append(
-			$('<div/>', { class: 'user-photo' }).append($('<img src="Images/jit.png" />')),
+			$('<div/>', { class: 'bot-photo' }).append($('<img src="Images/jit.png" />')),
 			$('<p/>', { class: 'chat-message', text: message })
 		)
 	);
