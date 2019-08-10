@@ -1,79 +1,42 @@
-// Information needed to access the api.ai bot, only thing needed to be changed
-// Emoji Bot
-var accessToken = credentialsAccessToken;
-
-//var bot name is used for the firebase database
-var botName = credentialsBotName;
-
-var baseUrl = credentialsBaseUrl;
-
-// Initialize Firebase
-var config = credentialsConfig;
-
-// The format for config is as follows
-// Set the configuration for your app
-// TODO: Replace with your project's config object
-// You can get this information by creating a project and clicking connect with web or start with web
-// var config = {
-// 	apiKey: "apiKey",
-// 	authDomain: "projectId.firebaseapp.com",
-// 	databaseURL: "https://databaseName.firebaseio.com",
-// 	storageBucket: "bucket.appspot.com"
-// };
+//PURPOSE:  Information needed to access the api.ai bot, only thing needed to be changed
+var accessToken = credentialsAccessToken,
+		botName = credentialsBotName,
+		baseUrl = credentialsBaseUrl,
+		config = credentialsConfig;
 
 firebase.initializeApp(config);
 
-// Key for this instance of the chat interface
-var newKey = firebase.database().ref(botName).push().key;
+var newKey = firebase.database().ref(botName).push().key; // Key for this instance of the chat interface
 console.log('Key for this chat instance = ' + newKey);
 
-//---------------------------------- Main Code Area ----------------------------------//
-//  Variables to be used for storing the last message sent and recieved for the database
-var lastSentMessage = '';
-var lastRecievedMessage = 1;
-var ButtonClicked = false;
+// PURPOSE: Variables to be used for storing the last message sent and recieved for the database
+var lastSentMessage = '',
+		lastRecievedMessage = 1,
+		ButtonClicked = false,
+		DEFAULT_TIME_DELAY = 300;
 
-var DEFAULT_TIME_DELAY = 30;
-
-// Variable for the chatlogs div
+// PURPOSE: Variable for the chatlogs div
 var $chatlogs = $('.chatlogs');
 
 $('document').ready(function() {
-	// Hide the switch input type button initially
-	$('#switchInputType').toggle();
-
-	// If the switch input type button is pressed
-	$('#switchInputType').click(function(event) {
-		// Toggle which input type is shown
-		if ($('.buttonResponse').is(':visible')) {
-			$('#switchInputType').attr('src', 'Images/multipleChoice.png');
-		} else {
-			$('#switchInputType').attr('src', 'Images/keyboard.png');
-		}
+	$('#switchInputType').toggle(); // Hide the switch input type button initially
+	$('#switchInputType').click(() => {
+		// Toggle Alternate Input
+		$('.buttonResponse').is(':visible')
+			? $('#switchInputType').attr('src', 'Images/multipleChoice.png')
+			: $('#switchInputType').attr('src', 'Images/keyboard.png');
 		$('textarea').toggle();
 		$('.buttonResponse').toggle();
 	});
 
-	//----------------------User Sends Message Methods--------------------------------//
-	// Method which executes once the enter key on the keyboard is pressed
-	// Primary function sends the text which the user typed
 	$('textarea').keypress(function(event) {
-		// If the enter key is pressed
+		// INFO: 13 stands for 'enter key'
 		if (event.which === 13) {
-			// Ignore the default function of the enter key(Dont go to a new line)
-			event.preventDefault();
-
+			event.preventDefault(); // Prevent the default function of the enter key (Dont go to a new line)
 			ButtonClicked = false;
-
-			// Call the method for sending a message, pass in the text from the user
-			send(this.value);
-
-			// reset the size of the text area
-			$('.input').attr('rows', '1');
-
-			// Clear the text area
-			this.value = '';
-
+			send(this.value); // Call the method for sending a message, pass in the text from the user
+			$('.input').attr('rows', '1'); // reset the size of the text area
+			this.value = ''; // Clear the text area
 			if ($('#switchInputType').is(':visible')) {
 				$('#switchInputType').toggle();
 				$('.buttonResponse').remove();
@@ -81,50 +44,29 @@ $('document').ready(function() {
 		}
 	});
 
-	// If the user presses the button for voice input
-	$('#rec').click(function(event) {
-		// Call the method to switch recognition to voice input
-		switchRecognition();
-	});
+	$('#rec').click(switchRecognition); // If the user presses the button for voice input
 
 	// If the user selects one of the dynamic button responses
 	$('.chat-form').on('click', '.buttonResponse', function() {
 		ButtonClicked = true;
-
-		// Send the text on the button as a user message
-		send(this.innerText);
-
-		// Show the record button and text input area
-		//$('#rec').toggle();
-		$('textarea').toggle();
-
+		send(this.innerText); // Send the text on the button as a user message
+		$('textarea').toggle(); // Show the record button and text input area
 		// Hide the button responses and the switch input button
 		$('.buttonResponse').toggle();
 		$('#switchInputType').hide();
-
-		// Remove the button responses from the div
-		$('.buttonResponse').remove();
+		$('.buttonResponse').remove(); // Remove the button responses from the div
 	});
 });
 
-// Method which takes the users text and sends an AJAX post request to API.AI
-// Creates a new Div with the users text, and recieves a response message from API.AI
 function send(text) {
-	// Create a div with the text that the user typed in
+	// PURPOSE: Method which takes the users text and sends an AJAX post request to API.AI and recieves a response message from API.AI
+	// Create a new Chat Message Div with the text that the user typed in
 	$chatlogs.append($('<div/>', { class: 'chat self' }).append($('<p/>', { class: 'chat-message', text: text })));
-
-	// Find the last message in the chatlogs
 	var $sentMessage = $('.chatlogs .chat').last();
-
-	// Check to see if that message is visible
 	checkVisibility($sentMessage);
-
-	// update the last message sent variable to be stored in the database and store in database
-	lastSentMessage = text;
+	lastSentMessage = text; // update the last message sent variable to be stored in the database and store in database
 	storeMessageToDB();
 
-	// AJAX post request, sends the users text to API.AI and
-	// calls the method newReceivedMessage with the response from API.AI
 	$.ajax({
 		type        : 'POST',
 		url         : baseUrl + 'query?v=20150910',
@@ -135,9 +77,8 @@ function send(text) {
 		},
 		data        : JSON.stringify({ query: text, lang: 'en', sessionId: 'somerandomthing' }),
 		success     : function(data) {
-			console.log(data);
-
-			// Pass the response into the method
+			console.log("AJAX Success : ");
+			console.log(data)
 			newRecievedMessage(JSON.stringify(data.result.fulfillment.speech, undefined, 2));
 		},
 		error       : function() {
@@ -146,42 +87,32 @@ function send(text) {
 	});
 }
 
-//----------------------User Receives Message Methods--------------------------------//
-
-// Method called whenver there is a new recieved message
-// This message comes from the AJAX request sent to API.AI
-// This method tells which type of message is to be sent
-// Splits between the button messages, multi messages and single message
 function newRecievedMessage(messageText) {
-	// Variable storing the message with the "" removed
-	var removedQuotes = messageText.replace(/[""]/g, '');
+	/* PURPOSE: Method called whenver there is a new recieved message
+		This message comes from the AJAX request sent to API.AI
+		This method tells which type of message is to be sent
+		Splits between the button messages, multi messages and single message 
+	*/
 
-	// update the last message recieved variable for storage in the database
-	lastRecievedMessage = removedQuotes;
-
-	// If the message contains a <ar then it is a message
-	// whose responses are buttons
+	var removedQuotes = messageText.replace(/[""]/g, ''); // Remove Quotes from the String
+	lastRecievedMessage = removedQuotes; // Update the last message recieved variable for storage in the database
+	// If the message contains a <ar> then it is a message whose responses are buttons
 	if (removedQuotes.includes('<ar')) {
 		buttonResponse(removedQuotes);
-	} else if (removedQuotes.includes('<br')) {
-		// if the message contains only <br then it is a multi line message
-		multiMessage(removedQuotes);
-	} else {
-		// There arent multiple messages to be sent, or message with buttons
-		// Show the typing indicator
-		showLoading();
-
-		// After 3 seconds call the createNewMessage function
+	}  else {
+		showLoading(); // Show the typing indicator
 		setTimeout(function() {
 			createNewMessage(removedQuotes);
 		}, DEFAULT_TIME_DELAY);
 	}
 }
 
-// Method which takes messages and splits them based off a the delimeter <br 2500>
-// The integer in the delimeter is optional and represents the time delay in milliseconds
-// if the delimeter is not there then the time delay is set to the default
 function multiMessage(message) {
+	/* Method which takes messages and splits them based off a the delimeter <br 2500>
+ 		The integer in the delimeter is optional and represents the time delay in milliseconds
+		 if the delimeter is not there then the time delay is set to the default 
+	*/
+	console.log('br')	
 	// Stores the matches in the message, which match the regex
 	var matches;
 
@@ -238,12 +169,14 @@ function multiMessage(message) {
 	})(listOfMessages, i, numMessages);
 }
 
-// Method called whenever an <ar tag is found
-// The responses for this type of message will be buttons
-// This method parses out the time delays, message text and button responses
-// Then creates a new message with the time delay and creates buttons for the responses
+
 function buttonResponse(message) {
-	// Stores the matches in the message, which match the regex
+	/*Method called whenever an <ar> tag is found
+		The responses for this type of message will be buttons
+		This method parses out the time delays, message text and button responses
+		Then creates a new message with the time delay and creates buttons for the responses
+		Stores the matches in the message, which match the regex 
+	*/
 	var matches;
 
 	// Used to store the new HTML div which will be the button
