@@ -193,17 +193,13 @@ function multiMessage(message) {
 	})(listOfMessages, i, numMessages);
 }
 
-// Method to create a new div showing the text from API.AI
+
 function createNewMessage(message) {
-	// Hide the typing indicator
-	hideLoading();
+	// PURPOSE: Method to create a new div showing the text from API.AI
+	hideLoading(); // Hide the typing indicator
 
 	// take the message and say it back to the user.
 	//speechResponse(message);
-
-	// // Show the send button and the text area
-	// $('#rec').css('visibility', 'visible');
-	// $('textarea').css('visibility', 'visible');
 
 	// Append a new div to the chatlogs body, with an image and the text from API.AI
 	$chatlogs.append(
@@ -213,11 +209,7 @@ function createNewMessage(message) {
 		)
 	);
 
-	// Find the last message in the chatlogs
-	var $newMessage = $('.chatlogs .chat').last();
-
-	// Call the method to see if the message is visible
-	checkVisibility($newMessage);
+	checkVisibility($('.chatlogs .chat').last()); // Call the method to see if the new message is visible
 }
 
 //------------------------------------------- Database Write --------------------------------------------------//
