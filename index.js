@@ -195,11 +195,9 @@ function multiMessage(message) {
 
 function createNewMessage(message) {
 	// PURPOSE: Method to create a new div showing the text from API.AI
+
 	hideLoading(); // Hide the typing indicator
-
-	// take the message and say it back to the user.
-	//speechResponse(message);
-
+	speechResponse(message); // take the message and say it back to the user.
 	// Append a new div to the chatlogs body, with an image and the text from API.AI
 	$chatlogs.append(
 		$('<div/>', { class: 'chat friend' }).append(
@@ -207,7 +205,6 @@ function createNewMessage(message) {
 			$('<p/>', { class: 'chat-message', text: message })
 		)
 	);
-
 	scrollChatLog(); // Call the method to see if the new message is visible
 }
 
@@ -255,27 +252,20 @@ var recognition;
 function startRecognition() {
 	console.log('Start');
 	recognition = new webkitSpeechRecognition();
-
-	recognition.onstart = function(event) {
+	recognition.onstart = function() {
 		console.log('Update');
 		updateRec();
 	};
-
 	recognition.onresult = function(event) {
 		var text = '';
-
-		for (var i = event.resultIndex; i < event.results.length; ++i) {
+		for (var i = event.resultIndex; i < event.results.length; ++i) 
 			text += event.results[i][0].transcript;
-		}
-
 		setInput(text);
 		stopRecognition();
 	};
-
 	recognition.onend = function() {
 		stopRecognition();
 	};
-
 	recognition.lang = 'en-US';
 	recognition.start();
 }
@@ -290,37 +280,22 @@ function stopRecognition() {
 }
 
 function switchRecognition() {
-	if (recognition) {
-		console.log(' Stop if');
-		stopRecognition();
-	} else {
-		startRecognition();
-	}
+	recognition ? stopRecognition() : startRecognition();
 }
 
 function setInput(text) {
 	$('.input').val(text);
-
 	send(text);
-
 	$('.input').val('');
 }
 
 function updateRec() {
-	if (recognition) {
-		$('#rec').attr('src', 'Images/MicrophoneOff.png');
-	} else {
-		$('#rec').attr('src', 'Images/microphone.png');
-	}
+	recognition ? $('#rec').attr('src', 'Images/MicrophoneOff.png') : $('#rec').attr('src', 'Images/microphone.png')
 }
 
 function speechResponse(message) {
 	var msg = new SpeechSynthesisUtterance();
-
 	// These lines list all of the voices which can be used in speechSynthesis
-	//var voices = speechSynthesis.getVoices();
-	//console.log(voices);
-
 	msg.default = false;
 	msg.voiceURI = 'Fiona';
 	msg.name = 'Fiona';
