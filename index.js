@@ -1,8 +1,16 @@
 //PURPOSE:  Information needed to access the api.ai bot, only thing needed to be changed
-var accessToken = credentialsAccessToken,
-	botName = credentialsBotName,
-	baseUrl = credentialsBaseUrl,
-	config = credentialsConfig;
+var accessToken = '1f2d4c70eb62402da8b081e30d8327f9',
+	botName = 'placementdetails',
+	baseUrl = 'https://api.dialogflow.com/v1/query?v=20150910',
+	config = {
+		apiKey            : 'AIzaSyCYYLSEAmwMjPTecc0UHEzQghaeVIE0rj4',
+		authDomain        : 'placementdetails-rpduhl.firebaseapp.com',
+		databaseURL       : 'https://placementdetails-rpduhl.firebaseio.com',
+		projectId         : 'placementdetails-rpduhl',
+		storageBucket     : 'placementdetails-rpduhl.appspot.com',
+		messagingSenderId : '705824998394',
+		appId             : '1:705824998394:web:309447646d290e9f'
+	};
 
 firebase.initializeApp(config);
 
@@ -16,12 +24,13 @@ var lastSentMessage = '',
 
 const DEFAULT_TIME_DELAY = 300;
 
-var $chatlogs = $('.chatlogs'), speechResponseActive = false;
+var $chatlogs = $('.chatlogs'),
+	speechResponseActive = false;
 
 //Toggle Chat Box
 $('.chatToggle').click(() => {
 	$('.chatContainer').slideToggle(() => $('textarea').focus());
-})
+});
 
 $('document').ready(function() {
 	$('#switchInputType').toggle(); // Hide the switch input type button initially
@@ -49,10 +58,10 @@ $('document').ready(function() {
 
 	$('#rec').click(switchRecognition); // If the user presses the button for voice input
 
-	$('#speechResponse').click((function() {
+	$('#speechResponse').click(function() {
 		speechResponseActive = !speechResponseActive;
-		$(this).toggleClass('fa-volume-mute').toggleClass('fa-volume-up')
-	}))
+		$(this).toggleClass('fa-volume-mute').toggleClass('fa-volume-up');
+	});
 
 	// If the user selects one of the dynamic button responses
 	$('.chat-form').on('click', '.buttonResponse', function() {
@@ -175,8 +184,7 @@ function createNewMessage(message) {
 	// PURPOSE: Method to create a new div showing the text from API
 
 	hideTypingIndicator();
-	if(speechResponseActive === true)
-	speechResponse(message); // take the message and say it back to the user.
+	if (speechResponseActive === true) speechResponse(message); // take the message and say it back to the user.
 	// Append a new div to the chatlogs body, with an image and the text from API
 	$chatlogs.append(
 		$('<div/>', { class: 'chat friend' }).append(
@@ -251,10 +259,10 @@ function stopVoiceRecognition() {
 }
 
 function updateRecIcon() {
-	$('#rec').toggleClass('fa-microphone').toggleClass('fa-microphone-slash')
-	$('#rec').hasClass('fa-microphone-slash') 
-		?	$('textarea.input').attr('placeholder', 'Type a message')
-		: $('textarea.input').attr('placeholder', 'Say Something...')
+	$('#rec').toggleClass('fa-microphone').toggleClass('fa-microphone-slash');
+	$('#rec').hasClass('fa-microphone-slash')
+		? $('textarea.input').attr('placeholder', 'Type a message')
+		: $('textarea.input').attr('placeholder', 'Say Something...');
 }
 
 function speechResponse(message) {
