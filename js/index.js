@@ -142,56 +142,33 @@ function multiMessage(message) {
 	*/
 
 	var matches, // Stores the matches in the message, which match the regex
-			listOfMessages = [], // List of message objects, each message will have a text and time delay
-			regex = /\<br(?:\s+?(\d+))?\>(.*?)(?=(?:\<br(?:\s+\d+)?\>)|$)/g; // Regex used to find time delay and text of each message
+		listOfMessages = [], // List of message objects, each message will have a text and time delay
+		regex = /\<br(?:\s+?(\d+))?\>(.*?)(?=(?:\<br(?:\s+\d+)?\>)|$)/g; // Regex used to find time delay and text of each message
 
 	// While matches are still being found in the message
 	while ((matches = regex.exec(message))) {
-		// if the time delay is undefined(empty) use the default time delay
-		if (matches[1] == undefined) {
-			matches[1] = DEFAULT_TIME_DELAY;
-		}
-
-		// Create an array of the responses which will be buttons
+		if (matches[1] === undefined) matches[1] = DEFAULT_TIME_DELAY;
 		var messageText = matches[2].split(/<ar>/);
-
-		// Create a message object and add it to the list of messages
 		listOfMessages.push({
 			text  : messageText[0],
 			delay : matches[1]
 		});
 	}
 
-	// loop index
-	var i = 0;
+	var i = 0,
+			numMessages = listOfMessages.length;
 
-	// Variable for the number of messages
-	var numMessages = listOfMessages.length;
-
-	// Show the typing indicator
 	showLoading();
-
-	// Function which calls the method createNewMessage after waiting on the message delay
 	(function theLoop(listOfMessages, i, numMessages) {
-		// Method which executes after the timedelay
 		setTimeout(function() {
-			// Create a new message from the server
-			createNewMessage(listOfMessages[i].text);
-
-			// If there are still more messages
+			createNewMessage(listOfMessages[i].text); // Create a new message from the server
 			if (i++ < numMessages - 1) {
-				// Show the typing indicator
 				showLoading();
-
-				// Call the method again
-				theLoop(listOfMessages, i, numMessages);
+				theLoop(listOfMessages, i, numMessages); // Call the method again
 			}
 		}, listOfMessages[i].delay);
-
-		// Pass the parameters back into the method
-	})(listOfMessages, i, numMessages);
+	})(listOfMessages, i, numMessages); // Pass the parameters back into the method
 }
-
 
 function createNewMessage(message) {
 	// PURPOSE: Method to create a new div showing the text from API.AI
@@ -258,8 +235,7 @@ function startVoiceRecognition() {
 	voiceRecogntion.onstart = updateRecIcon;
 	voiceRecogntion.onresult = function(event) {
 		var text = '';
-		for (var i = event.resultIndex; i < event.results.length; ++i) 
-			text += event.results[i][0].transcript;
+		for (var i = event.resultIndex; i < event.results.length; ++i) text += event.results[i][0].transcript;
 		send(text);
 		stopVoiceRecognition();
 	};
@@ -277,7 +253,7 @@ function stopVoiceRecognition() {
 }
 
 function updateRecIcon() {
-	voiceRecogntion ? $('#rec').attr('src', 'Images/MicrophoneOff.png') : $('#rec').attr('src', 'Images/microphone.png')
+	voiceRecogntion ? $('#rec').attr('src', 'Images/MicrophoneOff.png') : $('#rec').attr('src', 'Images/microphone.png');
 }
 
 function speechResponse(message) {
@@ -301,7 +277,8 @@ $(document)
 		this.value = savedValue;
 	})
 	.on('input.input', 'textarea.input', function() {
-		var minRows = this.getAttribute('data-min-rows') | 0, rows;
+		var minRows = this.getAttribute('data-min-rows') | 0,
+			rows;
 		this.rows = minRows;
 		rows = Math.floor((this.scrollHeight - this.baseScrollHeight) / 17);
 		this.rows = minRows + rows;
