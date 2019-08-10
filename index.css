@@ -239,3 +239,44 @@ body {
 	margin: 0 30px;
 	width: inherit;
 }
+
+.container{
+	position: relative;
+}
+
+.circle {
+  position: absolute;
+  display: inline-block;
+  height: 5px;
+  width: 5px;
+  background-color: white;
+  margin: 25px;
+  border-radius: 50%;
+  animation: wave 1.5s infinite ease-in-out;
+  top: 0;
+}
+
+.circle:first-child {
+  left: 0;
+}
+  
+.circle:nth-child(2) {
+  left: 10px;
+  animation-delay: 50ms;
+}
+  
+.circle:last-child {
+  left: 20px;
+  animation-delay: 0.10s;
+}
+
+@keyframes wave {
+  0%, 50% {
+    top: 0;
+  }
+  25% {
+    top: -10px;
+  }
+}
+
+
