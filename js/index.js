@@ -16,7 +16,6 @@ var lastSentMessage = '',
 
 const DEFAULT_TIME_DELAY = 300;
 
-// PURPOSE: Variable for the chatlogs div
 var $chatlogs = $('.chatlogs');
 
 $('document').ready(function() {
@@ -35,7 +34,7 @@ $('document').ready(function() {
 		if (event.which === 13) {
 			event.preventDefault(); // Prevent the default function of the enter key (Dont go to a new line)
 			ButtonClicked = false;
-			send(this.value); // Call the method for sending a message, pass in the text from the user
+			send(this.value); // Send Message to AJAX Request Function
 			$('.input').attr('rows', '1'); // reset the size of the text area
 			this.value = ''; // Clear the text area
 			if ($('#switchInputType').is(':visible')) {
@@ -51,20 +50,18 @@ $('document').ready(function() {
 	$('.chat-form').on('click', '.buttonResponse', function() {
 		ButtonClicked = true;
 		send(this.innerText); // Send the text on the button as a user message
-		$('textarea').toggle(); // Show the record button and text input area
-		// Hide the button responses and the switch input button
-		$('.buttonResponse').toggle();
+		$('textarea').toggle(); // Show text input area
 		$('#switchInputType').hide();
 		$('.buttonResponse').remove(); // Remove the button responses from the div
 	});
 });
 
 function send(text) {
-	// PURPOSE: Method which takes the users text and sends an AJAX post request to API.AI and recieves a response message from API.AI
+	// PURPOSE: Method which takes the users text and sends an AJAX post request to API and recieves a response message from API
 	// Create a new Chat Message Div with the text that the user typed in
 	$chatlogs.append($('<div/>', { class: 'chat self' }).append($('<p/>', { class: 'chat-message', text: text })));
 	scrollChatLog();
-	lastSentMessage = text; // update the last message sent variable to be stored in the database and store in database
+	lastSentMessage = text; // update the last message sent variable to be stored in the database
 	storeMessageToDB();
 
 	$.ajax({
@@ -77,8 +74,6 @@ function send(text) {
 		},
 		data        : JSON.stringify({ query: text, lang: 'en', sessionId: 'somerandomthing' }),
 		success     : function(data) {
-			console.log('AJAX Success : ');
-			console.log(data);
 			newRecievedMessage(JSON.stringify(data.result.fulfillment.speech, undefined, 2));
 		},
 		error       : function() {
@@ -89,9 +84,9 @@ function send(text) {
 
 function newRecievedMessage(messageText) {
 	/* PURPOSE: Method called whenver there is a new recieved message
-		This message comes from the AJAX request sent to API.AI
-		This method tells which type of message is to be sent
-		Splits between the button messages, multi messages and single message 
+		This method is called from the AJAX Response
+		This method tells how the response must be rendered
+		Splits between the button messages and single message 
 	*/
 
 	var removedQuotes = messageText.replace(/[""]/g, ''); // Remove Quotes from the String
@@ -100,7 +95,7 @@ function newRecievedMessage(messageText) {
 	if (removedQuotes.includes('<ar')) {
 		buttonResponse(removedQuotes);
 	} else {
-		showLoading(); // Show the typing indicator
+		showLoading();
 		setTimeout(function() {
 			createNewMessage(removedQuotes);
 		}, DEFAULT_TIME_DELAY);
@@ -109,13 +104,13 @@ function newRecievedMessage(messageText) {
 
 function buttonResponse(message) {
 	/*	Method called whenever an <ar> tag is found
-			The responses for this type of message will be buttons
+			The responses rendered for this type of message will be buttons
 			This method parses out the time delays, message text and button responses
 			Then creates a new message with the time delay and creates buttons for the responses
 			Stores the matches in the message, which match the regex 
 	*/
 
-	multiMessage(message); // send the message to the multi message method to split it up, message will be sent here
+	multiMessage(message); // Send the message to multiMessage to Render Chat Message
 	let buttonList = message.split(/<ar>/).splice(1); // Remove the first element, The first split is the Message replied to bes displayed on the chat
 
 	var listOfInputs = [];
@@ -125,9 +120,7 @@ function buttonResponse(message) {
 			$('<div/>', { class: 'buttonResponse' }).append($('<p/>', { class: 'chat-message', text: buttonList[i] }))
 		);
 
-	showLoading(); // Show the typing indicator
-
-	// After the time delay call the createNewMessage function
+	showLoading();
 	setTimeout(function() {
 		$('textarea').toggle(); // Hide the text area
 		$('#switchInputType').show(); // Show the switch input button
@@ -142,7 +135,7 @@ function multiMessage(message) {
 	*/
 
 	var matches, // Stores the matches in the message, which match the regex
-		listOfMessages = [], // List of message objects, each message will have a text and time delay
+		listOfMessages = [], // List of message objects
 		regex = /\<br(?:\s+?(\d+))?\>(.*?)(?=(?:\<br(?:\s+\d+)?\>)|$)/g; // Regex used to find time delay and text of each message
 
 	// While matches are still being found in the message
@@ -161,7 +154,7 @@ function multiMessage(message) {
 	showLoading();
 	(function theLoop(listOfMessages, i, numMessages) {
 		setTimeout(function() {
-			createNewMessage(listOfMessages[i].text); // Create a new message from the server
+			createNewMessage(listOfMessages[i].text);
 			if (i++ < numMessages - 1) {
 				showLoading();
 				theLoop(listOfMessages, i, numMessages); // Call the method again
@@ -171,23 +164,22 @@ function multiMessage(message) {
 }
 
 function createNewMessage(message) {
-	// PURPOSE: Method to create a new div showing the text from API.AI
+	// PURPOSE: Method to create a new div showing the text from API
 
-	hideLoading(); // Hide the typing indicator
+	hideLoading(); 
 	speechResponse(message); // take the message and say it back to the user.
-	// Append a new div to the chatlogs body, with an image and the text from API.AI
+	// Append a new div to the chatlogs body, with an image and the text from API
 	$chatlogs.append(
 		$('<div/>', { class: 'chat friend' }).append(
 			$('<div/>', { class: 'user-photo' }).append($('<img src="Images/jit.png" />')),
 			$('<p/>', { class: 'chat-message', text: message })
 		)
 	);
-	scrollChatLog(); // Call the method to see if the new message is visible
+	scrollChatLog();
 }
 
-//------------------------------------------- Database Write --------------------------------------------------//
-
 function storeMessageToDB() {
+	//PURPOSE: To store message to Databse
 	var date = new Date();
 	if (lastRecievedMessage == 1) {
 		firebase.database().ref(botName).child(newKey).push({
@@ -205,18 +197,15 @@ function storeMessageToDB() {
 }
 
 function showLoading() {
-	// PURPOSE: Funtion which shows the typing indicator
 	$chatlogs.append($('#loadingGif'));
 	$('#loadingGif').show();
 }
 
 function hideLoading() {
-	// PURPOSE:  Function which hides the typing indicator
 	$('.chat-form').css('visibility', 'visible');
 	$('#loadingGif').hide();
 }
 
-// Method which checks to see if a message is in visible
 function scrollChatLog() {
 	// Scroll the view down a certain amount
 	$chatlogs.stop().animate({ scrollTop: $chatlogs[0].scrollHeight });
@@ -269,7 +258,7 @@ function speechResponse(message) {
 	window.speechSynthesis.speak(msg);
 }
 
-//----------------------------------------- Resize the textarea ------------------------------------------//
+//Resize the TextArea
 $(document)
 	.one('focus.input', 'textarea.input', function() {
 		var savedValue = this.value;
