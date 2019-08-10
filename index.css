@@ -135,7 +135,7 @@ body {
 }
 
 .chat .chat-message {
-	padding: 15px;
+	padding: 10px;
 	margin: 5px 0;
 	font-size: 16px;
 	border-radius: 7px;
@@ -211,7 +211,7 @@ body {
 .buttonResponse {
 	background: rgba(162, 186, 190, 0.219);
 	color: #fff;
-	margin: 5px 20px 17px 0;
+	margin: 5px 20px 15px 0;
 	padding: 10px;
 	max-width: 80%;
 	width: fit-content;
