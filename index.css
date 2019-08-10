@@ -154,7 +154,7 @@ body {
 	max-width: 80%;
 	width: auto;
 	margin: 5px 0 5px auto;
-	background: #2298c7;
+	background: #329ac4c5;
 	border-top-right-radius: 0px;
 	overflow-wrap: break-word;
 }
@@ -224,7 +224,7 @@ body {
 .buttonResponse:hover {
 	transition: 0.2s all linear;
 	border-top-right-radius: 0;
-	background: #2298c7;
+	background: #329ac4c5;
 	cursor: pointer;
 }
 
