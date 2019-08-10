@@ -74,22 +74,22 @@ function postUserResponseToAPI(text) {
 		},
 		data        : JSON.stringify({ query: text, lang: 'en', sessionId: 'somerandomthing' }),
 		success     : function(data) {
-			newRecievedMessage(JSON.stringify(data.result.fulfillment.speech, undefined, 2));
+			parseResponse(JSON.stringify(data.result.fulfillment.speech, undefined, 2));
 		},
 		error       : function() {
-			newRecievedMessage('Internal Server Error');
+			parseResponse('Internal Server Error');
 		}
 	});
 }
 
-function newRecievedMessage(messageText) {
+function parseResponse(responseString) {
 	/* PURPOSE: Method called whenver there is a new recieved message
 		This method is called from the AJAX Response
 		This method tells how the response must be rendered
 		Splits between the button messages and single message 
 	*/
 
-	var removedQuotes = messageText.replace(/[""]/g, ''); // Remove Quotes from the String
+	var removedQuotes = responseString.replace(/[""]/g, ''); // Remove Quotes from the String
 	lastRecievedMessage = removedQuotes; // Update the last message recieved variable for storage in the database
 	// If the message contains a <ar> then it is a message whose responses are buttons
 	if (removedQuotes.includes('<ar')) {
