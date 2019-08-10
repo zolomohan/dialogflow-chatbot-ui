@@ -53,6 +53,7 @@ body {
 }
 
 .chatContainer {
+	z-index: 2;
 	display: none;
 	position: absolute;
 	bottom: 0;
