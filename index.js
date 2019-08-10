@@ -63,8 +63,7 @@ function send(text) {
 	// PURPOSE: Method which takes the users text and sends an AJAX post request to API.AI and recieves a response message from API.AI
 	// Create a new Chat Message Div with the text that the user typed in
 	$chatlogs.append($('<div/>', { class: 'chat self' }).append($('<p/>', { class: 'chat-message', text: text })));
-	var $sentMessage = $('.chatlogs .chat').last();
-	checkVisibility($sentMessage);
+	scrollChatLog();
 	lastSentMessage = text; // update the last message sent variable to be stored in the database and store in database
 	storeMessageToDB();
 
@@ -244,7 +243,7 @@ function hideLoading() {
 }
 
 // Method which checks to see if a message is in visible
-function checkVisibility(message) {
+function scrollChatLog() {
 	// Scroll the view down a certain amount
 	$chatlogs.stop().animate({ scrollTop: $chatlogs[0].scrollHeight });
 }
