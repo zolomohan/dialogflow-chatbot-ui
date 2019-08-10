@@ -18,6 +18,11 @@ const DEFAULT_TIME_DELAY = 300;
 
 var $chatlogs = $('.chatlogs'), speechResponseActive = false;
 
+//Toggle Chat Box
+$('.chatToggle').click(() => {
+	$('.chatContainer').slideToggle(() => $('textarea').focus());
+})
+
 $('document').ready(function() {
 	$('#switchInputType').toggle(); // Hide the switch input type button initially
 	$('#switchInputType').click(() => {
