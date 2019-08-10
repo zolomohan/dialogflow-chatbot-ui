@@ -16,7 +16,7 @@ var lastSentMessage = '',
 
 const DEFAULT_TIME_DELAY = 300;
 
-var $chatlogs = $('.chatlogs');
+var $chatlogs = $('.chatlogs'), speechResponseActive = false;
 
 $('document').ready(function() {
 	$('#switchInputType').toggle(); // Hide the switch input type button initially
@@ -43,6 +43,11 @@ $('document').ready(function() {
 	});
 
 	$('#rec').click(switchRecognition); // If the user presses the button for voice input
+
+	$('#speechResponse').click((function() {
+		speechResponseActive = !speechResponseActive;
+		$(this).toggleClass('fa-volume-mute').toggleClass('fa-volume-up')
+	}))
 
 	// If the user selects one of the dynamic button responses
 	$('.chat-form').on('click', '.buttonResponse', function() {
@@ -165,6 +170,7 @@ function createNewMessage(message) {
 	// PURPOSE: Method to create a new div showing the text from API
 
 	hideTypingIndicator();
+	if(speechResponseActive === true)
 	speechResponse(message); // take the message and say it back to the user.
 	// Append a new div to the chatlogs body, with an image and the text from API
 	$chatlogs.append(

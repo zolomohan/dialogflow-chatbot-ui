@@ -74,6 +74,10 @@ body {
 	font-size: 25px;
 }
 
+.header-icons{
+	user-select: none;
+}
+
 .headerBar i {
 	cursor: pointer;
 	margin-right: 10px;
