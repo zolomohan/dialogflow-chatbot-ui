@@ -3,38 +3,44 @@
   <head>
     <title>Chat Bot User Interface</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" type="text/css" href="index.css">
-	  <script src="js/lib/jQuery.3.1.1.min.js"></script>
-	  <script src="js/lib/firebase.min.js"></script>
-    <script type="text/javascript" src="js/credentials.js"></script>
+		<link rel="stylesheet" type="text/css" href="index.css">
+		<script src="js/lib/jQuery.3.1.1.min.js"></script>
+
+		<script src="js/lib/firebase.min.js"></script>
+		<script type="text/javascript" src="js/credentials.js"></script>
   </head>
-  <body>        
-    <div class="headerBar">
-      <div class="user-photo"><img src="Images/jit.png"></div>
-      <p class="title">KRYPTO</p>
-    </div>        
-    <div class="chatbox">
-    	<div class="chatlogs">            
-        <div class="chat friend">
-          <div class="user-photo"><img src="Images/jit.png"></div>
-          <p class="chat-message">HY I am Krypto! Enter "HY" to start. Here I'll show you the placement details of Jeppiaar Institute of Technology </p>
-        </div>
-        <div class="chat friend" id="loadingGif" style="display: none;">
-          <div class="user-photo"><img src="Images/jit.png"></div>
-          <div class="gif"><img src="Images/loading.gif"></div>
-        </div>
-      </div>            
-    </div>
-    <div class="chat-form">
-      <div id="inputDiv">
-        <div id="buttonDiv"></div>
-        <textarea class="input" placeholder="Message" rows="1" data-min-rows='1'></textarea>
-      </div>
-      <div id="chat-form-buttons">
-        <input type ="image"id="rec" src="Images/microphone.png">
-        <input type="image" src="Images/keyboard.png" id="switchInputType"/>
-      </div>
-    </div>  
-    <script type="text/javascript" src="js/index.js"></script>  
+  <body>
+		<div id="chatBubble"><i class="far fa-comments"></i></div>       
+		<div class="chatContainer">
+			<div class="headerBar">
+				<div class="user-photo"><img src="Images/jit.png"></div>
+				<p class="title">KRYPTO</p>
+			</div>        
+			<div class="chatbox">
+				<div class="chatlogs">            
+					<div class="chat friend">
+						<div class="user-photo"><img src="Images/jit.png"></div>
+						<p class="chat-message">HY I am Krypto! Enter "HY" to start. Here I'll show you the placement details of Jeppiaar Institute of Technology </p>
+					</div>
+					<div class="chat friend" id="loadingGif" style="display: none;">
+						<div class="user-photo"><img src="Images/jit.png"></div>
+						<div class="gif"><img src="Images/loading.gif"></div>
+					</div>
+				</div>            
+			</div>
+			<div class="chat-form">
+				<div id="inputDiv">
+					<div id="buttonDiv"></div>
+					<textarea class="input" placeholder="Message" rows="1" data-min-rows='1'></textarea>
+				</div>
+				<div id="chat-form-buttons">
+					<input type ="image"id="rec" src="Images/microphone.png">
+					<input type="image" src="Images/keyboard.png" id="switchInputType"/>
+				</div>
+			</div>  
+		</div> 
+		<script type="text/javascript" src="js/index.js"></script>  
+		<script type="text/javascript" src="js/toggleChatBox.js"></script>
+		<script src="https://kit.fontawesome.com/770ca4bfb4.js"></script>
   </body>
 </html>
