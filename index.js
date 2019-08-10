@@ -209,7 +209,7 @@ function createNewMessage(message) {
 		)
 	);
 
-	checkVisibility($('.chatlogs .chat').last()); // Call the method to see if the new message is visible
+	scrollChatLog(); // Call the method to see if the new message is visible
 }
 
 //------------------------------------------- Database Write --------------------------------------------------//
@@ -217,12 +217,12 @@ function createNewMessage(message) {
 function storeMessageToDB() {
 	var date = new Date();
 	if (lastRecievedMessage == 1) {
-		var storeMessage = firebase.database().ref(botName).child(newKey).push({
+		firebase.database().ref(botName).child(newKey).push({
 			UserResponse : lastSentMessage,
 			Time         : date + ''
 		});
 	} else {
-		var storeMessage = firebase.database().ref(botName).child(newKey).push({
+		firebase.database().ref(botName).child(newKey).push({
 			Question      : lastRecievedMessage,
 			UserResponse  : lastSentMessage,
 			ButtonClicked : ButtonClicked,
@@ -231,28 +231,16 @@ function storeMessageToDB() {
 	}
 }
 
-// Funtion which shows the typing indicator
-// As well as hides the textarea and send button
 function showLoading() {
+	// PURPOSE: Funtion which shows the typing indicator
 	$chatlogs.append($('#loadingGif'));
 	$('#loadingGif').show();
-
-	// $('#rec').css('visibility', 'hidden');
-	// $('textarea').css('visibility', 'hidden');
-
-	$('.chat-form').css('visibility', 'hidden');
 }
 
-// Function which hides the typing indicator
 function hideLoading() {
+	// PURPOSE:  Function which hides the typing indicator
 	$('.chat-form').css('visibility', 'visible');
 	$('#loadingGif').hide();
-
-	// Clear the text area of text
-	$('.input').val('');
-
-	// reset the size of the text area
-	$('.input').attr('rows', '1');
 }
 
 // Method which checks to see if a message is in visible
@@ -262,7 +250,7 @@ function checkVisibility(message) {
 }
 
 //----------------------Voice Message Methods--------------------------------//
-//Voice stuff
+
 var recognition;
 
 function startRecognition() {
