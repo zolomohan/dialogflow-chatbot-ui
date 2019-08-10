@@ -273,7 +273,7 @@ function speechResponse(message) {
 	msg.localService = true;
 	msg.text = message;
 	msg.lang = 'en';
-	msg.rate = 0.9;
+	msg.rate = 1.5;
 	msg.volume = 1;
 	window.speechSynthesis.speak(msg);
 }
