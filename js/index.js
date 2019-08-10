@@ -110,7 +110,7 @@ function buttonResponse(message) {
 			Stores the matches in the message, which match the regex 
 	*/
 
-	multiMessage(message); // Send the message to multiMessage to Render Chat Message
+	chatResponse(message); // Send the message to multiMessage to Render Chat Message
 	let buttonList = message.split(/<ar>/).splice(1); // Remove the first element, The first split is the Message replied to bes displayed on the chat
 
 	var listOfInputs = [];
@@ -128,7 +128,7 @@ function buttonResponse(message) {
 	}, DEFAULT_TIME_DELAY);
 }
 
-function multiMessage(message) {
+function chatResponse(message) {
 	/* PURPOSE: Method which takes messages and splits them based off a the delimeter <br 2500>
  		 The integer in the delimeter is optional and represents the time delay in milliseconds
 		 if the delimeter is not there then the time delay is set to the default 
