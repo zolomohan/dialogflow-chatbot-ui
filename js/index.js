@@ -201,13 +201,13 @@ function storeMessageToDB() {
 }
 
 function showTypingIndicator() {
-	$chatlogs.append($('#loadingGif'));
-	$('#loadingGif').show();
+	$chatlogs.append($('#typingIndicator'));
+	$('#typingIndicator').show();
 }
 
 function hideTypingIndicator() {
 	$('.chat-form').css('visibility', 'visible');
-	$('#loadingGif').hide();
+	$('#typingIndicator').hide();
 }
 
 function scrollChatLog() {
