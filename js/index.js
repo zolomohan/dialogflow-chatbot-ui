@@ -95,7 +95,7 @@ function newRecievedMessage(messageText) {
 	if (removedQuotes.includes('<ar')) {
 		buttonResponse(removedQuotes);
 	} else {
-		showLoading();
+		showTypingIndicator();
 		setTimeout(function() {
 			createNewMessage(removedQuotes);
 		}, DEFAULT_TIME_DELAY);
@@ -120,7 +120,7 @@ function buttonResponse(message) {
 			$('<div/>', { class: 'buttonResponse' }).append($('<p/>', { class: 'chat-message', text: buttonList[i] }))
 		);
 
-	showLoading();
+	showTypingIndicator();
 	setTimeout(function() {
 		$('textarea').toggle(); // Hide the text area
 		$('#switchInputType').show(); // Show the switch input button
@@ -151,12 +151,12 @@ function chatResponse(message) {
 	var i = 0,
 			numMessages = listOfMessages.length;
 
-	showLoading();
+	showTypingIndicator();
 	(function theLoop(listOfMessages, i, numMessages) {
 		setTimeout(function() {
 			createNewMessage(listOfMessages[i].text);
 			if (i++ < numMessages - 1) {
-				showLoading();
+				showTypingIndicator();
 				theLoop(listOfMessages, i, numMessages); // Call the method again
 			}
 		}, listOfMessages[i].delay);
@@ -166,7 +166,7 @@ function chatResponse(message) {
 function createNewMessage(message) {
 	// PURPOSE: Method to create a new div showing the text from API
 
-	hideLoading(); 
+	hideTypingIndicator(); 
 	speechResponse(message); // take the message and say it back to the user.
 	// Append a new div to the chatlogs body, with an image and the text from API
 	$chatlogs.append(
@@ -196,12 +196,12 @@ function storeMessageToDB() {
 	}
 }
 
-function showLoading() {
+function showTypingIndicator() {
 	$chatlogs.append($('#loadingGif'));
 	$('#loadingGif').show();
 }
 
-function hideLoading() {
+function hideTypingIndicator() {
 	$('.chat-form').css('visibility', 'visible');
 	$('#loadingGif').hide();
 }
