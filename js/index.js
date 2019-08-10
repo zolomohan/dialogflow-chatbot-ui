@@ -241,7 +241,9 @@ function stopVoiceRecognition() {
 
 function updateRecIcon() {
 	$('#rec').toggleClass('fa-microphone').toggleClass('fa-microphone-slash')
-	$('textarea.input').attr('placeholder', 'Say Something...')
+	$('#rec').hasClass('fa-microphone-slash') 
+		?	$('textarea.input').attr('placeholder', 'Type a message')
+		: $('textarea.input').attr('placeholder', 'Say Something...')
 }
 
 function speechResponse(message) {
