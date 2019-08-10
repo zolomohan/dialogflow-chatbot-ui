@@ -25,7 +25,9 @@ var lastSentMessage = '',
 const DEFAULT_TIME_DELAY = 300;
 
 var $chatlogs = $('.chatlogs'),
-	speechResponseActive = false;
+	speechResponseActive = true,
+	voiceList,
+	voice;
 
 //Toggle Chat Box
 $('.chatToggle').click(() => {
@@ -71,6 +73,13 @@ $('document').ready(function() {
 		$('#switchInputType').hide();
 		$('.buttonResponse').remove(); // Remove the button responses from the div
 	});
+
+	window.speechSynthesis.onvoiceschanged = () => {
+		voiceList = window.speechSynthesis.getVoices();
+		console.log(voiceList)
+		voice = voiceList[3];
+	}
+
 });
 
 function postUserResponseToAPI(text) {
@@ -268,13 +277,13 @@ function updateRecIcon() {
 function speechResponse(message) {
 	var msg = new SpeechSynthesisUtterance();
 	msg.default = false;
-	msg.voiceURI = 'Fiona';
-	msg.name = 'Fiona';
+	msg.voice = voice;
 	msg.localService = true;
 	msg.text = message;
 	msg.lang = 'en';
-	msg.rate = 1.5;
+	msg.rate = 1;
 	msg.volume = 1;
+	msg.pitch = 1;
 	window.speechSynthesis.speak(msg);
 }
 
