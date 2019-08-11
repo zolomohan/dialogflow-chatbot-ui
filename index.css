@@ -226,6 +226,10 @@ body {
 	color: #ffffff;
 }
 
+#chatFormButtons i:hover, i:hover{
+	color: #00e1ffd5;
+}
+
 #buttonDiv {
 	margin: 0 30px;
 	width: inherit;
@@ -269,5 +273,3 @@ body {
     top: -10px;
   }
 }
-
-
