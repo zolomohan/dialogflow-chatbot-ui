@@ -226,7 +226,7 @@ body {
 	color: #ffffff;
 }
 
-#chatFormButtons i:hover, i:hover{
+#chatFormButtons i:hover, #chatBoxHeader i:hover{
 	color: #00e1ffd5;
 }
 
