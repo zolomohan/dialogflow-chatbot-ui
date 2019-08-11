@@ -212,6 +212,7 @@ function createNewMessage(message) {
 function showTypingIndicator() {
 	chatLogs.append($('#typingIndicator'));
 	$('#typingIndicator').show();
+	scrollChatLog();
 }
 
 function hideTypingIndicator() {
