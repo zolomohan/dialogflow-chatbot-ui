@@ -17,11 +17,6 @@ firebase.initializeApp(fireBaseConfig);
 var currentChatKey = firebase.database().ref(botName).push().key; // Key for this instance of the chat interface
 console.log('Key for this chat instance = ' + currentChatKey);
 
-// PURPOSE: Variables to be used for storing the last message sent and recieved for the database
-var lastSentMessage = '',
-	lastRecievedMessage = 1,
-	ButtonClicked = false;
-
 const DEFAULT_TIME_DELAY = 300;
 
 var chatLogs = $('#chatLogs');
@@ -49,7 +44,6 @@ $('document').ready(function() {
 		// INFO: 13 stands for 'enter key'
 		if (event.which === 13) {
 			event.preventDefault(); // Prevent the default function of the enter key (Dont go to a new line)
-			ButtonClicked = false;
 			postUserResponseToAPI(this.value); // Send Message to AJAX Request Function
 			$('.input').attr('rows', '1'); // reset the size of the text area
 			this.value = ''; // Clear the text area
@@ -69,7 +63,6 @@ $('document').ready(function() {
 
 	// If the user selects one of the dynamic button responses
 	$('#chatForm').on('click', '.buttonResponse', function() {
-		ButtonClicked = true;
 		postUserResponseToAPI(this.innerText); // Send the text on the button as a user message
 		$('textarea').toggle(); // Show text input area
 		$('#switchInputType').hide();
@@ -101,8 +94,6 @@ function postUserResponseToAPI(text) {
 	// Create a new Chat Message Div with the text that the user typed in
 	chatLogs.append($('<div/>', { class: 'chat self' }).append($('<p/>', { class: 'chat-message', text: text })));
 	scrollChatLog();
-	lastSentMessage = text; // update the last message sent variable to be stored in the database
-	storeMessageToDB();
 
 	$.ajax({
 		type        : 'POST',
@@ -130,7 +121,6 @@ function parseResponse(responseString) {
 	*/
 
 	var removedQuotes = responseString.replace(/[""]/g, ''); // Remove Quotes from the String
-	lastRecievedMessage = removedQuotes; // Update the last message recieved variable for storage in the database
 	// If the message contains a <ar> then it is a message whose responses are buttons
 	if (removedQuotes.includes('<ar')) {
 		buttonResponse(removedQuotes);
@@ -216,24 +206,6 @@ function createNewMessage(message) {
 		)
 	);
 	scrollChatLog();
-}
-
-function storeMessageToDB() {
-	//PURPOSE: To store message to Databse
-	var date = new Date();
-	if (lastRecievedMessage == 1) {
-		firebase.database().ref(botName).child(currentChatKey).push({
-			UserResponse : lastSentMessage,
-			Time         : date + ''
-		});
-	} else {
-		firebase.database().ref(botName).child(currentChatKey).push({
-			Question      : lastRecievedMessage,
-			UserResponse  : lastSentMessage,
-			ButtonClicked : ButtonClicked,
-			Time          : date + ''
-		});
-	}
 }
 
 function showTypingIndicator() {
