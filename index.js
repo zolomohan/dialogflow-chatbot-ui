@@ -260,6 +260,10 @@ function updateRecIcon() {
 	$('#speechInput').hasClass('fa-microphone-slash')
 		? $('textarea.input').attr('placeholder', 'Type a message')
 		: $('textarea.input').attr('placeholder', 'Say Something...');
+	if($('#buttonDiv').is(':visible')){
+		$('#buttonDiv').toggle();
+		$('textarea.input').toggle();
+	}
 }
 
 function speechResponse(message) {
