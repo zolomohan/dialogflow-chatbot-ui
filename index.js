@@ -58,6 +58,7 @@ $('document').ready(function() {
 
 	$('#speechResponse').click(function() {
 		speechResponseActive = !speechResponseActive;
+		if(!speechResponseActive) window.speechSynthesis.cancel();
 		$(this).toggleClass('fa-volume-mute').toggleClass('fa-volume-up');
 	});
 
