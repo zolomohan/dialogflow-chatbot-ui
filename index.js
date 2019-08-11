@@ -2,7 +2,7 @@
 var accessToken = '1f2d4c70eb62402da8b081e30d8327f9',
 	botName = 'placementdetails',
 	baseUrl = 'https://api.dialogflow.com/v1/query?v=20150910',
-	config = {
+	fireBaseConfig = {
 		apiKey            : 'AIzaSyCYYLSEAmwMjPTecc0UHEzQghaeVIE0rj4',
 		authDomain        : 'placementdetails-rpduhl.firebaseapp.com',
 		databaseURL       : 'https://placementdetails-rpduhl.firebaseio.com',
@@ -12,10 +12,10 @@ var accessToken = '1f2d4c70eb62402da8b081e30d8327f9',
 		appId             : '1:705824998394:web:309447646d290e9f'
 	};
 
-firebase.initializeApp(config);
+firebase.initializeApp(fireBaseConfig);
 
-var newKey = firebase.database().ref(botName).push().key; // Key for this instance of the chat interface
-console.log('Key for this chat instance = ' + newKey);
+var currentChatKey = firebase.database().ref(botName).push().key; // Key for this instance of the chat interface
+console.log('Key for this chat instance = ' + currentChatKey);
 
 // PURPOSE: Variables to be used for storing the last message sent and recieved for the database
 var lastSentMessage = '',
@@ -24,14 +24,16 @@ var lastSentMessage = '',
 
 const DEFAULT_TIME_DELAY = 300;
 
-var $chatlogs = $('.chatlogs'),
-	speechResponseActive = true,
-	voiceList,
+var chatLogs = $('#chatLogs');
+
+//Speech Response Related Variables
+var speechResponseActive = true,
+	speechSynthesisInstance,
 	voice;
 
 //Toggle Chat Box
 $('.chatToggle').click(() => {
-	$('.chatContainer').slideToggle(() => $('textarea').focus());
+	$('#chatBox').slideToggle(() => $('textarea.input').focus());
 });
 
 $('document').ready(function() {
@@ -43,7 +45,7 @@ $('document').ready(function() {
 		$('.buttonResponse').toggle();
 	});
 
-	$('textarea').keypress(function(event) {
+	$('textarea.input').keypress(function(event) {
 		// INFO: 13 stands for 'enter key'
 		if (event.which === 13) {
 			event.preventDefault(); // Prevent the default function of the enter key (Dont go to a new line)
@@ -58,7 +60,7 @@ $('document').ready(function() {
 		}
 	});
 
-	$('#rec').click(switchRecognition); // If the user presses the button for voice input
+	$('#speechInput').click(switchVoiceRecognition); // If the user presses the button for voice input
 
 	$('#speechResponse').click(function() {
 		speechResponseActive = !speechResponseActive;
@@ -66,7 +68,7 @@ $('document').ready(function() {
 	});
 
 	// If the user selects one of the dynamic button responses
-	$('.chat-form').on('click', '.buttonResponse', function() {
+	$('#chatForm').on('click', '.buttonResponse', function() {
 		ButtonClicked = true;
 		postUserResponseToAPI(this.innerText); // Send the text on the button as a user message
 		$('textarea').toggle(); // Show text input area
@@ -75,17 +77,29 @@ $('document').ready(function() {
 	});
 
 	window.speechSynthesis.onvoiceschanged = () => {
-		voiceList = window.speechSynthesis.getVoices();
-		console.log(voiceList)
-		voice = voiceList[3];
-	}
-
+		voice = window.speechSynthesis.getVoices()[3];
+	};
 });
+
+//Resize the TextArea
+$(document)
+	.one('focus.input', 'textarea.input', function() {
+		var savedValue = this.value;
+		this.baseScrollHeight = this.scrollHeight;
+		this.value = savedValue;
+	})
+	.on('input.input', 'textarea.input', function() {
+		var minRows = this.getAttribute('data-min-rows') | 0,
+			rows;
+		this.rows = minRows;
+		rows = Math.floor((this.scrollHeight - this.baseScrollHeight) / 17);
+		this.rows = minRows + rows;
+	});
 
 function postUserResponseToAPI(text) {
 	// PURPOSE: Method which takes the users text and sends an AJAX post request to API and recieves a response message from API
 	// Create a new Chat Message Div with the text that the user typed in
-	$chatlogs.append($('<div/>', { class: 'chat self' }).append($('<p/>', { class: 'chat-message', text: text })));
+	chatLogs.append($('<div/>', { class: 'chat self' }).append($('<p/>', { class: 'chat-message', text: text })));
 	scrollChatLog();
 	lastSentMessage = text; // update the last message sent variable to be stored in the database
 	storeMessageToDB();
@@ -195,9 +209,9 @@ function createNewMessage(message) {
 	hideTypingIndicator();
 	if (speechResponseActive === true) speechResponse(message); // take the message and say it back to the user.
 	// Append a new div to the chatlogs body, with an image and the text from API
-	$chatlogs.append(
-		$('<div/>', { class: 'chat friend' }).append(
-			$('<div/>', { class: 'bot-photo' }).append($('<img src="https://i.ibb.co/cDCL67q/bot.png" />')),
+	chatLogs.append(
+		$('<div/>', { class: 'chat bot' }).append(
+			$('<div/>', { class: 'botImg' }).append($('<img src="https://i.ibb.co/cDCL67q/bot.png" />')),
 			$('<p/>', { class: 'chat-message', text: message })
 		)
 	);
@@ -208,12 +222,12 @@ function storeMessageToDB() {
 	//PURPOSE: To store message to Databse
 	var date = new Date();
 	if (lastRecievedMessage == 1) {
-		firebase.database().ref(botName).child(newKey).push({
+		firebase.database().ref(botName).child(currentChatKey).push({
 			UserResponse : lastSentMessage,
 			Time         : date + ''
 		});
 	} else {
-		firebase.database().ref(botName).child(newKey).push({
+		firebase.database().ref(botName).child(currentChatKey).push({
 			Question      : lastRecievedMessage,
 			UserResponse  : lastSentMessage,
 			ButtonClicked : ButtonClicked,
@@ -223,25 +237,25 @@ function storeMessageToDB() {
 }
 
 function showTypingIndicator() {
-	$chatlogs.append($('#typingIndicator'));
+	chatLogs.append($('#typingIndicator'));
 	$('#typingIndicator').show();
 }
 
 function hideTypingIndicator() {
-	$('.chat-form').css('visibility', 'visible');
+	$('#chatForm').css('visibility', 'visible');
 	$('#typingIndicator').hide();
 }
 
 function scrollChatLog() {
 	// Scroll the view down a certain amount
-	$chatlogs.stop().animate({ scrollTop: $chatlogs[0].scrollHeight });
+	chatLogs.stop().animate({ scrollTop: chatLogs[0].scrollHeight });
 }
 
 //----------------------Voice Message Methods--------------------------------//
 
 var voiceRecogntion;
 
-function switchRecognition() {
+function switchVoiceRecognition() {
 	voiceRecogntion ? stopVoiceRecognition() : startVoiceRecognition();
 }
 
@@ -268,36 +282,21 @@ function stopVoiceRecognition() {
 }
 
 function updateRecIcon() {
-	$('#rec').toggleClass('fa-microphone').toggleClass('fa-microphone-slash');
-	$('#rec').hasClass('fa-microphone-slash')
+	$('#speechInput').toggleClass('fa-microphone').toggleClass('fa-microphone-slash');
+	$('#speechInput').hasClass('fa-microphone-slash')
 		? $('textarea.input').attr('placeholder', 'Type a message')
 		: $('textarea.input').attr('placeholder', 'Say Something...');
 }
 
 function speechResponse(message) {
-	var msg = new SpeechSynthesisUtterance();
-	msg.default = false;
-	msg.voice = voice;
-	msg.localService = true;
-	msg.text = message;
-	msg.lang = 'en';
-	msg.rate = 1;
-	msg.volume = 1;
-	msg.pitch = 1;
-	window.speechSynthesis.speak(msg);
+	speechSynthesisInstance = new SpeechSynthesisUtterance();
+	speechSynthesisInstance.default = false;
+	speechSynthesisInstance.voice = voice;
+	speechSynthesisInstance.localService = true;
+	speechSynthesisInstance.text = message;
+	speechSynthesisInstance.lang = 'en';
+	speechSynthesisInstance.rate = 1;
+	speechSynthesisInstance.volume = 1;
+	speechSynthesisInstance.pitch = 1;
+	window.speechSynthesis.speak(speechSynthesisInstance);
 }
-
-//Resize the TextArea
-$(document)
-	.one('focus.input', 'textarea.input', function() {
-		var savedValue = this.value;
-		this.baseScrollHeight = this.scrollHeight;
-		this.value = savedValue;
-	})
-	.on('input.input', 'textarea.input', function() {
-		var minRows = this.getAttribute('data-min-rows') | 0,
-			rows;
-		this.rows = minRows;
-		rows = Math.floor((this.scrollHeight - this.baseScrollHeight) / 17);
-		this.rows = minRows + rows;
-	});

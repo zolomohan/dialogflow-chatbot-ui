@@ -10,38 +10,38 @@
 		<script src="lib/firebase.min.js"></script>
   </head>
   <body>
-		<div id="chatBubble" class="chatToggle"><i class="fas fa-comments"></i></div>       
-		<div class="chatContainer">
-			<div class="headerBar">
-				<p class="title">Chat Bot</p>
-				<div class="header-icons">
+		<div id="chatButton" class="chatToggle"><i class="fas fa-comments"></i></div>       
+		<div id="chatBox">
+			<div id="chatBoxHeader">
+				<h4 id="chatBotName">Chat Bot</h4>
+				<div class="icons">
 					<i class="fas fa-volume-up" id='speechResponse'></i>
 					<i class="fas fa-minus chatToggle"></i>
 				</div>
 			</div>        
-			<div class="chatbox">
-				<div class="chatlogs">            
-					<div class="chat friend">
-						<div class="bot-photo"><img src="https://i.ibb.co/cDCL67q/bot.png"></div>
+			<div id="chatBoxContent">
+				<div id="chatLogs">            
+					<div class="chat bot">
+						<div class="botImg"><img src="https://i.ibb.co/cDCL67q/bot.png"></div>
 						<p class="chat-message">Hey I am a Chat Bot! Say " Hi " to talk with me. I'll let you know the placement details of our college </p>
 					</div>
-					<div class="chat friend" id="typingIndicator" style="display: none;">
-						<div class="bot-photo"><img src="https://i.ibb.co/cDCL67q/bot.png"></div>
+					<div class="chat bot" id="typingIndicator" style="display: none;">
+						<div class="botImg"><img src="https://i.ibb.co/cDCL67q/bot.png"></div>
 						<div class="container">
-							<span class="circle"></span>
-							<span class="circle"></span>
-							<span class="circle"></span>
+							<span class="dot"></span>
+							<span class="dot"></span>
+							<span class="dot"></span>
 						</div>
 					</div>
 				</div>            
-			</div>
-			<div class="chat-form">
-				<div id="inputDiv">
+				</div>
+			<div id="chatForm">
+				<div id="chatInput">
 					<div id="buttonDiv"></div>
 					<textarea class="input" placeholder="Type a message" rows="1" data-min-rows='1'></textarea>
 				</div>
-				<div id="chat-form-buttons">
-					<i class="fas fa-microphone-slash" id="rec"></i>
+				<div id="chatFormButtons">
+					<i class="fas fa-microphone-slash" id="speechInput"></i>
 					<i class="fas fa-keyboard" id="switchInputType"></i>
 				</div>
 			</div>  

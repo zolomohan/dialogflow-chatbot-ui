@@ -20,7 +20,7 @@ body {
 	width: 100%;
 }
 
-#chatBubble {
+#chatButton {
 	display: flex;
 	justify-content: center;
 	position: absolute;
@@ -28,31 +28,31 @@ body {
 	left: 93%;
 	width: 70px;
 	height: 70px;
-	background-color: rgb(66, 66, 66);
-	color: white;
+	background-color: #424242;
+	color: #ffffff;
 	border-radius: 100%;
-	-webkit-box-shadow: 3px 9px 31px -9px rgba(0, 0, 0, 0.82);
-	box-shadow: 3px 9px 31px -9px rgba(0, 0, 0, 0.82);
+	-webkit-box-shadow: 3px 9px 31px -9px #000000d1;
+	box-shadow: 3px 9px 31px -9px #000000d1;
 	cursor: pointer;
 }
 
-#chatBubble:hover {
+#chatButton:hover {
 	top: 86.2%;
-	-webkit-box-shadow: 2px 4px 31px -9px rgba(0, 0, 0, 0.82);
-	box-shadow: 2px 4px 31px -9px rgba(0, 0, 0, 0.82);
+	-webkit-box-shadow: 2px 4px 31px -9px #000000d1;
+	box-shadow: 2px 4px 31px -9px #000000d1;
 }
 
-#chatBubble:active {
+#chatButton:active {
 	top: 86.5%;
 	box-shadow: none;
 }
 
-#chatBubble i {
+#chatButton i {
 	font-size: 30px;
 	align-self: center;
 }
 
-.chatContainer {
+#chatBox {
 	z-index: 2;
 	display: none;
 	position: absolute;
@@ -61,7 +61,7 @@ body {
 	transition: 0.2s margin linear;
 }
 
-.headerBar {
+#chatBoxHeader {
 	display: flex;
 	flex-flow: row wrap;
 	align-items: center;
@@ -71,24 +71,25 @@ body {
 	min-width: 390px;
 	margin: 20px auto 0px auto;
 	background: #222222;
-	color: white;
+	color: #ffffff;
 	font-size: 25px;
 }
 
-.header-icons{
+#chatBoxHeader .icons{
 	user-select: none;
 }
 
-.headerBar i {
+#chatBoxHeader i {
 	cursor: pointer;
 	margin-right: 10px;
 }
 
-.headerBar .title {
+#chatBoxHeader #chatBotName {
 	margin: auto 15px;
+	font-weight: 100;
 }
 
-.chatbox {
+#chatBoxContent {
 	background-color: #222222;
 	width: 450px;
 	min-width: 390px;
@@ -96,10 +97,9 @@ body {
 	padding-top: 10px;
 	padding-bottom: 10px;
 	margin: 0px auto 0px auto;
-	box-shadow: 0 3px #ccc;
 }
 
-.chatlogs {
+#chatLogs {
 	padding: 10px;
 	width: 100%;
 	height: 100%;
@@ -107,13 +107,13 @@ body {
 	overflow-y: scroll;
 }
 
-.chatlogs::-webkit-scrollbar {
+#chatLogs::-webkit-scrollbar {
 	width: 10px;
 }
 
-.chatlogs::-webkit-scrollbar-thumb {
+#chatLogs::-webkit-scrollbar-thumb {
 	border-radius: 5px;
-	background: rgba(17, 157, 186, 0.1);
+	background: #119dba1a;
 }
 
 .chat {
@@ -123,44 +123,41 @@ body {
 	margin-bottom: 10px;
 }
 
-.bot-photo{
+.botImg{
 	width: 60px;
 	height: 60px;
 	overflow: hidden;
 }
 
-.bot-photo img {
+.botImg img {
 	padding: 10px;
 	padding-top: 6px;
 	width: 100%;
 }
 
 .chat .chat-message {
+	color: #ffffff;
 	padding: 10px;
 	margin: 5px 0;
 	font-size: 16px;
 	border-radius: 7px;
+	max-width: 60%;
+	width: auto;
+	overflow-wrap: break-word;
 }
 
-.friend .chat-message {
-	color: rgb(255, 255, 255);
-	width: auto;
-	max-width: 70%;
-	background: rgb(34, 152, 199, 0.3);
+.bot .chat-message {
+	background: #2298c74d;
 	border-top-left-radius: 0px;
 }
 
 .self .chat-message {
-	color: white;
-	max-width: 80%;
-	width: auto;
 	margin: 5px 0 5px auto;
 	background: #329ac4c5;
 	border-top-right-radius: 0px;
-	overflow-wrap: break-word;
 }
 
-.chat-form {
+#chatForm {
 	margin: 0px auto 0px auto;
 	display: flex;
 	width: 450px;
@@ -170,13 +167,13 @@ body {
 	background: #222222;
 }
 
-#inputDiv {
+#chatInput {
 	width: 75%;
 	margin-right: 15px;
 }
 
-.chat-form textarea {
-	color: white;
+#chatForm textarea {
+	color: #ffffff;
 	border: none;
 	padding: 5px 5px 5px 15px;
 	background: #222222;
@@ -192,25 +189,18 @@ body {
 	outline: none;
 }
 
-.chat-form textarea::placeholder{
-	color: rgba(255, 255, 255, 0.705);
+#chatForm textarea::placeholder{
+	color: #ffffffb4;
 }
 
 
-#chat-form-buttons {
+#chatFormButtons {
 	margin: auto;
 	user-select: none;	 	
 }
 
-.gif img {
-	height: 51px;
-	margin: 10px;
-	border-radius: 7px;
-	background-color: rgb(34, 152, 199, 0.3);
-}
-
 .buttonResponse {
-	background: rgba(162, 186, 190, 0.219);
+	background: #a2babe38;
 	color: #fff;
 	margin: 5px 20px 15px 0;
 	padding: 10px;
@@ -229,7 +219,7 @@ body {
 	cursor: pointer;
 }
 
-#chat-form-buttons i {
+#chatFormButtons i {
 	font-size: 25px;
 	padding: 7px;
 	cursor: pointer;
@@ -241,32 +231,32 @@ body {
 	width: inherit;
 }
 
-.container{
+#typingIndicator .container{
 	position: relative;
 }
 
-.circle {
+.dot {
   position: absolute;
   display: inline-block;
   height: 5px;
   width: 5px;
-  background-color: white;
+  background-color: #ffffff;
   margin: 25px;
   border-radius: 50%;
   animation: wave 1.5s infinite ease-in-out;
   top: 0;
 }
 
-.circle:first-child {
+.dot:first-child {
   left: 0;
 }
   
-.circle:nth-child(2) {
+.dot:nth-child(2) {
   left: 10px;
   animation-delay: 50ms;
 }
   
-.circle:last-child {
+.dot:last-child {
   left: 20px;
   animation-delay: 0.10s;
 }
