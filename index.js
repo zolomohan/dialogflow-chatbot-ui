@@ -1,7 +1,5 @@
 //PURPOSE:  Information needed to access the api.ai bot, only thing needed to be changed
-var accessToken = '1f2d4c70eb62402da8b081e30d8327f9',
-	botName = 'placementdetails',
-	baseUrl = 'https://api.dialogflow.com/v1/query?v=20150910';
+import { accessToken , baseUrl } from './accessToken.js';
 
 const DEFAULT_TIME_DELAY = 300;
 
@@ -44,7 +42,7 @@ $('document').ready(function() {
 
 	$('#speechResponse').click(function() {
 		speechResponseActive = !speechResponseActive;
-		if(!speechResponseActive) window.speechSynthesis.cancel();
+		if (!speechResponseActive) window.speechSynthesis.cancel();
 		$(this).toggleClass('fa-volume-mute').toggleClass('fa-volume-up');
 	});
 
@@ -84,7 +82,7 @@ function postUserResponseToAPI(text) {
 
 	$.ajax({
 		type        : 'POST',
-		url         : baseUrl + 'query?v=20150910',
+		url         : baseUrl,
 		contentType : 'application/json; charset=utf-8',
 		dataType    : 'json',
 		headers     : {
@@ -246,8 +244,8 @@ function updateRecIcon() {
 	$('#speechInput').hasClass('fa-microphone-slash')
 		? $('textarea.input').attr('placeholder', 'Type a message')
 		: $('textarea.input').attr('placeholder', 'Say Something...');
-	if($('.buttonResponse').is(':visible')){
-		$('#switchInputType').toggleClass('fa-keyboard').toggleClass('fa-align-justify');		
+	if ($('.buttonResponse').is(':visible')) {
+		$('#switchInputType').toggleClass('fa-keyboard').toggleClass('fa-align-justify');
 		$('.buttonResponse').remove();
 		$('textarea.input').toggle();
 	}
