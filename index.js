@@ -1,21 +1,7 @@
 //PURPOSE:  Information needed to access the api.ai bot, only thing needed to be changed
 var accessToken = '1f2d4c70eb62402da8b081e30d8327f9',
 	botName = 'placementdetails',
-	baseUrl = 'https://api.dialogflow.com/v1/query?v=20150910',
-	fireBaseConfig = {
-		apiKey            : 'AIzaSyCYYLSEAmwMjPTecc0UHEzQghaeVIE0rj4',
-		authDomain        : 'placementdetails-rpduhl.firebaseapp.com',
-		databaseURL       : 'https://placementdetails-rpduhl.firebaseio.com',
-		projectId         : 'placementdetails-rpduhl',
-		storageBucket     : 'placementdetails-rpduhl.appspot.com',
-		messagingSenderId : '705824998394',
-		appId             : '1:705824998394:web:309447646d290e9f'
-	};
-
-firebase.initializeApp(fireBaseConfig);
-
-var currentChatKey = firebase.database().ref(botName).push().key; // Key for this instance of the chat interface
-console.log('Key for this chat instance = ' + currentChatKey);
+	baseUrl = 'https://api.dialogflow.com/v1/query?v=20150910';
 
 const DEFAULT_TIME_DELAY = 300;
 
