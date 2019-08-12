@@ -1,16 +1,19 @@
-# JIT CHAT BOT
-A Chat Bot for Jeppiaar Institute of Technology Using DialogFlow
+# JIT Chat Bot
+A Chat Bot Using DialogFlow created for Jeppiaar Institute of Technology
 
 ## Working
 This Chat Bot uses AJAX to perform Get Requests to the Dialogflow API where the Chat Bot is Set Up. <br />
+The Details are setup in Firebase which is fetched by Dialogflow. <br />
 This Chat Bot uses the V2 API provided by Dialogflow.
 
 In Order to Use This Code, <br />
-Create a Chat Bot using Dialogflow and Copy the AccessToken and The Base URL and Add it in a new File named "accessToken.js"
+Create a Chat Bot using Dialogflow and Copy the AccessToken and The Base URL and replace it in "accessToken.js"
 
 ### accessToken.js File Content Format
 
-const accessToken = ' <em><strong> ** You Access Token Goes Here ** </strong></em>', <br />
+<pre>
+const accessToken = ' <em><strong> ** You Access Token Goes Here ** </strong></em>',
       baseUrl = ' <em><strong> ** Your Base URL of the API Goes Here ** </strong></em> ';
+</pre>
 
 export { accessToken, baseUrl };
