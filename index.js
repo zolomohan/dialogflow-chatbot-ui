@@ -16,14 +16,6 @@ $('.chatToggle').click(() => {
 });
 
 $('document').ready(function() {
-	$('#switchInputType').toggle(); // Hide the switch input type button initially
-	$('#switchInputType').click(() => {
-		// Toggle Alternate Input
-		$('#switchInputType').toggleClass('fa-keyboard').toggleClass('fa-align-justify');
-		$('textarea').toggle();
-		$('.buttonResponse').toggle();
-	});
-
 	$('textarea.input').keypress(function(event) {
 		// INFO: 13 stands for 'enter key'
 		if (event.which === 13) {
@@ -31,10 +23,6 @@ $('document').ready(function() {
 			postUserResponseToAPI(this.value); // Send Message to AJAX Request Function
 			$('.input').attr('rows', '1'); // reset the size of the text area
 			this.value = ''; // Clear the text area
-			if ($('#switchInputType').is(':visible')) {
-				$('#switchInputType').toggle();
-				$('.buttonResponse').remove();
-			}
 		}
 	});
 
@@ -49,8 +37,6 @@ $('document').ready(function() {
 	// If the user selects one of the dynamic button responses
 	$('#chatForm').on('click', '.buttonResponse', function() {
 		postUserResponseToAPI(this.innerText); // Send the text on the button as a user message
-		$('textarea').toggle(); // Show text input area
-		$('#switchInputType').hide();
 		$('.buttonResponse').remove(); // Remove the button responses from the div
 	});
 
@@ -137,8 +123,6 @@ function buttonResponse(message) {
 
 	showTypingIndicator();
 	setTimeout(function() {
-		$('textarea').toggle(); // Hide the text area
-		$('#switchInputType').show(); // Show the switch input button
 		for (let button of listOfInputs) button.appendTo($('#buttonDiv'));
 	}, DEFAULT_TIME_DELAY);
 }
@@ -205,7 +189,6 @@ function hideTypingIndicator() {
 }
 
 function scrollChatLog() {
-	// Scroll the view down a certain amount
 	chatLogs.stop().animate({ scrollTop: chatLogs[0].scrollHeight });
 }
 
@@ -245,7 +228,6 @@ function updateRecIcon() {
 		? $('textarea.input').attr('placeholder', 'Type a message')
 		: $('textarea.input').attr('placeholder', 'Say Something...');
 	if ($('.buttonResponse').is(':visible')) {
-		$('#switchInputType').toggleClass('fa-keyboard').toggleClass('fa-align-justify');
 		$('.buttonResponse').remove();
 		$('textarea.input').toggle();
 	}
