@@ -95,10 +95,12 @@ function parseResponse(responseString) {
 	// If the message contains a <ar> then it is a message whose responses are buttons
 	if (removedQuotes.includes('<ar'))
 		buttonResponse(removedQuotes);
-	else
+	else if(removedQuotes.includes('<br'))
 		setTimeout(function() {
 			chatResponse(removedQuotes);
 		}, DEFAULT_TIME_DELAY);
+	else
+		createNewMessage(removedQuotes)
 }
 
 function buttonResponse(message) {
