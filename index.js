@@ -11,15 +11,14 @@ var speechResponseActive = true,
 	voice;
 
 //Toggle Chat Box
-$('.chatToggle').click(() => {
-	$('#chatBox').slideToggle(() => $('textarea.input').focus());
-});
+$('.chatToggle').click(() => $('#chatBox').slideToggle(() => $('textarea.input').focus()));
 
 $('document').ready(function() {
 	$('textarea.input').keypress(function(event) {
 		// INFO: 13 stands for 'enter key'
 		if (event.which === 13) {
 			event.preventDefault(); // Prevent the default function of the enter key (Dont go to a new line)
+			renderChatText(this.value, 'self');
 			postUserResponseToAPI(this.value); // Send Message to AJAX Request Function
 			$('.input').attr('rows', '1'); // reset the size of the text area
 			this.value = ''; // Clear the text area
@@ -34,10 +33,11 @@ $('document').ready(function() {
 		$(this).toggleClass('fa-volume-mute').toggleClass('fa-volume-up');
 	});
 
-	// If the user selects one of the dynamic button responses
+	// If the user selects one of the suggestions
 	$('#chatForm').on('click', '.buttonResponse', function() {
-		postUserResponseToAPI(this.innerText); // Send the text on the button as a user message
-		$('.buttonResponse').remove(); // Remove the button responses from the div
+		renderChatText(this.innerText, 'self');
+		postUserResponseToAPI(this.innerText);
+		$('.buttonResponse').remove();
 	});
 
 	window.speechSynthesis.onvoiceschanged = () => {
@@ -62,10 +62,6 @@ $(document)
 
 function postUserResponseToAPI(text) {
 	// PURPOSE: Method which takes the users text and sends an AJAX post request to API and recieves a response message from API
-	// Create a new Chat Message Div with the text that the user typed in
-	chatLogs.append($('<div/>', { class: 'chat self' }).append($('<p/>', { class: 'chat-message', text: text })));
-	scrollChatLog();
-	showTypingIndicator();
 	$.ajax({
 		type        : 'POST',
 		url         : baseUrl,
@@ -90,7 +86,7 @@ function parseResponse(responseString) {
 	var removedQuotes = responseString.replace(/[""]/g, ''); // Remove Quotes from the String
 	if (removedQuotes.includes('<ar')) buttonResponse(removedQuotes);
 	else if(removedQuotes.includes('<br')) setTimeout(() => chatResponse(removedQuotes), DEFAULT_TIME_DELAY);
-	else createNewMessage(removedQuotes)
+	else renderChatText(removedQuotes, 'bot')
 }
 
 function buttonResponse(message) {
@@ -143,7 +139,7 @@ function chatResponse(message) {
 	showTypingIndicator();
 	(function theLoop(listOfMessages, i, numMessages) {
 		setTimeout(() => {
-			createNewMessage(listOfMessages[i].text);
+			renderChatText(listOfMessages[i].text, 'bot');
 			if (i++ < numMessages - 1) {
 				showTypingIndicator();
 				theLoop(listOfMessages, i, numMessages); // Call the method again
@@ -152,18 +148,26 @@ function chatResponse(message) {
 	})(listOfMessages, i, numMessages); // Pass the parameters back into the method
 }
 
-function createNewMessage(message) {
+function renderChatText(message, user) {
 	// PURPOSE: Method to create a new div showing the text from API
-	hideTypingIndicator();
-	if (speechResponseActive === true) speechResponse(message); // take the message and say it back to the user.
-	// Append a new div to the chatlogs body, with an image and the text from API
-	chatLogs.append(
-		$('<div/>', { class: 'chat bot' }).append(
-			$('<div/>', { class: 'botImg' }).append($('<img src="https://i.ibb.co/cDCL67q/bot.png" />')),
-			$('<p/>', { class: 'chat-message', text: message })
-		)
-	);
 	scrollChatLog();
+	hideTypingIndicator();
+	if(user === 'bot'){
+		speechResponse(message)
+		chatLogs.append(
+			$('<div/>', { class: `chat ${user}` }).append(
+				$('<div/>', { class: 'botImg' }).append($('<img src="https://i.ibb.co/cDCL67q/bot.png" />')),
+				$('<p/>', { class: 'chat-message', text: message })
+			)
+		);
+	}
+	else{
+		chatLogs.append(
+			$('<div/>', { class: `chat ${user}` }).append(
+				$('<p/>', { class: 'chat-message', text: message })
+			)
+		);
+	}
 }
 
 function showTypingIndicator() {
