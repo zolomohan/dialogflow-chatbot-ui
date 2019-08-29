@@ -65,7 +65,7 @@ function postUserResponseToAPI(text) {
 	// Create a new Chat Message Div with the text that the user typed in
 	chatLogs.append($('<div/>', { class: 'chat self' }).append($('<p/>', { class: 'chat-message', text: text })));
 	scrollChatLog();
-
+	showTypingIndicator();
 	$.ajax({
 		type        : 'POST',
 		url         : baseUrl,
@@ -93,14 +93,12 @@ function parseResponse(responseString) {
 
 	var removedQuotes = responseString.replace(/[""]/g, ''); // Remove Quotes from the String
 	// If the message contains a <ar> then it is a message whose responses are buttons
-	if (removedQuotes.includes('<ar')) {
+	if (removedQuotes.includes('<ar'))
 		buttonResponse(removedQuotes);
-	} else {
-		showTypingIndicator();
+	else
 		setTimeout(function() {
 			createNewMessage(removedQuotes);
 		}, DEFAULT_TIME_DELAY);
-	}
 }
 
 function buttonResponse(message) {
