@@ -107,11 +107,11 @@ body {
 	overflow-y: scroll;
 }
 
-#chatLogs::-webkit-scrollbar {
+::-webkit-scrollbar {
 	width: 10px;
 }
 
-#chatLogs::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
 	border-radius: 5px;
 	background: #119dba1a;
 }
@@ -188,6 +188,7 @@ body {
 	overflow: hidden;
 	box-shadow: none;
 	outline: none;
+	overflow-y: scroll;
 }
 
 #chatForm textarea::placeholder{

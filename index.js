@@ -45,21 +45,6 @@ $('document').ready(function() {
 	};
 });
 
-//Resize the TextArea
-$(document)
-	.one('focus.input', 'textarea.input', function() {
-		var savedValue = this.value;
-		this.baseScrollHeight = this.scrollHeight;
-		this.value = savedValue;
-	})
-	.on('input.input', 'textarea.input', function() {
-		var minRows = this.getAttribute('data-min-rows') | 0,
-			rows;
-		this.rows = minRows;
-		rows = Math.floor((this.scrollHeight - this.baseScrollHeight) / 17);
-		this.rows = minRows + rows;
-	});
-
 function postUserResponseToAPI(text) {
 	// PURPOSE: Method which takes the users text and sends an AJAX post request to API and recieves a response message from API
 	$.ajax({
