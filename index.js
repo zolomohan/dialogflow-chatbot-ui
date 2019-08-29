@@ -75,12 +75,8 @@ function postUserResponseToAPI(text) {
 			Authorization : 'Bearer ' + accessToken
 		},
 		data        : JSON.stringify({ query: text, lang: 'en', sessionId: 'somerandomthing' }),
-		success     : function(data) {
-			parseResponse(JSON.stringify(data.result.fulfillment.speech, undefined, 2));
-		},
-		error       : function() {
-			parseResponse('Internal Server Error');
-		}
+		success     : data => parseResponse(JSON.stringify(data.result.fulfillment.speech, undefined, 2)),
+		error       : () => parseResponse('Server Error')
 	});
 }
 
@@ -92,15 +88,9 @@ function parseResponse(responseString) {
 	*/
 
 	var removedQuotes = responseString.replace(/[""]/g, ''); // Remove Quotes from the String
-	// If the message contains a <ar> then it is a message whose responses are buttons
-	if (removedQuotes.includes('<ar'))
-		buttonResponse(removedQuotes);
-	else if(removedQuotes.includes('<br'))
-		setTimeout(function() {
-			chatResponse(removedQuotes);
-		}, DEFAULT_TIME_DELAY);
-	else
-		createNewMessage(removedQuotes)
+	if (removedQuotes.includes('<ar')) buttonResponse(removedQuotes);
+	else if(removedQuotes.includes('<br')) setTimeout(() => chatResponse(removedQuotes), DEFAULT_TIME_DELAY);
+	else createNewMessage(removedQuotes)
 }
 
 function buttonResponse(message) {
@@ -114,14 +104,16 @@ function buttonResponse(message) {
 	let buttonList = message.split(/<ar>/).splice(1); // Remove the first element, The first split is the Message replied to bes displayed on the chat
 
 	var listOfInputs = [];
+	$('.buttonResponse').remove();	
 	// Loop through each response and create a button
-	for (var i = 0; i < buttonList.length; i++)
+	for (let button  of buttonList)
 		listOfInputs.push(
-			$('<div/>', { class: 'buttonResponse' }).append($('<p/>', { class: 'chat-message', text: buttonList[i] }))
+			$('<div/>', { class: 'buttonResponse' }).append($('<p/>', { class: 'chat-message', text: button }))
 		);
 
-	setTimeout(function() {
-		for (let button of listOfInputs) button.appendTo($('#buttonDiv'));
+	setTimeout(() => {
+		for (let button of listOfInputs) 
+			button.appendTo($('#buttonDiv'));
 	}, DEFAULT_TIME_DELAY);
 }
 
@@ -150,7 +142,7 @@ function chatResponse(message) {
 
 	showTypingIndicator();
 	(function theLoop(listOfMessages, i, numMessages) {
-		setTimeout(function() {
+		setTimeout(() => {
 			createNewMessage(listOfMessages[i].text);
 			if (i++ < numMessages - 1) {
 				showTypingIndicator();
@@ -162,7 +154,6 @@ function chatResponse(message) {
 
 function createNewMessage(message) {
 	// PURPOSE: Method to create a new div showing the text from API
-
 	hideTypingIndicator();
 	if (speechResponseActive === true) speechResponse(message); // take the message and say it back to the user.
 	// Append a new div to the chatlogs body, with an image and the text from API
