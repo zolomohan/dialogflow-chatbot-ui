@@ -34,10 +34,10 @@ $('document').ready(function() {
 	});
 
 	// If the user selects one of the suggestions
-	$('#chatForm').on('click', '.buttonResponse', function() {
+	$('#chatForm').on('click', '.suggestions', function() {
 		renderChatText(this.innerText, 'self');
 		postUserResponseToAPI(this.innerText);
-		$('.buttonResponse').remove();
+		$('.suggestions').remove();
 	});
 
 	window.speechSynthesis.onvoiceschanged = () => {
@@ -69,12 +69,12 @@ function parseResponse(responseString) {
 	*/
 
 	var removedQuotes = responseString.replace(/[""]/g, ''); // Remove Quotes from the String
-	if (removedQuotes.includes('<ar')) buttonResponse(removedQuotes);
+	if (removedQuotes.includes('<ar')) suggestionResponse(removedQuotes);
 	else if (removedQuotes.includes('<br')) setTimeout(() => chatResponse(removedQuotes), DEFAULT_TIME_DELAY);
 	else renderChatText(removedQuotes, 'bot');
 }
 
-function buttonResponse(message) {
+function suggestionResponse(message) {
 	/*	Method called whenever an <ar> tag is found
 			The responses rendered for this type of message will be buttons
 			This method parses out the time delays, message text and button responses
@@ -82,18 +82,17 @@ function buttonResponse(message) {
 			Stores the matches in the message, which match the regex 
 	*/
 	chatResponse(message); // Send the message to multiMessage to Render Chat Message
-	let buttonList = message.split(/<ar>/).splice(1); // Remove the first element, The first split is the Message replied to bes displayed on the chat
+	let suggestionList = message.split(/<ar>/).splice(1); // Remove the first element, The first split is the Message replied to bes displayed on the chat
 
-	var listOfInputs = [];
-	$('.buttonResponse').remove();
-	// Loop through each response and create a button
-	for (let button of buttonList)
-		listOfInputs.push(
-			$('<div/>', { class: 'buttonResponse' }).append($('<p/>', { class: 'chat-message', text: button }))
+	var listOfSuggestions = [];
+	$('.suggestions').remove(); //Remove Old Suggestion(s)
+	for (let suggestion of suggestionList)
+		listOfSuggestions.push(
+			$('<div/>', { class: 'suggestions' }).append($('<p/>', { class: 'chat-message', text: suggestion }))
 		);
 
 	setTimeout(() => {
-		for (let button of listOfInputs) button.appendTo($('#buttonDiv'));
+		for (let suggestion of listOfSuggestions) suggestion.appendTo($('#suggestionDiv'));
 	}, DEFAULT_TIME_DELAY);
 }
 
@@ -198,8 +197,8 @@ function updateRecIcon() {
 	$('#speechInput').hasClass('fa-microphone-slash')
 		? $('textarea.input').attr('placeholder', 'Type a message')
 		: $('textarea.input').attr('placeholder', 'Say Something...');
-	if ($('.buttonResponse').is(':visible')) {
-		$('.buttonResponse').remove();
+	if ($('.suggestions').is(':visible')) {
+		$('.suggestions').remove();
 		$('textarea.input').toggle();
 	}
 }

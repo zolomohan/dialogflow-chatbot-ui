@@ -201,7 +201,7 @@ body {
 	user-select: none;	 	
 }
 
-.buttonResponse {
+.suggestions {
 	background: #a2babe38;
 	color: #fff;
 	margin: 5px 20px 15px 0;
@@ -214,7 +214,7 @@ body {
 	float: left;
 }
 
-.buttonResponse:hover {
+.suggestions:hover {
 	transition: 0.2s all linear;
 	border-top-right-radius: 0;
 	background: #329ac4c5;
@@ -232,7 +232,7 @@ body {
 	color: #00e1ffd5;
 }
 
-#buttonDiv {
+#suggestionDiv {
 	margin: 0 30px;
 	width: inherit;
 }
