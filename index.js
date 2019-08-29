@@ -97,7 +97,7 @@ function parseResponse(responseString) {
 		buttonResponse(removedQuotes);
 	else
 		setTimeout(function() {
-			createNewMessage(removedQuotes);
+			chatResponse(removedQuotes);
 		}, DEFAULT_TIME_DELAY);
 }
 
@@ -108,7 +108,6 @@ function buttonResponse(message) {
 			Then creates a new message with the time delay and creates buttons for the responses
 			Stores the matches in the message, which match the regex 
 	*/
-
 	chatResponse(message); // Send the message to multiMessage to Render Chat Message
 	let buttonList = message.split(/<ar>/).splice(1); // Remove the first element, The first split is the Message replied to bes displayed on the chat
 
@@ -119,7 +118,6 @@ function buttonResponse(message) {
 			$('<div/>', { class: 'buttonResponse' }).append($('<p/>', { class: 'chat-message', text: buttonList[i] }))
 		);
 
-	showTypingIndicator();
 	setTimeout(function() {
 		for (let button of listOfInputs) button.appendTo($('#buttonDiv'));
 	}, DEFAULT_TIME_DELAY);
