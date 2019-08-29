@@ -1,5 +1,5 @@
 //PURPOSE:  Information needed to access the api.ai bot, only thing needed to be changed
-import { accessToken , baseUrl } from './accessToken.js';
+import { accessToken, baseUrl } from './accessToken.js';
 
 const DEFAULT_TIME_DELAY = 300;
 
@@ -41,7 +41,7 @@ $('document').ready(function() {
 	});
 
 	window.speechSynthesis.onvoiceschanged = () => {
-		voice = window.speechSynthesis.getVoices()[3];
+		voice = window.speechSynthesis.getVoices()[4];
 	};
 });
 
@@ -71,7 +71,7 @@ function postUserResponseToAPI(text) {
 			Authorization : 'Bearer ' + accessToken
 		},
 		data        : JSON.stringify({ query: text, lang: 'en', sessionId: 'somerandomthing' }),
-		success     : data => parseResponse(JSON.stringify(data.result.fulfillment.speech, undefined, 2)),
+		success     : (data) => parseResponse(JSON.stringify(data.result.fulfillment.speech, undefined, 2)),
 		error       : () => parseResponse('Server Error')
 	});
 }
@@ -85,8 +85,8 @@ function parseResponse(responseString) {
 
 	var removedQuotes = responseString.replace(/[""]/g, ''); // Remove Quotes from the String
 	if (removedQuotes.includes('<ar')) buttonResponse(removedQuotes);
-	else if(removedQuotes.includes('<br')) setTimeout(() => chatResponse(removedQuotes), DEFAULT_TIME_DELAY);
-	else renderChatText(removedQuotes, 'bot')
+	else if (removedQuotes.includes('<br')) setTimeout(() => chatResponse(removedQuotes), DEFAULT_TIME_DELAY);
+	else renderChatText(removedQuotes, 'bot');
 }
 
 function buttonResponse(message) {
@@ -100,16 +100,15 @@ function buttonResponse(message) {
 	let buttonList = message.split(/<ar>/).splice(1); // Remove the first element, The first split is the Message replied to bes displayed on the chat
 
 	var listOfInputs = [];
-	$('.buttonResponse').remove();	
+	$('.buttonResponse').remove();
 	// Loop through each response and create a button
-	for (let button  of buttonList)
+	for (let button of buttonList)
 		listOfInputs.push(
 			$('<div/>', { class: 'buttonResponse' }).append($('<p/>', { class: 'chat-message', text: button }))
 		);
 
 	setTimeout(() => {
-		for (let button of listOfInputs) 
-			button.appendTo($('#buttonDiv'));
+		for (let button of listOfInputs) button.appendTo($('#buttonDiv'));
 	}, DEFAULT_TIME_DELAY);
 }
 
@@ -136,7 +135,6 @@ function chatResponse(message) {
 	var i = 0,
 		numMessages = listOfMessages.length;
 
-	showTypingIndicator();
 	(function theLoop(listOfMessages, i, numMessages) {
 		setTimeout(() => {
 			renderChatText(listOfMessages[i].text, 'bot');
@@ -152,21 +150,16 @@ function renderChatText(message, user) {
 	// PURPOSE: Method to create a new div showing the text from API
 	scrollChatLog();
 	hideTypingIndicator();
-	if(user === 'bot'){
-		speechResponse(message)
+	if (user === 'bot') {
+		if (speechResponseActive) speechResponse(message);
 		chatLogs.append(
 			$('<div/>', { class: `chat ${user}` }).append(
 				$('<div/>', { class: 'botImg' }).append($('<img src="https://i.ibb.co/cDCL67q/bot.png" />')),
 				$('<p/>', { class: 'chat-message', text: message })
 			)
 		);
-	}
-	else{
-		chatLogs.append(
-			$('<div/>', { class: `chat ${user}` }).append(
-				$('<p/>', { class: 'chat-message', text: message })
-			)
-		);
+	} else {
+		chatLogs.append($('<div/>', { class: `chat ${user}` }).append($('<p/>', { class: 'chat-message', text: message })));
 	}
 }
 
