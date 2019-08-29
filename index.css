@@ -136,6 +136,7 @@ body {
 }
 
 .chat .chat-message {
+	text-transform: capitalize;
 	color: #ffffff;
 	padding: 10px;
 	margin: 5px 0;
