@@ -2,12 +2,14 @@ import React from 'react';
 import useInputState from '../hooks/useInputState';
 import classes from '../styles/Form.module.css';
 
-export default function Form() {
+export default function Form({addMessage}) {
 	const [ text, changeText, resetText ] = useInputState();
 
 	function handleChange(event){
-		if(event.nativeEvent.inputType === 'insertLineBreak') 
+		if(event.nativeEvent.inputType === 'insertLineBreak') {
+			addMessage(text, 'user');
 			resetText();
+		}
 		else
 			changeText(event);
 	}
