@@ -1,0 +1,41 @@
+.chat {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: flex-start;
+	margin-bottom: 10px;
+}
+
+.botImg {
+	width: 60px;
+	height: 60px;
+	overflow: hidden;
+}
+
+.botImg img {
+	padding: 10px;
+	padding-top: 6px;
+	width: 100%;
+}
+
+.chat .chatMessage {
+	text-transform: capitalize;
+	color: #ffffff;
+	padding: 10px;
+	margin: 5px 0;
+	font-size: 16px;
+	border-radius: 7px;
+	max-width: 60%;
+	width: auto;
+	overflow-wrap: break-word;
+}
+
+.bot .chatMessage {
+	background: #2298c74d;
+	border-top-left-radius: 0px;
+}
+
+.self .chatMessage {
+	margin: 5px 0 5px auto;
+	background: #329ac4c5;
+	border-top-right-radius: 0px;
+}
