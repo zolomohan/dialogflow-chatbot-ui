@@ -4,10 +4,10 @@ import Header from './Header';
 import Logs from './Logs';
 import Form from './Form';
 
-export default function Chat({ open }) {
+export default function Chat({ open, toggleChatBox }) {
 	return (
 		<div className={classes.chatBox} style={{ display: open ? 'block' : 'none' }}>
-			<Header />
+			<Header toggleChatBox={toggleChatBox} />
 			<Logs />
 			<Form />
 		</div>
