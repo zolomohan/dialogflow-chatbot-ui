@@ -13,7 +13,7 @@ export default class ChatBox extends Component {
 				variant: 'bot'
 			}
 		],
-		suggesstions: []
+		suggestions: []
 	};
 
 	addMessage = (text, variant) =>
@@ -21,8 +21,8 @@ export default class ChatBox extends Component {
 			log: [ ...log, { text, variant } ]
 		}));
 
-	addSuggesstion = (suggesstions) =>
-		this.setState((state) => ({ suggesstions }));
+	addSuggesstion = (suggestions) =>
+		this.setState((state) => ({ suggestions }));
 
 	resetSuggestions = () => this.setState({ suggesstion: [] });
 
@@ -34,7 +34,7 @@ export default class ChatBox extends Component {
 				<Logs messages={this.state.log} />
 				
 				<Form
-					suggesstions={this.state.suggesstions}
+					suggestions={this.state.suggestions}
 					addMessage={this.addMessage}
 					addSuggesstion={this.addSuggesstion}
 					resetSuggestions={this.resetSuggestions}
