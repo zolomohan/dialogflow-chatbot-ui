@@ -6,8 +6,8 @@ export default function Logs({ messages }) {
 	return (
 		<div className={classes.chatBoxContent}>
 			<div className={classes.chatLogs}>
-				{messages.map((message) => (
-					<Message text={message.text} variant={message.variant} />
+				{messages.map((message, i) => (
+					<Message key={i} text={message.text} variant={message.variant} />
 				))}
 			</div>
 		</div>
