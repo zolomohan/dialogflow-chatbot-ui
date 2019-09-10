@@ -1,0 +1,31 @@
+.chatButton {
+	display: flex;
+	justify-content: center;
+	position: absolute;
+	top: 86%;
+	left: 93%;
+	width: 70px;
+	height: 70px;
+	background-color: #424242;
+	color: #ffffff;
+	border-radius: 100%;
+	-webkit-box-shadow: 3px 9px 31px -9px #000000d1;
+	box-shadow: 3px 9px 31px -9px #000000d1;
+	cursor: pointer;
+}
+
+.chatButton:hover {
+	top: 86.2%;
+	-webkit-box-shadow: 2px 4px 31px -9px #000000d1;
+	box-shadow: 2px 4px 31px -9px #000000d1;
+}
+
+.chatButton:active {
+	top: 86.5%;
+	box-shadow: none;
+}
+
+.chatButton i {
+	font-size: 30px;
+	align-self: center;
+}
