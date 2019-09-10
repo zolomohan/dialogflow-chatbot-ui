@@ -12,11 +12,16 @@ export default function Chat({ open, toggleChatBox }) {
 			variant: 'bot'
 		}
 	]);
+
+	const addMessage = (text, variant) => {
+		setLog([ ...log, { text, variant } ]);
+	};
+
 	return (
 		<div className={classes.chatBox} style={{ display: open ? 'block' : 'none' }}>
 			<Header toggleChatBox={toggleChatBox} />
 			<Logs messages={log} />
-			<Form />
+			<Form addMessage={addMessage}/>
 		</div>
 	);
 }
