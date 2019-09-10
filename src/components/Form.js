@@ -1,17 +1,37 @@
 import React from 'react';
+import $ from 'jquery';
 import useInputState from '../hooks/useInputState';
 import classes from '../styles/Form.module.css';
 
-export default function Form({addMessage}) {
+export default function Form({ addMessage }) {
 	const [ text, changeText, resetText ] = useInputState();
 
-	function handleChange(event){
-		if(event.nativeEvent.inputType === 'insertLineBreak') {
+	function postUserResponseToAPI(text) {
+		$.ajax({
+			type: 'POST',
+			url: 'https://api.dialogflow.com/v1/query?v=20150910',
+			contentType: 'application/json; charset=utf-8',
+			dataType: 'json',
+			headers: {
+				Authorization: 'Bearer ' + '1f2d4c70eb62402da8b081e30d8327f9'
+			},
+			data: JSON.stringify({ query: text, lang: 'en', sessionId: 'somerandomthing' })
+		})
+			.then((data) => console.log(data.result.fulfillment.speech))
+			.catch(() =>
+				addMessage(
+					"it seems like there's something wrong. could you try again later?",
+					'bot'
+				)
+			);
+	}
+
+	function handleChange(event) {
+		if (event.nativeEvent.inputType === 'insertLineBreak') {
 			addMessage(text, 'user');
+			postUserResponseToAPI(text);
 			resetText();
-		}
-		else
-			changeText(event);
+		} else changeText(event);
 	}
 
 	return (
