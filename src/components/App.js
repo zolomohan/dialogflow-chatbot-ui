@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import ChatButton from './ChatButton';
-import Chat from './Chat';
+import ChatBox from './ChatBox';
 import '../styles/App.css';
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
 	return (
     <Fragment>
       <ChatButton onClick={setchatBoxOpen} open={chatBoxOpen}/>
-      <Chat open={chatBoxOpen} />
+      <ChatBox open={chatBoxOpen} />
     </Fragment>
   );
 }
