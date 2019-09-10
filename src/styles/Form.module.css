@@ -1,0 +1,52 @@
+.chatForm {
+	margin: 0px auto 0px auto;
+	display: flex;
+	width: 450px;
+	min-width: 390px;
+	align-items: flex-start;
+	overflow: auto;
+	background: #222222;
+}
+
+.chatInput {
+	width: 75%;
+	margin-right: 15px;
+}
+
+.chatForm textarea {
+	color: #ffffff;
+	border: none;
+	padding: 5px 5px 5px 15px;
+	background: #222222;
+	width: 100%;
+	min-height: 5px;
+	border-radius: 20px;
+	resize: none;
+	font-size: 18px;
+	margin: 15px 0px 15px 10px;
+	display: block;
+	overflow: hidden;
+	box-shadow: none;
+	outline: none;
+	overflow-y: scroll;
+}
+
+.chatForm textarea::placeholder{
+	color: #ffffffb4;
+}
+
+.chatFormButtons {
+	margin: auto;
+	user-select: none;	 	
+}
+
+.chatFormButtons i {
+	font-size: 25px;
+	padding: 7px;
+	cursor: pointer;
+	color: #ffffff;
+}
+
+.chatFormButtons i:hover{
+	color: #00e1ffd5;
+}
