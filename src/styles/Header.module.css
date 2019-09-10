@@ -25,3 +25,7 @@
 	margin: auto 15px;
 	font-weight: 100;
 }
+
+.chatBoxHeader i:hover{
+	color: #00e1ffd5;
+}
