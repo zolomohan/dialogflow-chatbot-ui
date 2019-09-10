@@ -6,7 +6,7 @@ import classes from '../styles/Form.module.css';
 
 const DEFAULT_TIME_DELAY = 300;
 
-export default function Form({ addMessage, addSuggesstion, resetSuggestions, suggesstions }) {
+export default function Form({ addMessage, addSuggesstion, resetSuggestions, suggestions }) {
 	const [ text, changeText, resetText ] = useInputState();
 
 	function handleChange(event) {
@@ -83,7 +83,7 @@ export default function Form({ addMessage, addSuggesstion, resetSuggestions, sug
 	return (
 		<div className={classes.chatForm}>
 			<div className={classes.chatInput}>
-				<Suggestions suggesstions={suggesstions} />
+				<Suggestions suggestions={suggestions} />
 				<div className={classes.suggestionDiv} />~
 				<textarea
 					value={text}
