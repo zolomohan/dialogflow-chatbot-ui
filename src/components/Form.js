@@ -1,11 +1,12 @@
 import React from 'react';
-import $ from 'jquery';
 import useInputState from '../hooks/useInputState';
+import $ from 'jquery';
+import Suggestions from './Suggestions';
 import classes from '../styles/Form.module.css';
 
 const DEFAULT_TIME_DELAY = 300;
 
-export default function Form({ addMessage }) {
+export default function Form({ addMessage, addSuggesstion, resetSuggestions, suggesstions }) {
 	const [ text, changeText, resetText ] = useInputState();
 
 	function handleChange(event) {
@@ -38,9 +39,17 @@ export default function Form({ addMessage }) {
 
 	function parseResponse(responseString) {
 		responseString = responseString.replace(/[""]/g, '');
-		if (responseString.includes('<br'))
+		if (responseString.includes('<ar')) suggestionResponse(responseString);
+		else if (responseString.includes('<br'))
 			setTimeout(() => chatResponse(responseString), DEFAULT_TIME_DELAY);
-		else addMessage(responseString, 'bot')
+		else addMessage(responseString, 'bot');
+	}
+
+	function suggestionResponse(message) {
+		chatResponse(message);
+		let suggestionList = message.split(/<ar>/).splice(1);
+		resetSuggestions();
+		setTimeout(() => addSuggesstion(suggestionList), DEFAULT_TIME_DELAY);
 	}
 
 	function chatResponse(message) {
@@ -52,14 +61,14 @@ export default function Form({ addMessage }) {
 			if (matches[1] === undefined) matches[1] = DEFAULT_TIME_DELAY;
 			var messageText = matches[2].split(/<ar>/);
 			listOfMessages.push({
-				text  : messageText[0],
-				delay : matches[1]
+				text: messageText[0],
+				delay: matches[1]
 			});
 		}
-	
+
 		var i = 0,
 			numMessages = listOfMessages.length;
-	
+
 		(function theLoop(listOfMessages, i, numMessages) {
 			setTimeout(() => {
 				addMessage(listOfMessages[i].text, 'bot');
@@ -74,7 +83,8 @@ export default function Form({ addMessage }) {
 	return (
 		<div className={classes.chatForm}>
 			<div className={classes.chatInput}>
-				<div className={classes.suggestionDiv} />
+				<Suggestions suggesstions={suggesstions} />
+				<div className={classes.suggestionDiv} />~
 				<textarea
 					value={text}
 					onChange={handleChange}
