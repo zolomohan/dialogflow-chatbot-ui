@@ -3,8 +3,18 @@ import $ from 'jquery';
 import useInputState from '../hooks/useInputState';
 import classes from '../styles/Form.module.css';
 
+const DEFAULT_TIME_DELAY = 300;
+
 export default function Form({ addMessage }) {
 	const [ text, changeText, resetText ] = useInputState();
+
+	function handleChange(event) {
+		if (event.nativeEvent.inputType === 'insertLineBreak') {
+			addMessage(text, 'user');
+			postUserResponseToAPI(text);
+			resetText();
+		} else changeText(event);
+	}
 
 	function postUserResponseToAPI(text) {
 		$.ajax({
@@ -17,7 +27,7 @@ export default function Form({ addMessage }) {
 			},
 			data: JSON.stringify({ query: text, lang: 'en', sessionId: 'somerandomthing' })
 		})
-			.then((data) => console.log(data.result.fulfillment.speech))
+			.then((data) => parseResponse(data.result.fulfillment.speech))
 			.catch(() =>
 				addMessage(
 					"it seems like there's something wrong. could you try again later?",
@@ -26,12 +36,39 @@ export default function Form({ addMessage }) {
 			);
 	}
 
-	function handleChange(event) {
-		if (event.nativeEvent.inputType === 'insertLineBreak') {
-			addMessage(text, 'user');
-			postUserResponseToAPI(text);
-			resetText();
-		} else changeText(event);
+	function parseResponse(responseString) {
+		responseString = responseString.replace(/[""]/g, '');
+		if (responseString.includes('<br'))
+			setTimeout(() => chatResponse(responseString), DEFAULT_TIME_DELAY);
+		else addMessage(responseString, 'bot')
+	}
+
+	function chatResponse(message) {
+		var matches,
+			listOfMessages = [],
+			regex = /\<br(?:\s+?(\d+))?\>(.*?)(?=(?:\<br(?:\s+\d+)?\>)|$)/g;
+
+		while ((matches = regex.exec(message))) {
+			if (matches[1] === undefined) matches[1] = DEFAULT_TIME_DELAY;
+			var messageText = matches[2].split(/<ar>/);
+			listOfMessages.push({
+				text  : messageText[0],
+				delay : matches[1]
+			});
+		}
+	
+		var i = 0,
+			numMessages = listOfMessages.length;
+	
+		(function theLoop(listOfMessages, i, numMessages) {
+			setTimeout(() => {
+				addMessage(listOfMessages[i].text, 'bot');
+				if (i++ < numMessages - 1) {
+					// showTypingIndicator();
+					theLoop(listOfMessages, i, numMessages);
+				}
+			}, listOfMessages[i].delay);
+		})(listOfMessages, i, numMessages);
 	}
 
 	return (
