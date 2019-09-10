@@ -10,11 +10,14 @@ export default function Form({ addMessage, addSuggesstion, resetSuggestions, sug
 	const [ text, changeText, resetText ] = useInputState();
 
 	function handleChange(event) {
-		if (event.nativeEvent.inputType === 'insertLineBreak') {
-			addMessage(text, 'user');
-			postUserResponseToAPI(text);
-			resetText();
-		} else changeText(event);
+		if (event.nativeEvent.inputType === 'insertLineBreak') handleSubmit();
+		else changeText(event);
+	}
+
+	function handleSubmit(userResponse = text) {
+		addMessage(userResponse, 'user');
+		postUserResponseToAPI(userResponse);
+		resetText();
 	}
 
 	function postUserResponseToAPI(text) {
@@ -83,7 +86,10 @@ export default function Form({ addMessage, addSuggesstion, resetSuggestions, sug
 	return (
 		<div className={classes.chatForm}>
 			<div className={classes.chatInput}>
-				<Suggestions suggestions={suggestions} />
+				<Suggestions
+					suggestions={suggestions}
+					handleSubmit={handleSubmit}
+				/>
 				<div className={classes.suggestionDiv} />~
 				<textarea
 					value={text}

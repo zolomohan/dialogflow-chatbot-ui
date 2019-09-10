@@ -21,8 +21,7 @@ export default class ChatBox extends Component {
 			log: [ ...log, { text, variant } ]
 		}));
 
-	addSuggesstion = (suggestions) =>
-		this.setState((state) => ({ suggestions }));
+	addSuggesstion = (suggestions) => this.setState({suggestions});
 
 	resetSuggestions = () => this.setState({ suggesstion: [] });
 
@@ -32,7 +31,6 @@ export default class ChatBox extends Component {
 			<div className={classes.chatBox} style={{ display: open ? 'block' : 'none' }}>
 				<Header toggleChatBox={toggleChatBox} />
 				<Logs messages={this.state.log} />
-				
 				<Form
 					suggestions={this.state.suggestions}
 					addMessage={this.addMessage}
