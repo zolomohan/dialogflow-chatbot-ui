@@ -1,0 +1,27 @@
+.chatBoxHeader {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px;
+	padding-top: 15px;
+	min-width: 390px;
+	margin: 20px auto 0px auto;
+	background: #222222;
+	color: #ffffff;
+	font-size: 25px;
+}
+
+.chatBoxHeader .icons{
+	user-select: none;
+}
+
+.chatBoxHeader i {
+	cursor: pointer;
+	margin-right: 10px;
+}
+
+.chatBoxHeader #chatBotName {
+	margin: auto 15px;
+	font-weight: 100;
+}
