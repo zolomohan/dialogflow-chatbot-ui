@@ -17,8 +17,11 @@ export default class ChatBox extends Component {
 				variant: 'bot'
 			}
 		],
-		suggestions: []
+		suggestions: [],
+		speechOutput: true
 	};
+
+	toggleSpeechOutput = () => this.setState(({ speechOutput }) => ({ speechOutput: !speechOutput }));
 
 	addMessage = (text, variant) =>
 		this.setState(({ log }) => ({
@@ -96,7 +99,11 @@ export default class ChatBox extends Component {
 		const { open, toggleChatBox } = this.props;
 		return (
 			<div className={classes.chatBox} style={{ display: open ? 'block' : 'none' }}>
-				<Header toggleChatBox={toggleChatBox} />
+				<Header
+					toggleChatBox={toggleChatBox}
+					speechOutput={this.state.speechOutput}
+					toggleSpeechOutput={this.toggleSpeechOutput}
+				/>
 				<Logs messages={this.state.log} />
 				<Suggestions suggestions={this.state.suggestions} handleSubmit={this.handleSubmit} />
 				<Form

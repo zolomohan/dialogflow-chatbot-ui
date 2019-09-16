@@ -1,15 +1,19 @@
 import React from 'react';
 import Icon from './Icon';
-import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/css/all.css';
 import classes from '../styles/Header.module.css';
 
-export default function Header({toggleChatBox}) {
+export default function Header({ toggleChatBox, speechOutput, toggleSpeechOutput }) {
 	return (
 		<div className={classes.chatBoxHeader}>
 			<h4 className={classes.chatBotName}>Chat Bot</h4>
 			<div className={classes.icons}>
-				<Icon type='fas' name='fa-volume-up' />
-				<Icon type='fas' name='fa-minus' onClick={toggleChatBox} />
+				<Icon
+					type="fas"
+					name={`fa-${speechOutput ? 'volume-up' : 'volume-mute'}`}
+					onClick={toggleSpeechOutput}
+				/>
+				<Icon type="fas" name="fa-minus" onClick={toggleChatBox} />
 			</div>
 		</div>
 	);
