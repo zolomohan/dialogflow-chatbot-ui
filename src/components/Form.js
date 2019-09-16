@@ -27,7 +27,7 @@ export default function Form({ addMessage, addSuggesstion, resetSuggestions, sug
 			contentType: 'application/json; charset=utf-8',
 			dataType: 'json',
 			headers: {
-				Authorization: 'Bearer ' + '1f2d4c70eb62402da8b081e30d8327f9'
+				Authorization: 'Bearer ' + '38578c4faf424691a4540abffe6a1ec8'
 			},
 			data: JSON.stringify({ query: text, lang: 'en', sessionId: 'somerandomthing' })
 		})
@@ -90,7 +90,6 @@ export default function Form({ addMessage, addSuggesstion, resetSuggestions, sug
 					suggestions={suggestions}
 					handleSubmit={handleSubmit}
 				/>
-				<div className={classes.suggestionDiv} />~
 				<textarea
 					value={text}
 					onChange={handleChange}
