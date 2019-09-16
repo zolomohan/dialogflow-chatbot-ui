@@ -28,7 +28,7 @@ export default function Form({ handleSubmit }) {
 				/>
 			</div>
 			<div className={classes.chatFormButtons}>
-				<i className="fas fa-microphone-slash" id="speechInput" />
+				<Icon type='fas' name='fa-microphone-slash' />
 			</div>
 		</div>
 	);
