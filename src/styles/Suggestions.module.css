@@ -2,7 +2,9 @@
 	display: flex;
 	align-items: center;
 	height: 40px;
-	margin: 0 10px;
+	width: 450px;
+	overflow: auto;
+	background-color: #222222;
 }
 
 .suggestion {
@@ -17,7 +19,7 @@
 	border-right: 1px solid #5858585d;
 }
 
-.suggestion:last-child{
+.suggestion:last-child {
 	border-right: none;
 }
 
