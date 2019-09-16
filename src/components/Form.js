@@ -7,8 +7,9 @@ export default function Form({ handleSubmit }) {
 	const [ text, changeText, resetText ] = useInputState();
 
 	function handleChange(event) {
-		if (event.nativeEvent.inputType === 'insertLineBreak') onSubmit();
-		else changeText(event);
+		event.nativeEvent.inputType === 'insertLineBreak'
+			? onSubmit()
+			: changeText(event);
 	}
 
 	function onSubmit(userResponse = text) {
@@ -23,9 +24,9 @@ export default function Form({ handleSubmit }) {
 					value={text}
 					onChange={handleChange}
 					className={classes.input}
-					placeholder="Type a message"
-					rows="1"
-					data-min-rows="1"
+					placeholder='Type a message'
+					rows='1'
+					data-min-rows='1'
 				/>
 			</div>
 			<div className={classes.chatFormButtons}>

@@ -9,11 +9,11 @@ export default function Header({ toggleChatBox, speechOutput, toggleSpeechOutput
 			<h4 className={classes.chatBotName}>Chat Bot</h4>
 			<div className={classes.icons}>
 				<Icon
-					type="fas"
+					type='fas'
 					name={`fa-${speechOutput ? 'volume-up' : 'volume-mute'}`}
 					onClick={toggleSpeechOutput}
 				/>
-				<Icon type="fas" name="fa-minus" onClick={toggleChatBox} />
+				<Icon type='fas' name='fa-minus' onClick={toggleChatBox} />
 			</div>
 		</div>
 	);
