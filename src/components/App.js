@@ -5,7 +5,7 @@ import ChatBox from './ChatBox';
 import '../styles/App.css';
 
 function App() {
-	const [ chatBox, toggleChatBox ] = useToggleState();
+	const [ chatBox, toggleChatBox ] = useToggleState(true);
 	return (
     <Fragment>
       <ChatButton toggleChatBox={toggleChatBox} open={chatBox}/>
