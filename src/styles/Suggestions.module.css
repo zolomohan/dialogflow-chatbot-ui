@@ -7,6 +7,10 @@
 	background-color: #222222;
 }
 
+.suggestionContainer::-webkit-scrollbar{
+	height: 3px;
+}
+
 .suggestion {
 	display: flex;
 	align-items: center;
