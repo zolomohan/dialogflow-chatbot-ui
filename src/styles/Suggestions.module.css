@@ -1,24 +1,27 @@
 .suggestionContainer {
-	margin: 0 30px;
-	width: inherit;
+	display: flex;
+	align-items: center;
+	height: 40px;
+	margin: 0 10px;
 }
 
-.suggestions {
-	background: #a2babe38;
+.suggestion {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	padding: 0 20px;
 	color: #fff;
-	margin: 5px 20px 15px 0;
-	padding: 10px;
-	max-width: 80%;
-	width: fit-content;
-	border-radius: 7px;
-	font-size: 16px;
-	overflow-wrap: break-word;
-	float: left;
+	border-radius: 2px;
+	border-right: 1px solid #5858585d;
 }
 
-.suggestions:hover {
-	transition: 0.2s all linear;
-	border-top-right-radius: 0;
-	background: #329ac4c5;
+.suggestion:last-child{
+	border-right: none;
+}
+
+.suggestion:hover {
 	cursor: pointer;
+	transition: 0.2s all linear;
+	background: #505050c5;
 }

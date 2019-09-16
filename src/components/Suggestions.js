@@ -5,8 +5,8 @@ export default function Suggestions({ suggestions, handleSubmit }) {
 	return (
 		<div className={classes.suggestionContainer}>
 			{suggestions.map((suggesstion) => (
-				<div className={classes.suggestions} onClick={() => handleSubmit(suggesstion)}>
-					<p className={classes.chatMessage}>{suggesstion}</p>
+				<div className={classes.suggestion} onClick={() => handleSubmit(suggesstion)}>
+					<p className={classes.suggestionMessage}>{suggesstion}</p>
 				</div>
 			))}
 		</div>
