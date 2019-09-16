@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+import Speech from 'speak-tts';
 import Header from './Header';
 import Logs from './Logs';
 import Suggestions from './Suggestions';
@@ -9,24 +10,52 @@ import classes from '../styles/Chat.module.css';
 const DEFAULT_TIME_DELAY = 300;
 
 export default class ChatBox extends Component {
-	state = {
-		log: [
-			{
-				text:
-					"Hey I am Krypto! Say ' Hi ' to talk with me. I'll let you know the placement details of our college",
-				variant: 'bot'
-			}
-		],
-		suggestions: [],
-		speechOutput: true
-	};
+	constructor(props) {
+		super(props);
+		this._speech = new Speech();
+		this._speech
+			.init({
+				volume: 0.5,
+				lang: 'en-GB',
+				rate: 1,
+				pitch: 1,
+				voice: 'Google UK English Female',
+				listeners: {
+					onvoiceschanged: (voices) => {
+						console.log('Voices changed', voices);
+					}
+				}
+			})
+			.then((data) => console.log('Speech is ready', data))
+			.catch((error) =>
+				console.error('An error occured while initializing Speech : ', error)
+			);
 
-	toggleSpeechOutput = () => this.setState(({ speechOutput }) => ({ speechOutput: !speechOutput }));
+		this.state = {
+			log: [
+				{
+					text:
+						"Hey I am Krypto! Say ' Hi ' to talk with me. I'll let you know the placement details of our college",
+					variant: 'bot'
+				}
+			],
+			suggestions: [],
+			speechOutput: true
+		};
+	}
 
-	addMessage = (text, variant) =>
+	toggleSpeechOutput = () =>
+		this.setState(
+			({ speechOutput }) => ({ speechOutput: !speechOutput }),
+			this._speech.cancel
+		);
+
+	addMessage = (text, variant) => {
+		if (this.state.speechOutput && variant === 'bot') this._speech.speak({ text });
 		this.setState(({ log }) => ({
 			log: [ ...log, { text, variant } ]
 		}));
+	};
 
 	addSuggesstion = (suggestions) => this.setState({ suggestions });
 
@@ -46,10 +75,19 @@ export default class ChatBox extends Component {
 			headers: {
 				Authorization: 'Bearer ' + '38578c4faf424691a4540abffe6a1ec8'
 			},
-			data: JSON.stringify({ query: text, lang: 'en', sessionId: 'somerandomthing' })
+			data: JSON.stringify({
+				query: text,
+				lang: 'en',
+				sessionId: 'somerandomthing'
+			})
 		})
 			.then((data) => this.parseResponse(data.result.fulfillment.speech))
-			.catch(() => this.addMessage("it seems like there's something wrong. could you try again later?", 'bot'));
+			.catch(() =>
+				this.addMessage(
+					"it seems like there's something wrong. could you try again later?",
+					'bot'
+				)
+			);
 	};
 
 	parseResponse = (responseString) => {
@@ -105,7 +143,10 @@ export default class ChatBox extends Component {
 					toggleSpeechOutput={this.toggleSpeechOutput}
 				/>
 				<Logs messages={this.state.log} />
-				<Suggestions suggestions={this.state.suggestions} handleSubmit={this.handleSubmit} />
+				<Suggestions
+					suggestions={this.state.suggestions}
+					handleSubmit={this.handleSubmit}
+				/>
 				<Form
 					addMessage={this.addMessage}
 					addSuggesstion={this.addSuggesstion}
