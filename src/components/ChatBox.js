@@ -19,14 +19,8 @@ export default class ChatBox extends Component {
 				lang: 'en-GB',
 				rate: 1,
 				pitch: 1,
-				voice: 'Google UK English Female',
-				listeners: {
-					onvoiceschanged: (voices) => {
-						console.log('Voices changed', voices);
-					}
-				}
+				voice: 'Google UK English Female'
 			})
-			.then((data) => console.log('Speech is ready', data))
 			.catch((error) =>
 				console.error('An error occured while initializing Speech : ', error)
 			);

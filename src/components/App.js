@@ -7,11 +7,11 @@ import '../styles/App.css';
 function App() {
 	const [ chatBox, toggleChatBox ] = useToggleState(true);
 	return (
-    <Fragment>
-      <ChatButton toggleChatBox={toggleChatBox} open={chatBox}/>
-      <ChatBox toggleChatBox={toggleChatBox} open={chatBox} />
-    </Fragment>
-  );
+		<Fragment>
+			<ChatButton toggleChatBox={toggleChatBox} open={chatBox} />
+			<ChatBox toggleChatBox={toggleChatBox} open={chatBox} />
+		</Fragment>
+	);
 }
 
 export default App;
