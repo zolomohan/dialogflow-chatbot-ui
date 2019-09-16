@@ -1,9 +1,11 @@
 .suggestionContainer {
 	display: flex;
 	align-items: center;
+	box-sizing: unset;
 	height: 40px;
 	width: 450px;
 	overflow: auto;
+	padding-bottom: 10px;
 	background-color: #222222;
 }
 
@@ -18,17 +20,20 @@
 	white-space: nowrap;
 	height: 100%;
 	padding: 0 20px;
-	color: #fff;
-	border-radius: 2px;
-	border-right: 1px solid #5858585d;
+	color: rgb(211, 211, 211);
+	border-radius: 30px;
+	background-color: #5f5f5f42;
+	margin-left: 8px;
+	border: 1px solid #5858585d;
 }
 
-.suggestion:last-child {
-	border-right: none;
+.suggestion:first-child{
+	margin-left: 20px;
 }
 
 .suggestion:hover {
 	cursor: pointer;
+	color: #fff;
 	transition: 0.2s all linear;
 	background: #505050c5;
 }
