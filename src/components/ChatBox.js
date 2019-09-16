@@ -34,7 +34,8 @@ export default class ChatBox extends Component {
 				}
 			],
 			suggestions: [],
-			speechOutput: true
+			speechOutput: true,
+			speechInput: false
 		};
 	}
 
@@ -43,6 +44,9 @@ export default class ChatBox extends Component {
 			({ speechOutput }) => ({ speechOutput: !speechOutput }),
 			this._speech.cancel
 		);
+
+	toggleSpeechInput = () =>
+		this.setState(({ speechInput }) => ({ speechInput: !speechInput }));
 
 	addMessage = (text, variant) => {
 		if (this.state.speechOutput && variant === 'bot') this._speech.speak({ text });
@@ -142,6 +146,8 @@ export default class ChatBox extends Component {
 					handleSubmit={this.handleSubmit}
 				/>
 				<Form
+					speechInput={this.state.speechInput}
+					toggleSpeechInput={this.toggleSpeechInput}
 					addMessage={this.addMessage}
 					addSuggesstion={this.addSuggesstion}
 					resetSuggestions={this.resetSuggestions}
