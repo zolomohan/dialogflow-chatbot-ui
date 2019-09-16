@@ -31,13 +31,13 @@
 	overflow-y: scroll;
 }
 
-.chatForm textarea::placeholder{
+.chatForm textarea::placeholder {
 	color: #ffffffb4;
 }
 
 .chatFormButtons {
 	margin: auto;
-	user-select: none;	 	
+	user-select: none;
 }
 
 .chatFormButtons i {
@@ -47,6 +47,6 @@
 	color: #ffffff;
 }
 
-.chatFormButtons i:hover{
+.chatFormButtons i:hover {
 	color: #00e1ffd5;
 }
