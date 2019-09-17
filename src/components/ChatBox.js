@@ -132,26 +132,35 @@ export default class ChatBox extends Component {
 	};
 
 	render() {
-		const { open, toggleChatBox } = this.props;
+		const {
+			toggleSpeechOutput,
+			toggleSpeechInput,
+			addMessage,
+			addSuggesstion,
+			resetSuggestions,
+			handleSubmit,
+			state,
+			props
+		} = this;
+		const { open, toggleChatBox } = props;
+		const { speechOutput, speechInput, suggestions, log } = state;
+		
 		return (
 			<div className={classes.chatBox} style={{ display: open ? 'block' : 'none' }}>
 				<Header
 					toggleChatBox={toggleChatBox}
-					speechOutput={this.state.speechOutput}
-					toggleSpeechOutput={this.toggleSpeechOutput}
+					speechOutput={speechOutput}
+					toggleSpeechOutput={toggleSpeechOutput}
 				/>
-				<Logs messages={this.state.log} />
-				<Suggestions
-					suggestions={this.state.suggestions}
-					handleSubmit={this.handleSubmit}
-				/>
+				<Logs messages={log} />
+				<Suggestions suggestions={suggestions} handleSubmit={handleSubmit} />
 				<Form
-					speechInput={this.state.speechInput}
-					toggleSpeechInput={this.toggleSpeechInput}
-					addMessage={this.addMessage}
-					addSuggesstion={this.addSuggesstion}
-					resetSuggestions={this.resetSuggestions}
-					handleSubmit={this.handleSubmit}
+					speechInput={speechInput}
+					toggleSpeechInput={toggleSpeechInput}
+					addMessage={addMessage}
+					addSuggesstion={addSuggesstion}
+					resetSuggestions={resetSuggestions}
+					handleSubmit={handleSubmit}
 				/>
 			</div>
 		);
