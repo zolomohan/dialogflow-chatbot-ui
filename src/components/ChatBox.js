@@ -13,6 +13,7 @@ export default class ChatBox extends Component {
 	constructor(props) {
 		super(props);
 		this._speech = new Speech();
+		this._voiceRecogntion = new window.webkitSpeechRecognition();
 		this._speech
 			.init({
 				volume: 0.5,
@@ -29,7 +30,7 @@ export default class ChatBox extends Component {
 			log: [
 				{
 					text:
-						"Hey I am Krypto! Say ' Hi ' to talk with me. I'll let you know the placement details of our college",
+						"Hey I am Krypto! Say ' Hi ' to talk with me. I'll let you know the details of our college",
 					variant: 'bot'
 				}
 			],
@@ -46,7 +47,13 @@ export default class ChatBox extends Component {
 		);
 
 	toggleSpeechInput = () =>
-		this.setState(({ speechInput }) => ({ speechInput: !speechInput }));
+		this.setState(
+			({ speechInput }) => ({ speechInput: !speechInput }),
+			() =>
+				this.state.speechInput
+					? this.startVoiceRecognition()
+					: this._voiceRecogntion.stop()
+		);
 
 	addMessage = (text, variant) => {
 		if (this.state.speechOutput && variant === 'bot') this._speech.speak({ text });
@@ -131,6 +138,19 @@ export default class ChatBox extends Component {
 		})(listOfMessages, i, numMessages);
 	};
 
+	startVoiceRecognition = () => {
+		this._voiceRecogntion.lang = 'en-US';
+		this._voiceRecogntion.onresult = (event) => {
+			let text = '';
+			for (let i = event.resultIndex; i < event.results.length; ++i)
+				text += event.results[i][0].transcript;
+			this.postUserResponseToAPI(text);
+			this.addMessage(text);	
+			this.toggleSpeechInput();
+		};
+		this._voiceRecogntion.start();
+	};
+
 	render() {
 		const {
 			toggleSpeechOutput,
@@ -144,7 +164,7 @@ export default class ChatBox extends Component {
 		} = this;
 		const { open, toggleChatBox } = props;
 		const { speechOutput, speechInput, suggestions, log } = state;
-		
+
 		return (
 			<div className={classes.chatBox} style={{ display: open ? 'block' : 'none' }}>
 				<Header
