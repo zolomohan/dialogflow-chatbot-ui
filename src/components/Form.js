@@ -28,6 +28,7 @@ export default function Form({ handleSubmit, speechInput, toggleSpeechInput }) {
 					rows='1'
 					data-min-rows='1'
 					className={classes.input}
+					autoFocus
 				/>
 			</div>
 			<div className={classes.chatFormButtons}>
