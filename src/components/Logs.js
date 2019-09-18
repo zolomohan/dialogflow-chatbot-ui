@@ -8,8 +8,8 @@ export default function Logs({ messages, typingIndicator }) {
 	return (
 		<div className={classes.chatBoxContent}>
 			<div className={classes.chatLogs}>
-				{messages.map(({ text, variant }, i) => (
-					<Message key={i} text={text} variant={variant} />
+				{messages.map(({ text, variant, image }, i) => (
+					<Message key={i} text={text} variant={variant} image={image} />
 				))}
 				{typingIndicator && (
 					<Message key="typing" variant="bot" typingIndicator />

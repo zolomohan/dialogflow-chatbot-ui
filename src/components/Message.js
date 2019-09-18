@@ -1,8 +1,8 @@
 import React from 'react';
 import classes from '../styles/Message.module.css';
 
-export default function Message({ text = '', variant, typingIndicator }) {
-	const { chat, bot, self, botImg, chatMessage } = classes;
+export default function Message({ text = '', image, variant, typingIndicator }) {
+	const { chat, bot, self, botImg, chatMessage, imageMessage } = classes;
 	return (
 		<div className={`${chat} ${variant === 'bot' ? bot : self}`}>
 			{variant === 'bot' && (
@@ -17,7 +17,8 @@ export default function Message({ text = '', variant, typingIndicator }) {
 					<span className={classes.dot} />
 				</div>
 			)}
-			{!typingIndicator && <p className={chatMessage}>{text}</p> }
+			{text && <p className={chatMessage}>{text}</p>}
+			{image && <img className={imageMessage} src={image} />}
 		</div>
 	);
 }

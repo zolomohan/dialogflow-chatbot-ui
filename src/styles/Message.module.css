@@ -29,6 +29,14 @@
 	overflow-wrap: break-word;
 }
 
+.chat .imageMessage {
+	margin: 5px 0;
+	border-radius: 7px;
+	max-width: 60%;
+	width: auto;
+	border: 1px solid rgba(82, 82, 82, 0.411);
+}
+
 .bot .chatMessage {
 	background: #2298c74d;
 	border-top-left-radius: 0px;

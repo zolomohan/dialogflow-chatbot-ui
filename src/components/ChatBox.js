@@ -70,6 +70,13 @@ export default class ChatBox extends Component {
 		}));
 	};
 
+	addImage = (image, variant) => {
+		this.setState(({ log }) => ({
+			log: [ ...log, { image, variant } ]
+		}));
+		this.toggleTypingIndicator();
+	}
+
 	addSuggesstion = (suggestions) => this.setState({ suggestions });
 
 	resetSuggestions = () => this.setState({ suggesstion: [] });
@@ -104,27 +111,29 @@ export default class ChatBox extends Component {
 			);
 	};
 
-	parseResponse = (responseString) => {
-		responseString = responseString.replace(/[""]/g, '');
-		if (responseString.includes('<ar')) this.suggestionResponse(responseString);
-		else if (responseString.includes('<br'))
-			setTimeout(() => this.chatResponse(responseString), DEFAULT_TIME_DELAY);
-		else this.addMessage(responseString, 'bot');
+	parseResponse = (res) => {
+		res = res.replace(/[""]/g, '');
+		if (res.includes('<ar>')) this.suggestionResponse(res);
+		else if (res.includes('<br>'))
+			setTimeout(() => this.chatResponse(res), DEFAULT_TIME_DELAY);
+		else if (res.includes('<img>'))
+			setTimeout(() => this.imageResponse(res), DEFAULT_TIME_DELAY);
+		else this.addMessage(res, 'bot');
 	};
 
-	suggestionResponse = (message) => {
-		this.chatResponse(message);
-		let suggestionList = message.split(/<ar>/).splice(1);
+	suggestionResponse = (res) => {
+		this.chatResponse(res);
+		let suggestionList = res.split(/<ar>/).splice(1);
 		this.resetSuggestions();
 		setTimeout(() => this.addSuggesstion(suggestionList), DEFAULT_TIME_DELAY);
 	};
 
-	chatResponse = (message) => {
+	chatResponse = (res) => {
 		var matches,
 			listOfMessages = [],
 			regex = /\<br(?:\s+?(\d+))?\>(.*?)(?=(?:\<br(?:\s+\d+)?\>)|$)/g;
 
-		while ((matches = regex.exec(message))) {
+		while ((matches = regex.exec(res))) {
 			if (matches[1] === undefined) matches[1] = DEFAULT_TIME_DELAY;
 			var messageText = matches[2].split(/<ar>/);
 			listOfMessages.push({
@@ -145,6 +154,10 @@ export default class ChatBox extends Component {
 			}, listOfMessages[i].delay);
 		})(listOfMessages, i, numMessages);
 	};
+
+	imageResponse = (res) => {
+		this.addImage(res.split(/<img>/)[1], 'bot')
+	}
 
 	startVoiceRecognition = () => {
 		this._voiceRecogntion.lang = 'en-US';
