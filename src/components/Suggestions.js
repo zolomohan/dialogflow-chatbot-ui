@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import classes from '../styles/Suggestions.module.css';
 
-export default function Suggestions({ suggestions, handleSubmit }) {
-	if(suggestions.length === 0) return null;
+export default memo(function Suggestions({ suggestions, handleSubmit }) {
+	if (suggestions.length === 0) return null;
 	return (
 		<div className={classes.suggestionContainer}>
 			{suggestions.map((suggesstion, i) => (
@@ -16,4 +16,4 @@ export default function Suggestions({ suggestions, handleSubmit }) {
 			))}
 		</div>
 	);
-}
+});
