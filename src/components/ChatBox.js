@@ -7,8 +7,6 @@ import Suggestions from './Suggestions';
 import Form from './Form';
 import classes from '../styles/Chat.module.css';
 
-const DEFAULT_TIME_DELAY = 300;
-
 export default class ChatBox extends Component {
 	constructor(props) {
 		super(props);
@@ -60,10 +58,9 @@ export default class ChatBox extends Component {
 		this.setState(({ typingIndicator }) => ({ typingIndicator: !typingIndicator }));
 
 	addMessage = (text, variant) => {
-		if(variant === 'bot') {
+		if (variant === 'bot') {
 			this.toggleTypingIndicator();
-			if (this.state.speechOutput)
-				this._speech.speak({ text });
+			if (this.state.speechOutput) this._speech.speak({ text });
 		}
 		this.setState(({ log }) => ({
 			log: [ ...log, { text, variant } ]
@@ -75,7 +72,7 @@ export default class ChatBox extends Component {
 			log: [ ...log, { image, variant } ]
 		}));
 		this.toggleTypingIndicator();
-	}
+	};
 
 	addSuggesstion = (suggestions) => this.setState({ suggestions });
 
@@ -114,50 +111,24 @@ export default class ChatBox extends Component {
 	parseResponse = (res) => {
 		res = res.replace(/[""]/g, '');
 		if (res.includes('<ar>')) this.suggestionResponse(res);
-		else if (res.includes('<br>'))
-			setTimeout(() => this.chatResponse(res), DEFAULT_TIME_DELAY);
-		else if (res.includes('<img>'))
-			setTimeout(() => this.imageResponse(res), DEFAULT_TIME_DELAY);
+		else if (res.includes('<br>')) this.chatResponse(res);
+		else if (res.includes('<img>')) this.imageResponse(res);
 		else this.addMessage(res, 'bot');
 	};
 
 	suggestionResponse = (res) => {
-		this.chatResponse(res);
-		let suggestionList = res.split(/<ar>/).splice(1);
+		this.chatResponse(res.split(/<ar>/)[0]);
 		this.resetSuggestions();
-		setTimeout(() => this.addSuggesstion(suggestionList), DEFAULT_TIME_DELAY);
+		this.addSuggesstion(res.split(/<ar>/).splice(1))
 	};
 
 	chatResponse = (res) => {
-		var matches,
-			listOfMessages = [],
-			regex = /\<br(?:\s+?(\d+))?\>(.*?)(?=(?:\<br(?:\s+\d+)?\>)|$)/g;
-
-		while ((matches = regex.exec(res))) {
-			if (matches[1] === undefined) matches[1] = DEFAULT_TIME_DELAY;
-			var messageText = matches[2].split(/<ar>/);
-			listOfMessages.push({
-				text: messageText[0],
-				delay: matches[1]
-			});
-		}
-
-		var i = 0,
-			numMessages = listOfMessages.length;
-		const addMessage = this.addMessage;
-		(function theLoop(listOfMessages, i, numMessages) {
-			setTimeout(() => {
-				addMessage(listOfMessages[i].text, 'bot');
-				if (i++ < numMessages - 1) {
-					theLoop(listOfMessages, i, numMessages);
-				}
-			}, listOfMessages[i].delay);
-		})(listOfMessages, i, numMessages);
+		const messages = res.split(/<br>/).splice(1);
+		for (let message of messages)
+			this.addMessage(message, 'bot')
 	};
 
-	imageResponse = (res) => {
-		this.addImage(res.split(/<img>/)[1], 'bot')
-	}
+	imageResponse = (res) => this.addImage(res.split(/<img>/)[1], 'bot');
 
 	startVoiceRecognition = () => {
 		this._voiceRecogntion.lang = 'en-US';
