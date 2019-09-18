@@ -1,35 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import useToggleState from '../hooks/useToggleState';
 import $ from 'jquery';
-import Speech from 'speak-tts';
 import Header from './Header';
 import Logs from './Logs';
 import Suggestions from './Suggestions';
 import Form from './Form';
+import speech from '../helpers/speechOutput';
 import classes from '../styles/Chat.module.css';
 
 export default function ChatBox({ open, toggleChatBox }) {
 	let voiceRecogntion = new window.webkitSpeechRecognition();
-	const speech = new Speech();
-	speech
-		.init({
-			volume: 0.5,
-			lang: 'en-GB',
-			rate: 1,
-			pitch: 1,
-			voice: 'Google UK English Female'
-		})
-		.catch((error) =>
-			console.error('An error occured while initializing Speech : ', error)
-		);
-
 	const [ log, setLog ] = useState([
 		{
 			text:
 				"Hey I am Krypto! Say ' Hi ' to talk with me. I'll let you know the details of our college",
 			variant: 'bot'
 		}
-	]);
+  ]);
 	const [ suggestions, setSuggestions ] = useState([]);
 	const [ speechInput, toggleSpeechInput ] = useToggleState();
 	const [ typing, toggleTyping, setTyping ] = useToggleState();
