@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import useToggleState from '../hooks/useToggleState';
 import $ from 'jquery';
 import Speech from 'speak-tts';
 import Header from './Header';
@@ -7,84 +8,62 @@ import Suggestions from './Suggestions';
 import Form from './Form';
 import classes from '../styles/Chat.module.css';
 
-export default class ChatBox extends Component {
-	constructor(props) {
-		super(props);
-		this._speech = new Speech();
-		this._voiceRecogntion = new window.webkitSpeechRecognition();
-		this._speech
-			.init({
-				volume: 0.5,
-				lang: 'en-GB',
-				rate: 1,
-				pitch: 1,
-				voice: 'Google UK English Female'
-			})
-			.catch((error) =>
-				console.error('An error occured while initializing Speech : ', error)
-			);
-
-		this.state = {
-			log: [
-				{
-					text:
-						"Hey I am Krypto! Say ' Hi ' to talk with me. I'll let you know the details of our college",
-					variant: 'bot'
-				}
-			],
-			suggestions: [],
-			speechOutput: true,
-			speechInput: false,
-			typingIndicator: false
-		};
-	}
-
-	toggleSpeechOutput = () =>
-		this.setState(
-			({ speechOutput }) => ({ speechOutput: !speechOutput }),
-			this._speech.cancel
+export default function ChatBox({ open, toggleChatBox }) {
+	let voiceRecogntion = new window.webkitSpeechRecognition();
+	const speech = new Speech();
+	speech
+		.init({
+			volume: 0.5,
+			lang: 'en-GB',
+			rate: 1,
+			pitch: 1,
+			voice: 'Google UK English Female'
+		})
+		.catch((error) =>
+			console.error('An error occured while initializing Speech : ', error)
 		);
 
-	toggleSpeechInput = () =>
-		this.setState(
-			({ speechInput }) => ({ speechInput: !speechInput }),
-			() =>
-				this.state.speechInput
-					? this.startVoiceRecognition()
-					: this._voiceRecogntion.stop()
-		);
-
-	toggleTypingIndicator = () =>
-		this.setState(({ typingIndicator }) => ({ typingIndicator: !typingIndicator }));
-
-	addMessage = (text, variant) => {
-		if (variant === 'bot') {
-			this.toggleTypingIndicator();
-			if (this.state.speechOutput) this._speech.speak({ text });
+	const [ log, setLog ] = useState([
+		{
+			text:
+				"Hey I am Krypto! Say ' Hi ' to talk with me. I'll let you know the details of our college",
+			variant: 'bot'
 		}
-		this.setState(({ log }) => ({
-			log: [ ...log, { text, variant } ]
-		}));
+	]);
+	const [ suggestions, setSuggestions ] = useState([]);
+	const [ speechInput, toggleSpeechInput ] = useToggleState();
+	const [ typing, toggleTyping, setTyping ] = useToggleState();
+	const [ speechOutput, toggleSpeechOutput ] = useToggleState(true);
+
+	useEffect(speech.cancel, [ speechOutput ]);
+	useEffect(() => (speechInput ? startVoiceRecognition() : voiceRecogntion.stop()), [
+		speechInput
+	]);
+
+	const addMessage = (text, variant) => {
+		if (variant === 'bot') {
+			setTyping(false);
+			if (speechOutput) speech.speak({ text });
+		}
+		let newLog = log;
+		newLog.push({ text, variant });
+		setLog(newLog);
 	};
 
-	addImage = (image, variant) => {
-		this.setState(({ log }) => ({
-			log: [ ...log, { image, variant } ]
-		}));
-		this.toggleTypingIndicator();
+	const addImage = (image, variant) => {
+		let newLog = log;
+		newLog.push({ image, variant });
+		setLog(newLog);
+		setTyping(false);
 	};
 
-	addSuggesstion = (suggestions) => this.setState({ suggestions });
-
-	resetSuggestions = () => this.setState({ suggesstion: [] });
-
-	handleSubmit = (userResponse) => {
-		this.addMessage(userResponse, 'user');
-		this.postUserResponseToAPI(userResponse);
+	const handleSubmit = (userResponse) => {
+		addMessage(userResponse, 'user');
+		postUserResponseToAPI(userResponse);
 	};
 
-	postUserResponseToAPI = (text) => {
-		this.toggleTypingIndicator();
+	const postUserResponseToAPI = (text) => {
+		toggleTyping();
 		$.ajax({
 			type: 'POST',
 			url: 'https://api.dialogflow.com/v1/query?v=20150910',
@@ -99,82 +78,64 @@ export default class ChatBox extends Component {
 				sessionId: 'somerandomthing'
 			})
 		})
-			.then((data) => this.parseResponse(data.result.fulfillment.speech))
+			.then((data) => parseResponse(data.result.fulfillment.speech))
 			.catch(() =>
-				this.addMessage(
+				addMessage(
 					"it seems like there's something wrong. could you try again later?",
 					'bot'
 				)
 			);
 	};
 
-	parseResponse = (res) => {
+	const parseResponse = (res) => {
 		res = res.replace(/[""]/g, '');
-		if (res.includes('<ar>')) this.suggestionResponse(res);
-		else if (res.includes('<br>')) this.chatResponse(res);
-		else if (res.includes('<img>')) this.imageResponse(res);
+		if (res.includes('<ar>')) suggestionResponse(res);
+		else if (res.includes('<br>')) chatResponse(res);
+		else if (res.includes('<img>')) imageResponse(res);
 		else this.addMessage(res, 'bot');
 	};
 
-	suggestionResponse = (res) => {
-		this.chatResponse(res.split(/<ar>/)[0]);
-		this.resetSuggestions();
-		this.addSuggesstion(res.split(/<ar>/).splice(1))
+	const suggestionResponse = (res) => {
+		chatResponse(res.split(/<ar>/)[0]);
+		setSuggestions([])
+		setSuggestions(res.split(/<ar>/).splice(1))
 	};
 
-	chatResponse = (res) => {
+	const chatResponse = (res) => {
 		const messages = res.split(/<br>/).splice(1);
-		for (let message of messages)
-			this.addMessage(message, 'bot')
+		for (let message of messages) addMessage(message, 'bot');
 	};
 
-	imageResponse = (res) => this.addImage(res.split(/<img>/)[1], 'bot');
+	const imageResponse = (res) => addImage(res.split(/<img>/)[1], 'bot');
 
-	startVoiceRecognition = () => {
-		this._voiceRecogntion.lang = 'en-US';
-		this._voiceRecogntion.onresult = (event) => {
+	const startVoiceRecognition = () => {
+		voiceRecogntion.lang = 'en-US';
+		voiceRecogntion.onresult = (event) => {
 			let text = '';
 			for (let i = event.resultIndex; i < event.results.length; ++i)
 				text += event.results[i][0].transcript;
-			this.postUserResponseToAPI(text);
-			this.addMessage(text);
-			this.toggleSpeechInput();
+			postUserResponseToAPI(text);
+			addMessage(text);
+			toggleSpeechInput();
 		};
-		this._voiceRecogntion.start();
+		voiceRecogntion.start();
 	};
 
-	render() {
-		const {
-			toggleSpeechOutput,
-			toggleSpeechInput,
-			addMessage,
-			addSuggesstion,
-			resetSuggestions,
-			handleSubmit,
-			state,
-			props
-		} = this;
-		const { open, toggleChatBox } = props;
-		const { typingIndicator, speechOutput, speechInput, suggestions, log } = state;
-
-		return (
-			<div className={classes.chatBox} style={{ display: open ? 'block' : 'none' }}>
-				<Header
-					toggleChatBox={toggleChatBox}
-					speechOutput={speechOutput}
-					toggleSpeechOutput={toggleSpeechOutput}
-				/>
-				<Logs messages={log} typingIndicator={typingIndicator} />
-				<Suggestions suggestions={suggestions} handleSubmit={handleSubmit} />
-				<Form
-					speechInput={speechInput}
-					toggleSpeechInput={toggleSpeechInput}
-					addMessage={addMessage}
-					addSuggesstion={addSuggesstion}
-					resetSuggestions={resetSuggestions}
-					handleSubmit={handleSubmit}
-				/>
-			</div>
-		);
-	}
+	return (
+		<div className={classes.chatBox} style={{ display: open ? 'block' : 'none' }}>
+			<Header
+				toggleChatBox={toggleChatBox}
+				speechOutput={speechOutput}
+				toggleSpeechOutput={toggleSpeechOutput}
+			/>
+			<Logs messages={log} typingIndicator={typing} />
+			<Suggestions suggestions={suggestions} handleSubmit={handleSubmit} />
+			<Form
+				speechInput={speechInput}
+				toggleSpeechInput={toggleSpeechInput}
+				addMessage={addMessage}
+				handleSubmit={handleSubmit}
+			/>
+		</div>
+	);
 }
