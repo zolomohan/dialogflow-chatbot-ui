@@ -36,7 +36,8 @@ export default class ChatBox extends Component {
 			],
 			suggestions: [],
 			speechOutput: true,
-			speechInput: false
+			speechInput: false,
+			typingIndicator: false
 		};
 	}
 
@@ -55,8 +56,15 @@ export default class ChatBox extends Component {
 					: this._voiceRecogntion.stop()
 		);
 
+	toggleTypingIndicator = () =>
+		this.setState(({ typingIndicator }) => ({ typingIndicator: !typingIndicator }));
+
 	addMessage = (text, variant) => {
-		if (this.state.speechOutput && variant === 'bot') this._speech.speak({ text });
+		if(variant === 'bot') {
+			this.toggleTypingIndicator();
+			if (this.state.speechOutput)
+				this._speech.speak({ text });
+		}
 		this.setState(({ log }) => ({
 			log: [ ...log, { text, variant } ]
 		}));
@@ -72,6 +80,7 @@ export default class ChatBox extends Component {
 	};
 
 	postUserResponseToAPI = (text) => {
+		this.toggleTypingIndicator();
 		$.ajax({
 			type: 'POST',
 			url: 'https://api.dialogflow.com/v1/query?v=20150910',
@@ -131,7 +140,6 @@ export default class ChatBox extends Component {
 			setTimeout(() => {
 				addMessage(listOfMessages[i].text, 'bot');
 				if (i++ < numMessages - 1) {
-					// showTypingIndicator();
 					theLoop(listOfMessages, i, numMessages);
 				}
 			}, listOfMessages[i].delay);
@@ -145,7 +153,7 @@ export default class ChatBox extends Component {
 			for (let i = event.resultIndex; i < event.results.length; ++i)
 				text += event.results[i][0].transcript;
 			this.postUserResponseToAPI(text);
-			this.addMessage(text);	
+			this.addMessage(text);
 			this.toggleSpeechInput();
 		};
 		this._voiceRecogntion.start();
@@ -163,7 +171,7 @@ export default class ChatBox extends Component {
 			props
 		} = this;
 		const { open, toggleChatBox } = props;
-		const { speechOutput, speechInput, suggestions, log } = state;
+		const { typingIndicator, speechOutput, speechInput, suggestions, log } = state;
 
 		return (
 			<div className={classes.chatBox} style={{ display: open ? 'block' : 'none' }}>
@@ -172,7 +180,7 @@ export default class ChatBox extends Component {
 					speechOutput={speechOutput}
 					toggleSpeechOutput={toggleSpeechOutput}
 				/>
-				<Logs messages={log} />
+				<Logs messages={log} typingIndicator={typingIndicator} />
 				<Suggestions suggestions={suggestions} handleSubmit={handleSubmit} />
 				<Form
 					speechInput={speechInput}
