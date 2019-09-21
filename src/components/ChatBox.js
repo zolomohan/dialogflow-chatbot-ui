@@ -10,7 +10,15 @@ import speech from '../helpers/speechOutput';
 import classes from '../styles/Chat.module.css';
 
 export default function ChatBox({ open, toggleChatBox }) {
-	let voiceRecogntion = new window.webkitSpeechRecognition();
+	let speechRecognition = new window.webkitSpeechRecognition();
+	speechRecognition.onresult = (event) => {
+		let text = '';
+		for (let i = event.resultIndex; i < event.results.length; ++i)
+			text += event.results[i][0].transcript;
+		fetchBotResponse(text);
+		addMessage('text', text, 'user');
+		toggleSpeechInput();
+	};
 	const [ log, addLog ] = useLogState();
 	const [ suggestions, setSuggestions ] = useState([]);
 	const [ speechInput, toggleSpeechInput ] = useToggleState();
@@ -18,9 +26,10 @@ export default function ChatBox({ open, toggleChatBox }) {
 	const [ speechOutput, toggleSpeechOutput ] = useToggleState(true);
 
 	useEffect(speech.cancel, [ speechOutput ]);
-	useEffect(() => (speechInput ? startVoiceRecognition() : voiceRecogntion.stop()), [
-		speechInput
-	]);
+	useEffect(
+		() => (speechInput ? speechRecognition.start() : speechRecognition.stop()),
+		[ speechInput ]
+	);
 
 	const addMessage = (type, payload, user) => {
 		if (user === 'bot') {
@@ -30,12 +39,12 @@ export default function ChatBox({ open, toggleChatBox }) {
 		addLog(type, payload, user);
 	};
 
-	const handleSubmit = (userResponse) => {
-		addMessage('text', userResponse, 'user');
-		postUserResponseToAPI(userResponse);
+	const onUserResponse = (res) => {
+		addMessage('text', res, 'user');
+		fetchBotResponse(res);
 	};
 
-	const postUserResponseToAPI = (text) => {
+	const fetchBotResponse = (text) => {
 		toggleTyping();
 		$.ajax({
 			type: 'POST',
@@ -51,7 +60,7 @@ export default function ChatBox({ open, toggleChatBox }) {
 				sessionId: 'somerandomthing'
 			})
 		})
-			.then((data) => parseResponse(data.result.fulfillment.speech))
+			.then((res) => parseBotResponse(res.result.fulfillment.speech))
 			.catch(() =>
 				addMessage(
 					'text',
@@ -61,39 +70,25 @@ export default function ChatBox({ open, toggleChatBox }) {
 			);
 	};
 
-	const parseResponse = (res) => {
-		res = res.replace(/[""]/g, '');
-		if (res.includes('<ar>')) suggestionResponse(res);
-		else if (res.includes('<br>')) chatResponse(res);
-		else if (res.includes('<img>')) imageResponse(res);
+	const parseBotResponse = (res) => {
+		if (res.includes('<ar>')) parseSuggestions(res);
+		else if (res.includes('<br>')) parseTextResponse(res);
+		else if (res.includes('<img>')) parseImageResponse(res);
 		else addMessage('text', res, 'bot');
 	};
 
-	const suggestionResponse = (res) => {
-		chatResponse(res.split(/<ar>/)[0]);
+	const parseSuggestions = (res) => {
+		parseTextResponse(res.split(/<ar>/)[0]);
 		setSuggestions([]);
 		setSuggestions(res.split(/<ar>/).splice(1));
 	};
 
-	const chatResponse = (res) => {
+	const parseTextResponse = (res) => {
 		const messages = res.split(/<br>/).splice(1);
 		for (var message of messages) addMessage('text', message, 'bot');
 	};
 
-	const imageResponse = (res) => addMessage('image', res.split(/<img>/)[1], 'bot');
-
-	const startVoiceRecognition = () => {
-		voiceRecogntion.lang = 'en-US';
-		voiceRecogntion.onresult = (event) => {
-			let text = '';
-			for (let i = event.resultIndex; i < event.results.length; ++i)
-				text += event.results[i][0].transcript;
-			postUserResponseToAPI(text);
-			addMessage('text', text, 'user');
-			toggleSpeechInput();
-		};
-		voiceRecogntion.start();
-	};
+	const parseImageResponse = (res) => addMessage('image', res.split(/<img>/)[1], 'bot');
 
 	return (
 		<div className={classes.chatBox} style={{ display: open ? 'block' : 'none' }}>
@@ -103,11 +98,11 @@ export default function ChatBox({ open, toggleChatBox }) {
 				toggleSpeechOutput={toggleSpeechOutput}
 			/>
 			<Logs messages={log} typingIndicator={typing} />
-			<Suggestions suggestions={suggestions} handleSubmit={handleSubmit} />
+			<Suggestions suggestions={suggestions} handleSubmit={onUserResponse} />
 			<Form
 				speechInput={speechInput}
 				toggleSpeechInput={toggleSpeechInput}
-				handleSubmit={handleSubmit}
+				handleSubmit={onUserResponse}
 			/>
 		</div>
 	);
