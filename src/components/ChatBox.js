@@ -7,6 +7,7 @@ import Logs from './Logs';
 import Suggestions from './Suggestions';
 import Form from './Form';
 import speech from '../helpers/speechOutput';
+import dialogflow from '../config/dialogflow';
 import classes from '../styles/Chat.module.css';
 
 export default function ChatBox({ open, toggleChatBox }) {
@@ -46,18 +47,18 @@ export default function ChatBox({ open, toggleChatBox }) {
 	};
 
 	const fetchBotResponse = (text) => {
-		$.ajax({
-			type: 'POST',
-			url: 'https://api.dialogflow.com/v1/query?v=20150910',
+		const { url, accessToken, sessionId } = dialogflow;
+		$.post({
+			url,
 			contentType: 'application/json; charset=utf-8',
 			dataType: 'json',
 			headers: {
-				Authorization: 'Bearer 38578c4faf424691a4540abffe6a1ec8'
+				Authorization: `Bearer ${accessToken}`
 			},
 			data: JSON.stringify({
 				query: text,
 				lang: 'en',
-				sessionId: 'somerandomthing'
+				sessionId
 			})
 		})
 			.then((res) => parseBotResponse(res.result.fulfillment.speech))
