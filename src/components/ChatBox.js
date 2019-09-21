@@ -85,6 +85,7 @@ export default function ChatBox({ open, toggleChatBox }) {
 	};
 
 	const parseTextResponse = (res) => {
+		if (res.includes('<img>')) parseImageResponse(res.split(/<br>/)[0]);
 		const messages = res.split(/<br>/).splice(1);
 		for (var message of messages) addMessage('text', message, 'bot');
 	};
@@ -98,7 +99,7 @@ export default function ChatBox({ open, toggleChatBox }) {
 				speechOutput={speechOutput}
 				toggleSpeechOutput={toggleSpeechOutput}
 			/>
-			<Logs messages={log} typingIndicator={typing} />
+			<Logs log={log} typingIndicator={typing} />
 			<Suggestions suggestions={suggestions} handleSubmit={onUserResponse} />
 			<Form
 				speechInput={speechInput}
