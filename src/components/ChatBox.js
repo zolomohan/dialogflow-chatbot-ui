@@ -40,12 +40,12 @@ export default function ChatBox({ open, toggleChatBox }) {
 	};
 
 	const onUserResponse = (res) => {
-		addMessage('text', res, 'user');
 		fetchBotResponse(res);
+		toggleTyping();
+		addMessage('text', res, 'user');
 	};
 
 	const fetchBotResponse = (text) => {
-		toggleTyping();
 		$.ajax({
 			type: 'POST',
 			url: 'https://api.dialogflow.com/v1/query?v=20150910',
