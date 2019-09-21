@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import useToggleState from '../hooks/useToggleState';
+import useLogState from '../hooks/useLogState';
 import $ from 'jquery';
 import Header from './Header';
 import Logs from './Logs';
@@ -10,13 +11,7 @@ import classes from '../styles/Chat.module.css';
 
 export default function ChatBox({ open, toggleChatBox }) {
 	let voiceRecogntion = new window.webkitSpeechRecognition();
-	const [ log, setLog ] = useState([
-		{
-			text:
-				"Hey I am Krypto! Say ' Hi ' to talk with me. I'll let you know the details of our college",
-			variant: 'bot'
-		}
-  ]);
+	const [ log, addLog ] = useLogState();
 	const [ suggestions, setSuggestions ] = useState([]);
 	const [ speechInput, toggleSpeechInput ] = useToggleState();
 	const [ typing, toggleTyping, setTyping ] = useToggleState();
@@ -27,25 +22,16 @@ export default function ChatBox({ open, toggleChatBox }) {
 		speechInput
 	]);
 
-	const addMessage = (text, variant) => {
-		if (variant === 'bot') {
+	const addMessage = (type, payload, user) => {
+		if (user === 'bot') {
 			setTyping(false);
-			if (speechOutput) speech.speak({ text });
+			if (speechOutput && type !== 'image') speech.speak({ text: payload });
 		}
-		let newLog = log;
-		newLog.push({ text, variant });
-		setLog(newLog);
-	};
-
-	const addImage = (image, variant) => {
-		let newLog = log;
-		newLog.push({ image, variant });
-		setLog(newLog);
-		setTyping(false);
+		addLog(type, payload, user);
 	};
 
 	const handleSubmit = (userResponse) => {
-		addMessage(userResponse, 'user');
+		addMessage('text', userResponse, 'user');
 		postUserResponseToAPI(userResponse);
 	};
 
@@ -57,7 +43,7 @@ export default function ChatBox({ open, toggleChatBox }) {
 			contentType: 'application/json; charset=utf-8',
 			dataType: 'json',
 			headers: {
-				Authorization: 'Bearer ' + '38578c4faf424691a4540abffe6a1ec8'
+				Authorization: 'Bearer 38578c4faf424691a4540abffe6a1ec8'
 			},
 			data: JSON.stringify({
 				query: text,
@@ -68,6 +54,7 @@ export default function ChatBox({ open, toggleChatBox }) {
 			.then((data) => parseResponse(data.result.fulfillment.speech))
 			.catch(() =>
 				addMessage(
+					'text',
 					"it seems like there's something wrong. could you try again later?",
 					'bot'
 				)
@@ -79,21 +66,21 @@ export default function ChatBox({ open, toggleChatBox }) {
 		if (res.includes('<ar>')) suggestionResponse(res);
 		else if (res.includes('<br>')) chatResponse(res);
 		else if (res.includes('<img>')) imageResponse(res);
-		else this.addMessage(res, 'bot');
+		else addMessage('text', res, 'bot');
 	};
 
 	const suggestionResponse = (res) => {
 		chatResponse(res.split(/<ar>/)[0]);
-		setSuggestions([])
-		setSuggestions(res.split(/<ar>/).splice(1))
+		setSuggestions([]);
+		setSuggestions(res.split(/<ar>/).splice(1));
 	};
 
 	const chatResponse = (res) => {
 		const messages = res.split(/<br>/).splice(1);
-		for (let message of messages) addMessage(message, 'bot');
+		for (var message of messages) addMessage('text', message, 'bot');
 	};
 
-	const imageResponse = (res) => addImage(res.split(/<img>/)[1], 'bot');
+	const imageResponse = (res) => addMessage('image', res.split(/<img>/)[1], 'bot');
 
 	const startVoiceRecognition = () => {
 		voiceRecogntion.lang = 'en-US';
@@ -102,7 +89,7 @@ export default function ChatBox({ open, toggleChatBox }) {
 			for (let i = event.resultIndex; i < event.results.length; ++i)
 				text += event.results[i][0].transcript;
 			postUserResponseToAPI(text);
-			addMessage(text);
+			addMessage('text', text, 'user');
 			toggleSpeechInput();
 		};
 		voiceRecogntion.start();
@@ -120,7 +107,6 @@ export default function ChatBox({ open, toggleChatBox }) {
 			<Form
 				speechInput={speechInput}
 				toggleSpeechInput={toggleSpeechInput}
-				addMessage={addMessage}
 				handleSubmit={handleSubmit}
 			/>
 		</div>

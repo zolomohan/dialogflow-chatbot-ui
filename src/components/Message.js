@@ -1,11 +1,11 @@
 import React, { memo } from 'react';
 import classes from '../styles/Message.module.css';
 
-export default memo(function Message({ text = '', image, variant, typingIndicator }) {
+export default memo(function Message({ text = '', image, user, typingIndicator }) {
 	const { chat, bot, self, botImg, chatMessage, imageMessage } = classes;
 	return (
-		<div className={`${chat} ${variant === 'bot' ? bot : self}`}>
-			{variant === 'bot' && (
+		<div className={`${chat} ${user === 'bot' ? bot : self}`}>
+			{user === 'bot' && (
 				<div className={botImg}>
 					<img src="https://i.ibb.co/cDCL67q/bot.png" alt="bot" />
 				</div>
@@ -18,7 +18,7 @@ export default memo(function Message({ text = '', image, variant, typingIndicato
 				</div>
 			)}
 			{text && <p className={chatMessage}>{text}</p>}
-			{image && <img className={imageMessage} src={image} />}
+			{image && <img className={imageMessage} src={image} alt="requested" />}
 		</div>
 	);
 });
