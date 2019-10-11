@@ -6,7 +6,7 @@ import Header from './Header';
 import Logs from './Logs';
 import Suggestions from './Suggestions';
 import Form from './Form';
-import speech from '../helpers/speechOutput';
+import speech from '../config/speechOutput';
 import dialogflow from '../config/dialogflow';
 import classes from '../styles/Chat.module.css';
 
