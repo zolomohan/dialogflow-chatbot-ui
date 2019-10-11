@@ -1,14 +1,8 @@
 import { useState } from 'react';
+import starterMessage from '../helpers/starterMessage'
 
 export default (initialState = []) => {
-	const [ state, setState ] = useState(
-		[
-			{
-				text: "Hey There, I am Krypto! Say 'Hey' to talk with me.",
-				user: 'bot'
-			}
-		] || initialState
-	);
+	const [ state, setState ] = useState([ starterMessage ] || initialState);
 
 	const addLog = (type, payload, user) => {
 		let newLog = state;
