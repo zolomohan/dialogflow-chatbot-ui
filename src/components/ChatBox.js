@@ -2,16 +2,24 @@ import React, { useState, useEffect } from 'react';
 import useToggleState from '../hooks/useToggleState';
 import useLogState from '../hooks/useLogState';
 import $ from 'jquery';
+import Speech from 'speak-tts';
 import Header from './Header';
 import Logs from './Logs';
 import Suggestions from './Suggestions';
 import Form from './Form';
-import speech from '../config/speechOutput';
 import dialogflow from '../config/dialogflow';
+import speechConfig from '../config/speechOutput';
 import classes from '../styles/Chat.module.css';
 
 export default function ChatBox({ open, toggleChatBox }) {
-	let speechRecognition = new window.webkitSpeechRecognition();
+	const speech = new Speech(),
+		speechRecognition = new window.webkitSpeechRecognition();
+
+	speech
+		.init(speechConfig)
+		.catch((error) =>
+			console.error('An error occured while initializing Speech : ', error)
+		);
 	speechRecognition.onresult = (event) => {
 		let text = '';
 		for (let i = event.resultIndex; i < event.results.length; ++i)
@@ -20,6 +28,7 @@ export default function ChatBox({ open, toggleChatBox }) {
 		addMessage('text', text, 'user');
 		toggleSpeechInput();
 	};
+
 	const [ log, addLog ] = useLogState();
 	const [ suggestions, setSuggestions ] = useState([]);
 	const [ speechInput, toggleSpeechInput ] = useToggleState();
@@ -42,8 +51,8 @@ export default function ChatBox({ open, toggleChatBox }) {
 
 	const onUserResponse = (res) => {
 		fetchBotResponse(res);
-		toggleTyping();
 		addMessage('text', res, 'user');
+		toggleTyping();
 	};
 
 	const fetchBotResponse = (text) => {
