@@ -29,3 +29,9 @@
 .chatBoxHeader i:hover{
 	color: #00e1ffd5;
 }
+
+.chatBotName {
+	text-transform: capitalize;
+	padding-left: 0.5em;
+	font-weight: 100;
+}
