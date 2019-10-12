@@ -32,7 +32,7 @@ export default function ChatBox({ open, toggleChatBox }) {
 	const [ log, addLog ] = useLogState();
 	const [ suggestions, setSuggestions ] = useState([]);
 	const [ speechInput, toggleSpeechInput ] = useToggleState();
-	const [ typing, toggleTyping, setTyping ] = useToggleState();
+	const [ typing, toggleTyping ] = useToggleState();
 	const [ speechOutput, toggleSpeechOutput ] = useToggleState(true);
 
 	useEffect(speech.cancel, [ speechOutput ]);
@@ -43,7 +43,7 @@ export default function ChatBox({ open, toggleChatBox }) {
 
 	const addMessage = (type, payload, user) => {
 		if (user === 'bot') {
-			setTyping(false);
+			toggleTyping();
 			if (speechOutput && type !== 'image') speech.speak({ text: payload });
 		}
 		addLog(type, payload, user);
