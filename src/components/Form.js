@@ -32,7 +32,7 @@ export default function Form({ handleSubmit, speechInput, toggleSpeechInput }) {
 				/>
 			</div>
 			<div className={classes.chatFormButtons}>
-				<Icon type='fas' name={`fa-${speechInput ?'microphone' : 'microphone-slash'}`} onClick={toggleSpeechInput} />
+				<Icon name={`fa-${speechInput ?'microphone' : 'microphone-slash'}`} onClick={toggleSpeechInput} />
 			</div>
 		</div>
 	);
