@@ -1,0 +1,39 @@
+.container{
+	position: relative;
+}
+
+.dot {
+  position: absolute;
+  display: inline-block;
+  height: 5px;
+  width: 5px;
+  background-color: #ffffff;
+  margin: 25px;
+  border-radius: 50%;
+  animation: wave 1.5s infinite ease-in-out;
+  top: 0;
+}
+
+.dot:first-child {
+  left: 0;
+}
+  
+.dot:nth-child(2) {
+  left: 10px;
+  animation-delay: 50ms;
+}
+  
+.dot:last-child {
+  left: 20px;
+  animation-delay: 0.10s;
+}
+
+@keyframes wave {
+  0%, 50% {
+    top: 0;
+  }
+  25% {
+    top: -10px;
+  }
+}
+

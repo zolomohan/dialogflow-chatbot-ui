@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import botConfig from '../config/bot';
 import classes from '../styles/Message.module.css';
+import TypingIndicator from './TypingIndicator';
 
 export default memo(function Message({ text = '', image, user, typingIndicator }) {
 	const { chat, bot, self, botImg, chatMessage, imageMessage } = classes;
@@ -11,13 +12,7 @@ export default memo(function Message({ text = '', image, user, typingIndicator }
 					<img src={botConfig.avatar} alt="bot avatar" />
 				</div>
 			)}
-			{typingIndicator && (
-				<div className={classes.container}>
-					<span className={classes.dot} />
-					<span className={classes.dot} />
-					<span className={classes.dot} />
-				</div>
-			)}
+			{typingIndicator && <TypingIndicator />}
 			{text && <p className={chatMessage}>{text}</p>}
 			{image && <img className={imageMessage} src={image} alt="requested" />}
 		</div>
