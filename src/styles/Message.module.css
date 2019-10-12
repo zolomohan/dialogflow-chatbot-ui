@@ -1,24 +1,11 @@
-.chat {
+.message {
 	display: flex;
 	flex-flow: row wrap;
 	align-items: flex-start;
 	margin-bottom: 10px;
 }
 
-.botImg {
-	width: 60px;
-	height: 60px;
-	overflow: hidden;
-}
-
-.botImg img {
-	padding: 10px;
-	padding-top: 6px;
-	width: 100%;
-	user-select: none;
-}
-
-.chat .chatMessage {
+.message .textMessage {
 	text-transform: capitalize;
 	color: #ffffff;
 	padding: 10px;
@@ -30,7 +17,7 @@
 	overflow-wrap: break-word;
 }
 
-.chat .imageMessage {
+.message .imageMessage {
 	margin: 5px 0;
 	border-radius: 7px;
 	max-width: 60%;
@@ -38,12 +25,12 @@
 	border: 1px solid rgba(82, 82, 82, 0.411);
 }
 
-.bot .chatMessage {
+.bot .textMessage {
 	background: #2298c74d;
 	border-top-left-radius: 0px;
 }
 
-.self .chatMessage {
+.self .textMessage {
 	margin: 5px 0 5px auto;
 	background: #329ac4c5;
 	border-top-right-radius: 0px;

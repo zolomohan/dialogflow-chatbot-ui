@@ -2,18 +2,15 @@ import React, { memo } from 'react';
 import botConfig from '../config/bot';
 import classes from '../styles/Message.module.css';
 import TypingIndicator from './TypingIndicator';
+import Avatar from './Avatar';
 
 export default memo(function Message({ text = '', image, user, typingIndicator }) {
-	const { chat, bot, self, botImg, chatMessage, imageMessage } = classes;
+	const { message, bot, self, textMessage, imageMessage } = classes;
 	return (
-		<div className={`${chat} ${user === 'bot' ? bot : self}`}>
-			{user === 'bot' && (
-				<div className={botImg}>
-					<img src={botConfig.avatar} alt="bot avatar" />
-				</div>
-			)}
+		<div className={`${message} ${user === 'bot' ? bot : self}`}>
+			{user === 'bot' && <Avatar name={botConfig.name} img={botConfig.avatar} />}
 			{typingIndicator && <TypingIndicator />}
-			{text && <p className={chatMessage}>{text}</p>}
+			{text && <p className={textMessage}>{text}</p>}
 			{image && <img className={imageMessage} src={image} alt="requested" />}
 		</div>
 	);
