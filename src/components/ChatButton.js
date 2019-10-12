@@ -6,7 +6,7 @@ import classes from '../styles/ChatButton.module.css';
 export default function ChatButton({ toggleChatBox }) {
 	return (
 		<div className={classes.chatButton} onClick={toggleChatBox}>
-			<Icon type='fas' name='fa-comments' />
+			<Icon name='comments' />
 		</div>
 	);
 }

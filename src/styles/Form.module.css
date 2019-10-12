@@ -37,16 +37,4 @@
 
 .chatFormButtons {
 	margin: auto;
-	user-select: none;
-}
-
-.chatFormButtons i {
-	font-size: 25px;
-	padding: 7px;
-	cursor: pointer;
-	color: #ffffff;
-}
-
-.chatFormButtons i:hover {
-	color: #00e1ffd5;
 }

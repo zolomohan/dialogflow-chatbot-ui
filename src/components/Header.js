@@ -11,6 +11,7 @@ export default function Header({ toggleChatBox, speechOutput, toggleSpeechOutput
 				<Icon
 					name={`${speechOutput ? 'volume-up' : 'volume-mute'}`}
 					onClick={toggleSpeechOutput}
+					marginRight
 				/>
 				<Icon name="minus" onClick={toggleChatBox} />
 			</div>

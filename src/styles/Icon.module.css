@@ -1,0 +1,15 @@
+.icon{
+  color: #fff;
+  user-select: none;
+  cursor: pointer;
+  font-size: 25px;
+}
+
+.iconMargin{
+  margin-right: 10px;
+}
+
+.icon:hover{
+  color: #00e1ffd5;
+  transition: 0.1s;
+}

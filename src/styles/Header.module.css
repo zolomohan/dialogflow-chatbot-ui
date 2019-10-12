@@ -12,26 +12,8 @@
 	font-size: 25px;
 }
 
-.chatBoxHeader .icons{
-	user-select: none;
-}
-
-.chatBoxHeader i {
-	cursor: pointer;
-	margin-right: 10px;
-}
-
-.chatBoxHeader #chatBotName {
-	margin: auto 15px;
-	font-weight: 100;
-}
-
-.chatBoxHeader i:hover{
-	color: #00e1ffd5;
-}
-
 .chatBotName {
 	text-transform: capitalize;
-	padding-left: 0.5em;
+	margin-left: 0.5em;
 	font-weight: 100;
 }
