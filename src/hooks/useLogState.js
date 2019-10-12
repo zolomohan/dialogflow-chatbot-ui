@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import starterMessage from '../helpers/starterMessage';
+import starterMessage from '../helpers/messages/starter';
 
 export default (initialState = []) => {
 	const [ state, setState ] = useState([ starterMessage ] || initialState);

@@ -9,6 +9,8 @@ import Suggestions from './Suggestions';
 import Form from './Form';
 import dialogflow from '../config/dialogflow';
 import speechConfig from '../config/speechOutput';
+import random from '../helpers/randomFromArray';
+import errorMessages from '../helpers/messages/error';
 import { chatBox } from '../styles/Chat.module.css';
 
 export default function ChatBox({ open, toggleChatBox }) {
@@ -71,13 +73,7 @@ export default function ChatBox({ open, toggleChatBox }) {
 			})
 		})
 			.then((res) => parseBotResponse(res.result.fulfillment.speech))
-			.catch(() =>
-				addMessage(
-					'text',
-					"it seems like there's something wrong. could you try again later?",
-					'bot'
-				)
-			);
+			.catch(() => addMessage('text', random(errorMessages), 'bot'));
 	};
 
 	const parseBotResponse = (res) => {

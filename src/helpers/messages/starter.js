@@ -1,6 +1,6 @@
-import bot from '../config/bot';
+import bot from '../../config/bot';
+import random from '../randomFromArray';
 
-const random = (array) => array[Math.floor(Math.random() * array.length)];
 const greeting = [ 'hello', 'hey', 'hey there', 'hello there' ];
 const intro = [ 'my name is', 'i am' ]
 
