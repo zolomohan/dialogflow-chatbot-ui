@@ -13,7 +13,8 @@ export default function Form({ handleSubmit, speechInput, toggleSpeechInput }) {
 	}
 
 	function onSubmit(userResponse = text) {
-		handleSubmit(userResponse);
+		if(text.trim() !== '')
+			handleSubmit(userResponse);
 		resetText();
 	}
 
