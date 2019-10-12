@@ -1,18 +1,18 @@
 import React from 'react';
 import Icon from './Icon';
-import '@fortawesome/fontawesome-free/css/all.css';
-import classes from '../styles/Header.module.css';
+import bot from '../config/bot';
+import { chatBoxHeader, chatBotName, icons } from '../styles/Header.module.css';
 
 export default function Header({ toggleChatBox, speechOutput, toggleSpeechOutput }) {
 	return (
-		<div className={classes.chatBoxHeader}>
-			<h4 className={classes.chatBotName}>Chat Bot</h4>
-			<div className={classes.icons}>
+		<div className={chatBoxHeader}>
+			<h4 className={chatBotName}>{bot.name}</h4>
+			<div className={icons}>
 				<Icon
-					name={`fa-${speechOutput ? 'volume-up' : 'volume-mute'}`}
+					name={`${speechOutput ? 'volume-up' : 'volume-mute'}`}
 					onClick={toggleSpeechOutput}
 				/>
-				<Icon name='fa-minus' onClick={toggleChatBox} />
+				<Icon name="minus" onClick={toggleChatBox} />
 			</div>
 		</div>
 	);

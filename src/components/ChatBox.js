@@ -4,12 +4,12 @@ import useLogState from '../hooks/useLogState';
 import $ from 'jquery';
 import Speech from 'speak-tts';
 import Header from './Header';
-import Logs from './Logs';
+import Log from './Log';
 import Suggestions from './Suggestions';
 import Form from './Form';
 import dialogflow from '../config/dialogflow';
 import speechConfig from '../config/speechOutput';
-import classes from '../styles/Chat.module.css';
+import { chatBox } from '../styles/Chat.module.css';
 
 export default function ChatBox({ open, toggleChatBox }) {
 	const speech = new Speech(),
@@ -55,7 +55,7 @@ export default function ChatBox({ open, toggleChatBox }) {
 		toggleTyping();
 	};
 
-	const fetchBotResponse = (text) => {
+	const fetchBotResponse = (userResponse) => {
 		const { url, accessToken, sessionId } = dialogflow;
 		$.post({
 			url,
@@ -65,7 +65,7 @@ export default function ChatBox({ open, toggleChatBox }) {
 				Authorization: `Bearer ${accessToken}`
 			},
 			data: JSON.stringify({
-				query: text,
+				query: userResponse,
 				lang: 'en',
 				sessionId
 			})
@@ -89,7 +89,6 @@ export default function ChatBox({ open, toggleChatBox }) {
 
 	const parseSuggestions = (res) => {
 		parseTextResponse(res.split(/<ar>/)[0]);
-		setSuggestions([]);
 		setSuggestions(res.split(/<ar>/).splice(1));
 	};
 
@@ -102,13 +101,13 @@ export default function ChatBox({ open, toggleChatBox }) {
 	const parseImageResponse = (res) => addMessage('image', res.split(/<img>/)[1], 'bot');
 
 	return (
-		<div className={classes.chatBox} style={{ display: open ? 'block' : 'none' }}>
+		<div className={chatBox} style={{ display: open ? 'block' : 'none' }}>
 			<Header
 				toggleChatBox={toggleChatBox}
 				speechOutput={speechOutput}
 				toggleSpeechOutput={toggleSpeechOutput}
 			/>
-			<Logs log={log} typingIndicator={typing} />
+			<Log log={log} typingIndicator={typing} />
 			<Suggestions suggestions={suggestions} handleSubmit={onUserResponse} />
 			<Form
 				speechInput={speechInput}

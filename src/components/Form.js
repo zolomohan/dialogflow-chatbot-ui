@@ -21,18 +21,18 @@ export default function Form({ handleSubmit, speechInput, toggleSpeechInput }) {
 		<div className={classes.chatForm}>
 			<div className={classes.chatInput}>
 				<textarea
+					autoFocus
+					rows='1'
 					value={text}
-					placeholder={speechInput ?'Say Something ...' : 'Type a message'}
+					data-min-rows='1'
 					disabled={speechInput}
 					onChange={handleChange}
-					rows='1'
-					data-min-rows='1'
 					className={classes.input}
-					autoFocus
+					placeholder={speechInput ?'Say Something ...' : 'Type a message'}
 				/>
 			</div>
 			<div className={classes.chatFormButtons}>
-				<Icon name={`fa-${speechInput ?'microphone' : 'microphone-slash'}`} onClick={toggleSpeechInput} />
+				<Icon name={`${speechInput ?'microphone' : 'microphone-slash'}`} onClick={toggleSpeechInput} />
 			</div>
 		</div>
 	);

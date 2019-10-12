@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import botConfig from '../config/bot';
 import classes from '../styles/Message.module.css';
 
 export default memo(function Message({ text = '', image, user, typingIndicator }) {
@@ -7,7 +8,7 @@ export default memo(function Message({ text = '', image, user, typingIndicator }
 		<div className={`${chat} ${user === 'bot' ? bot : self}`}>
 			{user === 'bot' && (
 				<div className={botImg}>
-					<img src="https://i.ibb.co/cDCL67q/bot.png" alt="bot" />
+					<img src={botConfig.avatar} alt="bot avatar" />
 				</div>
 			)}
 			{typingIndicator && (

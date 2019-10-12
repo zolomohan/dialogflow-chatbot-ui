@@ -1,3 +1,4 @@
 export default {
-  name: 'krypto'
+  name: 'natalie',
+  avatar: 'https://i.ibb.co/cDCL67q/bot.png'
 }
