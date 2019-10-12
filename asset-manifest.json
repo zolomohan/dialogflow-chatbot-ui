@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/chat-bot-ui/static/css/main.8028153e.chunk.css",
-    "main.js": "/chat-bot-ui/static/js/main.605bf569.chunk.js",
-    "main.js.map": "/chat-bot-ui/static/js/main.605bf569.chunk.js.map",
-    "runtime~main.js": "/chat-bot-ui/static/js/runtime~main.a2cb3f7a.js",
-    "runtime~main.js.map": "/chat-bot-ui/static/js/runtime~main.a2cb3f7a.js.map",
-    "static/css/2.7242530e.chunk.css": "/chat-bot-ui/static/css/2.7242530e.chunk.css",
-    "static/js/2.fa5fcf96.chunk.js": "/chat-bot-ui/static/js/2.fa5fcf96.chunk.js",
-    "static/js/2.fa5fcf96.chunk.js.map": "/chat-bot-ui/static/js/2.fa5fcf96.chunk.js.map",
+    "main.css": "/chat-bot-ui/static/css/main.a2641e03.chunk.css",
+    "main.js": "/chat-bot-ui/static/js/main.0e8a3201.chunk.js",
+    "main.js.map": "/chat-bot-ui/static/js/main.0e8a3201.chunk.js.map",
+    "runtime~main.js": "/chat-bot-ui/static/js/runtime~main.6e6f016c.js",
+    "runtime~main.js.map": "/chat-bot-ui/static/js/runtime~main.6e6f016c.js.map",
+    "static/css/2.933c0310.chunk.css": "/chat-bot-ui/static/css/2.933c0310.chunk.css",
+    "static/js/2.55ec39b1.chunk.js": "/chat-bot-ui/static/js/2.55ec39b1.chunk.js",
+    "static/js/2.55ec39b1.chunk.js.map": "/chat-bot-ui/static/js/2.55ec39b1.chunk.js.map",
     "index.html": "/chat-bot-ui/index.html",
-    "precache-manifest.13cf7abb99db54f87cd34daf754939d6.js": "/chat-bot-ui/precache-manifest.13cf7abb99db54f87cd34daf754939d6.js",
+    "precache-manifest.a0f4266d830042015ed625cdd8c7dfb1.js": "/chat-bot-ui/precache-manifest.a0f4266d830042015ed625cdd8c7dfb1.js",
     "service-worker.js": "/chat-bot-ui/service-worker.js",
-    "static/css/2.7242530e.chunk.css.map": "/chat-bot-ui/static/css/2.7242530e.chunk.css.map",
-    "static/css/main.8028153e.chunk.css.map": "/chat-bot-ui/static/css/main.8028153e.chunk.css.map",
-    "static/media/all.css": "/chat-bot-ui/static/media/fa-solid-900.d6d8d5da.woff2"
+    "static/css/2.933c0310.chunk.css.map": "/chat-bot-ui/static/css/2.933c0310.chunk.css.map",
+    "static/css/main.a2641e03.chunk.css.map": "/chat-bot-ui/static/css/main.a2641e03.chunk.css.map",
+    "static/media/all.css": "/chat-bot-ui/static/media/fa-solid-900.c2801fb4.svg"
   }
 }
