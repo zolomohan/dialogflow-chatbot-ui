@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import Message from './Message';
 import classes from '../styles/Logs.module.css';
 
-export default function Logs({ log, typingIndicator }) {
+export default function Log({ log, typingIndicator }) {
 	const logEnd = useRef();
 	useEffect(() => logEnd.current.scrollIntoView({ behavior: 'smooth' }));
 	return (
