@@ -1,14 +1,9 @@
 import { useState } from 'react';
-import starterMessage from '../helpers/starterMessage'
+import starterMessage from '../helpers/starterMessage';
 
 export default (initialState = []) => {
 	const [ state, setState ] = useState([ starterMessage ] || initialState);
-
-	const addLog = (type, payload, user) => {
-		let newLog = state;
-		newLog.push({ [type]: payload, user });
-		setState(newLog);
-	};
-
+	const addLog = (type, payload, user) =>
+		setState((state) => [ ...state, { [type]: payload, user } ]);
 	return [ state, addLog ];
 };
