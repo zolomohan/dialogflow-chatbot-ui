@@ -15,6 +15,7 @@
 	padding: 10px;
 	padding-top: 6px;
 	width: 100%;
+	user-select: none;
 }
 
 .chat .chatMessage {

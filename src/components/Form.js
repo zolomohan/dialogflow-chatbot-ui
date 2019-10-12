@@ -22,17 +22,21 @@ export default function Form({ handleSubmit, speechInput, toggleSpeechInput }) {
 			<div className={classes.chatInput}>
 				<textarea
 					autoFocus
-					rows='1'
+					rows="1"
 					value={text}
-					data-min-rows='1'
+					data-min-rows="1"
 					disabled={speechInput}
 					onChange={handleChange}
 					className={classes.input}
-					placeholder={speechInput ?'Say Something ...' : 'Type a message'}
+					placeholder={speechInput ? 'Say Something ...' : 'Type a message'}
 				/>
 			</div>
 			<div className={classes.chatFormButtons}>
-				<Icon name={`${speechInput ?'microphone' : 'microphone-slash'}`} onClick={toggleSpeechInput} />
+				<Icon name='arrow-right' onClick={() => onSubmit(text)} marginRight/>
+				<Icon
+					name={`${speechInput ? 'microphone' : 'microphone-slash'}`}
+					onClick={toggleSpeechInput}
+				/>
 			</div>
 		</div>
 	);

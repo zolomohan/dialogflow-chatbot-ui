@@ -13,7 +13,7 @@ export default function Header({ toggleChatBox, speechOutput, toggleSpeechOutput
 					onClick={toggleSpeechOutput}
 					marginRight
 				/>
-				<Icon name="minus" onClick={toggleChatBox} />
+				<Icon name="minus" onClick={toggleChatBox} marginRight/>
 			</div>
 		</div>
 	);
