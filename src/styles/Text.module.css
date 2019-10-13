@@ -1,0 +1,22 @@
+.text {
+	text-transform: capitalize;
+	color: #ffffff;
+	padding: 10px;
+	margin: 5px 0;
+	font-size: 16px;
+	border-radius: 7px;
+	max-width: 60%;
+	width: auto;
+	overflow-wrap: break-word;
+}
+
+.bot {
+	background: #2298c74d;
+	border-top-left-radius: 0px;
+}
+
+.self {
+	margin: 5px 0 5px auto;
+	background: #329ac4c5;
+	border-top-right-radius: 0px;
+}

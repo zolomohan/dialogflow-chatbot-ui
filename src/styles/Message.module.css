@@ -4,34 +4,3 @@
 	align-items: flex-start;
 	margin-bottom: 10px;
 }
-
-.message .textMessage {
-	text-transform: capitalize;
-	color: #ffffff;
-	padding: 10px;
-	margin: 5px 0;
-	font-size: 16px;
-	border-radius: 7px;
-	max-width: 60%;
-	width: auto;
-	overflow-wrap: break-word;
-}
-
-.message .imageMessage {
-	margin: 5px 0;
-	border-radius: 7px;
-	max-width: 60%;
-	width: auto;
-	border: 1px solid rgba(82, 82, 82, 0.411);
-}
-
-.bot .textMessage {
-	background: #2298c74d;
-	border-top-left-radius: 0px;
-}
-
-.self .textMessage {
-	margin: 5px 0 5px auto;
-	background: #329ac4c5;
-	border-top-right-radius: 0px;
-}
