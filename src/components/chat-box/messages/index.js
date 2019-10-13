@@ -1,10 +1,10 @@
 import React, { memo } from 'react';
-import botConfig from '../../config/bot';
-import TypingIndicator from '../TypingIndicator';
+import botConfig from '../../../config/bot';
+import TypingIndicator from './TypingIndicator';
 import Avatar from './Avatar';
 import Text from './Text';
 import Image from './Image';
-import { message } from '../../styles/Message.module.css';
+import { message } from '../../../styles/Message.module.css';
 
 export default memo(function Message({ text = '', image, user, typing }) {
 	return (

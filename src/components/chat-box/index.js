@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import useToggleState from '../hooks/useToggleState';
-import useLogState from '../hooks/useLogState';
+import useToggleState from '../../hooks/useToggleState';
+import useLogState from '../../hooks/useLogState';
 import $ from 'jquery';
 import Speech from 'speak-tts';
 import Header from './Header';
 import Log from './Log';
-import Suggestions from './Suggestions';
+import Suggestions from './suggestions';
 import Form from './Form';
-import dialogflow from '../config/dialogflow';
-import speechConfig from '../config/speechOutput';
-import random from '../helpers/randomFromArray';
-import errorMessages from '../helpers/messages/error';
-import { chatBox } from '../styles/Chat.module.css';
+import dialogflow from '../../config/dialogflow';
+import speechConfig from '../../config/speechOutput';
+import random from '../../helpers/randomFromArray';
+import errorMessages from '../../helpers/messages/error';
+import { chatBox } from '../../styles/ChatBox.module.css';
 
 export default function ChatBox({ open, toggleChatBox }) {
 	const speech = new Speech(),
