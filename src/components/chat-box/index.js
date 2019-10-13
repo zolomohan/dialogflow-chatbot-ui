@@ -4,7 +4,7 @@ import useLogState from '../../hooks/useLogState';
 import $ from 'jquery';
 import Speech from 'speak-tts';
 import Header from './Header';
-import Log from './Log';
+import Log from './log';
 import Suggestions from './suggestions';
 import Form from './Form';
 import dialogflow from '../../config/dialogflow';
