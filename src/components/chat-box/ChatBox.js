@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import useToggleState from 'hooks/useToggleState';
 import useLogState from 'hooks/useLogState';
-import $ from 'jquery';
 import Speech from 'speak-tts';
 import Header from 'components/chat-box/header/Header';
 import Log from 'components/chat-box/log/Log';
 import Suggestions from 'components/chat-box//suggestions/Suggestions';
 import Form from 'components/chat-box/form/Form';
-import random from 'helpers/randomFromArray';
-import errorMessages from 'helpers/messages/error';
-import dialogflow from 'config/dialogflow';
+import fetchBotResponse from 'helpers/fetchBotResponse';
 import speechConfig from 'config/speechOutput';
 import { chatBox } from './ChatBox.module.css';
 
@@ -26,7 +23,7 @@ export default function ChatBox({ open, toggleChatBox }) {
 		let text = '';
 		for (let i = event.resultIndex; i < event.results.length; ++i)
 			text += event.results[i][0].transcript;
-		fetchBotResponse(text);
+		fetchBotResponse(text, parseBotResponse, addMessage);
 		addMessage('text', text, 'user');
 		toggleSpeechInput();
 	};
@@ -52,28 +49,9 @@ export default function ChatBox({ open, toggleChatBox }) {
 	};
 
 	const onUserResponse = (res) => {
-		fetchBotResponse(res);
+		fetchBotResponse(res, parseBotResponse, addMessage);
 		addMessage('text', res, 'user');
 		setTyping(true);
-	};
-
-	const fetchBotResponse = (userResponse) => {
-		const { url, accessToken, sessionId } = dialogflow;
-		$.post({
-			url,
-			contentType: 'application/json; charset=utf-8',
-			dataType: 'json',
-			headers: {
-				Authorization: `Bearer ${accessToken}`
-			},
-			data: JSON.stringify({
-				query: userResponse,
-				lang: 'en',
-				sessionId
-			})
-		})
-			.then((res) => parseBotResponse(res.result.fulfillment.speech))
-			.catch(() => addMessage('text', random(errorMessages), 'bot'));
 	};
 
 	const parseBotResponse = (res) => {
