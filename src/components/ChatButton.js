@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon from './Icon';
+import Icon from './ui/Icon';
 import '@fortawesome/fontawesome-free/css/all.css';
 import classes from '../styles/ChatButton.module.css';
 

@@ -4,4 +4,11 @@
 	max-width: 60%;
 	width: auto;
 	border: 1px solid rgba(82, 82, 82, 0.411);
+	cursor: pointer;
+}
+
+.imageModal {
+	margin: auto;
+	height: 100%;
+	width: 100%;
 }

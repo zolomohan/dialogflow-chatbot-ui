@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon from '../Icon';
+import Icon from '../ui/Icon';
 import bot from '../../config/bot';
 import { chatBoxHeader, chatBotName, icons } from '../../styles/Header.module.css';
 
