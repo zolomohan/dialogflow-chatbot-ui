@@ -5,7 +5,7 @@ import $ from 'jquery';
 import Speech from 'speak-tts';
 import Header from 'components/chat-box/header/Header';
 import Log from 'components/chat-box/log/Log';
-import Suggestions from './suggestions/Suggestions';
+import Suggestions from 'components/chat-box//suggestions/Suggestions';
 import Form from 'components/chat-box/form/Form';
 import random from 'helpers/randomFromArray';
 import errorMessages from 'helpers/messages/error';

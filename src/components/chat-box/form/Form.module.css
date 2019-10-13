@@ -1,4 +1,4 @@
-.chatForm {
+.form {
 	margin: 0px auto 0px auto;
 	display: flex;
 	width: 450px;
@@ -8,12 +8,12 @@
 	background: #222222;
 }
 
-.chatInput {
+.input {
 	width: 75%;
 	margin-right: 15px;
 }
 
-.chatForm textarea {
+.form textarea {
 	color: #ffffff;
 	border: none;
 	padding: 5px 5px 5px 15px;
@@ -31,10 +31,10 @@
 	overflow-y: scroll;
 }
 
-.chatForm textarea::placeholder {
+.form textarea::placeholder {
 	color: #ffffffb4;
 }
 
-.chatFormButtons {
+.formButtons {
 	margin: auto;
 }

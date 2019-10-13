@@ -1,6 +1,5 @@
 .message {
 	display: flex;
-	flex-flow: row wrap;
 	align-items: flex-start;
 	margin-bottom: 10px;
 }

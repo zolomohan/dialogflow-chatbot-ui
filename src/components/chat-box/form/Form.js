@@ -1,7 +1,7 @@
 import React from 'react';
 import useInputState from 'hooks/useInputState';
 import Icon from 'components/ui/icon/Icon';
-import classes from './Form.module.css';
+import { form, input, formButtons } from './Form.module.css';
 
 export default function Form({ handleSubmit, speechInput, toggleSpeechInput }) {
 	const [ text, changeText, resetText ] = useInputState();
@@ -12,28 +12,25 @@ export default function Form({ handleSubmit, speechInput, toggleSpeechInput }) {
 			: changeText(event);
 	}
 
-	function onSubmit(userResponse = text) {
-		if(text.trim() !== '')
-			handleSubmit(userResponse);
+	function onSubmit() {
+		if (text.trim() !== '') handleSubmit(text);
 		resetText();
 	}
 
 	return (
-		<div className={classes.chatForm}>
-			<div className={classes.chatInput}>
+		<div className={form}>
+			<div className={input}>
 				<textarea
 					autoFocus
 					rows="1"
 					value={text}
-					data-min-rows="1"
 					disabled={speechInput}
 					onChange={handleChange}
-					className={classes.input}
 					placeholder={speechInput ? 'Say Something ...' : 'Type a message'}
 				/>
 			</div>
-			<div className={classes.chatFormButtons}>
-				<Icon name='arrow-right' onClick={() => onSubmit(text)} marginRight/>
+			<div className={formButtons}>
+				<Icon name="arrow-right" onClick={onSubmit} marginRight />
 				<Icon
 					name={`${speechInput ? 'microphone' : 'microphone-slash'}`}
 					onClick={toggleSpeechInput}

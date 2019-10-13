@@ -4,7 +4,7 @@ import ChatBox from 'components/chat-box/ChatBox';
 import ChatButton from 'components/chat-button/ChatButton';
 
 function App() {
-	const [ chatBox, toggleChatBox ] = useToggleState(true);
+	const [ chatBox, toggleChatBox ] = useToggleState(false);
 	return (
 		<>
 			<ChatBox toggleChatBox={toggleChatBox} open={chatBox} />

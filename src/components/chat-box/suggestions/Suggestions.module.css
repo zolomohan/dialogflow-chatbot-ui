@@ -10,5 +10,5 @@
 }
 
 .suggestionContainer::-webkit-scrollbar{
-	height: 3px;
+	height: 5px;
 }

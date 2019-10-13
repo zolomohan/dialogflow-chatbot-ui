@@ -1,8 +1,6 @@
 .chatBox {
-	display: none;
 	z-index: 2;
 	position: absolute;
 	bottom: 0;
 	right: 0;
-	transition: 0.2s margin linear;
 }

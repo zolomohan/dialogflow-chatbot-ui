@@ -1,20 +1,20 @@
 import React from 'react';
 import Icon from 'components/ui/icon/Icon';
 import bot from 'config/bot';
-import { chatBoxHeader, chatBotName, icons } from './Header.module.css';
+import { header, botName } from './Header.module.css';
 
 export default function Header({ toggleChatBox, speechOutput, toggleSpeechOutput }) {
 	return (
-		<div className={chatBoxHeader}>
-			<h4 className={chatBotName}>{bot.name}</h4>
-			<div className={icons}>
+		<div className={header}>
+			<h4 className={botName}>{bot.name}</h4>
+			<span>
 				<Icon
 					name={`${speechOutput ? 'volume-up' : 'volume-mute'}`}
 					onClick={toggleSpeechOutput}
 					marginRight
 				/>
-				<Icon name="minus" onClick={toggleChatBox} marginRight/>
-			</div>
+				<Icon name="minus" onClick={toggleChatBox} marginRight />
+			</span>
 		</div>
 	);
 }

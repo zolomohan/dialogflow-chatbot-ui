@@ -7,7 +7,7 @@
   display: inline-block;
   height: 5px;
   width: 5px;
-  background-color: #ffffff;
+  background-color: #fff;
   margin: 25px;
   border-radius: 50%;
   animation: wave 1.5s infinite ease-in-out;
