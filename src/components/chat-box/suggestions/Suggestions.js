@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import Suggestion from './suggestion/Suggestion';
+import Suggestion from 'components/chat-box/suggestions/suggestion/Suggestion';
 import { suggestionContainer } from './Suggestions.module.css';
 
 export default memo(function Suggestions({ suggestions, handleSubmit }) {

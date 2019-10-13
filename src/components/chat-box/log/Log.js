@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import Message from './messages/Message';
+import Message from 'components/chat-box/log/messages/Message';
 import { chatBoxContent, chatLogs } from './Log.module.css';
 
 export default function Log({ log, typing }) {
