@@ -3,15 +3,15 @@ import useToggleState from '../../hooks/useToggleState';
 import useLogState from '../../hooks/useLogState';
 import $ from 'jquery';
 import Speech from 'speak-tts';
-import Header from './Header';
-import Log from './log';
-import Suggestions from './suggestions';
-import Form from './Form';
+import Header from './header/Header';
+import Log from './log/Log';
+import Suggestions from './suggestions/Suggestions';
+import Form from './form/Form';
 import dialogflow from '../../config/dialogflow';
 import speechConfig from '../../config/speechOutput';
 import random from '../../helpers/randomFromArray';
 import errorMessages from '../../helpers/messages/error';
-import { chatBox } from '../../styles/ChatBox.module.css';
+import { chatBox } from './ChatBox.module.css';
 
 export default function ChatBox({ open, toggleChatBox }) {
 	const speech = new Speech(),

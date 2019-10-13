@@ -1,7 +1,7 @@
 import React from 'react';
-import Icon from '../ui/Icon';
-import useInputState from '../../hooks/useInputState';
-import classes from '../../styles/Form.module.css';
+import Icon from '../../ui/Icon/Icon';
+import useInputState from '../../../hooks/useInputState';
+import classes from './Form.module.css';
 
 export default function Form({ handleSubmit, speechInput, toggleSpeechInput }) {
 	const [ text, changeText, resetText ] = useInputState();

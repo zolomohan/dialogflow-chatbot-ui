@@ -1,7 +1,7 @@
 import React from 'react';
-import Icon from '../ui/Icon';
-import bot from '../../config/bot';
-import { chatBoxHeader, chatBotName, icons } from '../../styles/Header.module.css';
+import Icon from '../../ui/Icon/Icon';
+import bot from '../../../config/bot';
+import { chatBoxHeader, chatBotName, icons } from './Header.module.css';
 
 export default function Header({ toggleChatBox, speechOutput, toggleSpeechOutput }) {
 	return (
