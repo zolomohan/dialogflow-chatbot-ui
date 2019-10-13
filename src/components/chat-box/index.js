@@ -34,7 +34,7 @@ export default function ChatBox({ open, toggleChatBox }) {
 	const [ log, addLog ] = useLogState();
 	const [ suggestions, setSuggestions ] = useState([]);
 	const [ speechInput, toggleSpeechInput ] = useToggleState();
-	const [ typing, toggleTyping ] = useToggleState();
+	const [ typing, setTyping ] = useState(false);
 	const [ speechOutput, toggleSpeechOutput ] = useToggleState(true);
 
 	useEffect(speech.cancel, [ speechOutput ]);
@@ -45,7 +45,7 @@ export default function ChatBox({ open, toggleChatBox }) {
 
 	const addMessage = (type, payload, user) => {
 		if (user === 'bot') {
-			toggleTyping();
+			setTyping(false);
 			if (speechOutput && type !== 'image') speech.speak({ text: payload });
 		}
 		addLog(type, payload, user);
@@ -54,7 +54,7 @@ export default function ChatBox({ open, toggleChatBox }) {
 	const onUserResponse = (res) => {
 		fetchBotResponse(res);
 		addMessage('text', res, 'user');
-		toggleTyping();
+		setTyping(true);
 	};
 
 	const fetchBotResponse = (userResponse) => {
@@ -103,7 +103,7 @@ export default function ChatBox({ open, toggleChatBox }) {
 				speechOutput={speechOutput}
 				toggleSpeechOutput={toggleSpeechOutput}
 			/>
-			<Log log={log} typingIndicator={typing} />
+			<Log log={log} typing={typing} />
 			<Suggestions suggestions={suggestions} handleSubmit={onUserResponse} />
 			<Form
 				speechInput={speechInput}
