@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon from '../../ui/Icon/Icon';
+import Icon from '../../ui/icon/Icon';
 import useInputState from '../../../hooks/useInputState';
 import classes from './Form.module.css';
 
