@@ -16,7 +16,10 @@ export default function parse(res) {
 		for (var message of messages) response.texts.push(message);
 	};
 
-  const parseImageResponse = (res) => response.image.push(res.split(/<img>/)[1]);
+  const parseImageResponse = (res) => {
+		let images = res.split(/<img>/).splice(1);
+		images.map((image) => response.images.push(image))
+	}
   
 	if (res.includes('<ar>')) parseSuggestions(res);
 	else if (res.includes('<br>')) parseTextResponse(res);
