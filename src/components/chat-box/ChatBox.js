@@ -20,11 +20,10 @@ export default function ChatBox({ open, toggleChatBox }) {
 			console.error('An error occured while initializing Speech : ', error)
 		);
 	speechRecognition.onresult = (event) => {
-		let text = '';
+		let transcript = '';
 		for (let i = event.resultIndex; i < event.results.length; ++i)
-			text += event.results[i][0].transcript;
-		fetchBotResponse(text, parseBotResponse, addMessage);
-		addMessage('text', text, 'user');
+			transcript += event.results[i][0].transcript;
+		onUserResponse(transcript);
 		toggleSpeechInput();
 	};
 
@@ -40,7 +39,7 @@ export default function ChatBox({ open, toggleChatBox }) {
 		[ speechInput ]
 	);
 
-	const addMessage = (type, payload, user) => {
+	const addMessage = (type, payload, user = 'bot') => {
 		if (user === 'bot') {
 			setTyping(false);
 			if (speechOutput && type !== 'image') speech.speak({ text: payload });
@@ -48,31 +47,17 @@ export default function ChatBox({ open, toggleChatBox }) {
 		addLog(type, payload, user);
 	};
 
-	const onUserResponse = (res) => {
-		fetchBotResponse(res, parseBotResponse, addMessage);
-		addMessage('text', res, 'user');
+	const onUserResponse = (userResponse) => {
+		fetchBotResponse(userResponse).then(onBotResponse);
+		addMessage('text', userResponse, 'user');
 		setTyping(true);
 	};
 
-	const parseBotResponse = (res) => {
-		if (res.includes('<ar>')) parseSuggestions(res);
-		else if (res.includes('<br>')) parseTextResponse(res);
-		else if (res.includes('<img>')) parseImageResponse(res);
-		else addMessage('text', res, 'bot');
+	const onBotResponse = (botResponse) => {
+		setSuggestions(botResponse.suggestions);
+		botResponse.texts.map((text) => addMessage('text', text));
+		botResponse.images.map((image) => addMessage('image', image));
 	};
-
-	const parseSuggestions = (res) => {
-		parseTextResponse(res.split(/<ar>/)[0]);
-		setSuggestions(res.split(/<ar>/).splice(1));
-	};
-
-	const parseTextResponse = (res) => {
-		if (res.includes('<img>')) parseImageResponse(res.split(/<br>/)[0]);
-		const messages = res.split(/<br>/).splice(1);
-		for (var message of messages) addMessage('text', message, 'bot');
-	};
-
-	const parseImageResponse = (res) => addMessage('image', res.split(/<img>/)[1], 'bot');
 
 	return (
 		<div className={chatBox} style={{ display: open ? 'block' : 'none' }}>
