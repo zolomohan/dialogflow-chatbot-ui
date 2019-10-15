@@ -6,7 +6,6 @@
 	width: 450px;
 	overflow: auto;
 	padding-bottom: 10px;
-	background-color: #222222;
 }
 
 .suggestionContainer::-webkit-scrollbar{

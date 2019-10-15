@@ -66,7 +66,7 @@ export default function ChatBox({ open, toggleChatBox }) {
 				speechOutput={speechOutput}
 				toggleSpeechOutput={toggleSpeechOutput}
 			/>
-			<Log log={log} typing={typing} />
+			<Log log={log} typing={typing} noSuggestions={suggestions.length === 0} />
 			<Suggestions suggestions={suggestions} handleSubmit={onUserResponse} />
 			<Form
 				speechInput={speechInput}

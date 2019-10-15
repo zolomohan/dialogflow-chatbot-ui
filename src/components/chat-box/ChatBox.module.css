@@ -1,4 +1,6 @@
 .chatBox {
+	background-color: #222;
+	color: #fff;
 	z-index: 2;
 	position: absolute;
 	bottom: 0;
