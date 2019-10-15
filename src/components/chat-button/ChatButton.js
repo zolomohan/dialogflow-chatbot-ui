@@ -6,7 +6,7 @@ import '@fortawesome/fontawesome-free/css/all.css';
 export default function ChatButton({ toggleChatBox }) {
 	return (
 		<div className={chatButton} onClick={toggleChatBox}>
-			<Icon name="comments" />
+			<Icon name="comments" disableHover />
 		</div>
 	);
 }

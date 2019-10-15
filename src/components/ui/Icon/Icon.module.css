@@ -9,7 +9,7 @@
   margin-right: 0.5em;
 }
 
-.icon:hover{
+.hoverIcon:hover{
   color: #00e1ffd5;
   transition: 0.1s;
 }

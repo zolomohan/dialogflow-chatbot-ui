@@ -4,7 +4,7 @@ import errorMessages from 'helpers/messages/error';
 import dialogflow from 'config/dialogflow';
 
 export default async (userResponse) => {
-	let response = new Object();
+	let response = {};
 	await $.post({
 		url: dialogflow.url,
 		contentType: 'application/json; charset=utf-8',

@@ -36,7 +36,7 @@ export default function ChatBox({ open, toggleChatBox }) {
 	useEffect(speech.cancel, [ speechOutput ]);
 	useEffect(
 		() => (speechInput ? speechRecognition.start() : speechRecognition.stop()),
-		[ speechInput ]
+		[ speechInput, speechRecognition ]
 	);
 
 	const addMessage = (type, payload, user = 'bot') => {
