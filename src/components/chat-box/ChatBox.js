@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import useToggleState from 'hooks/useToggleState';
-import useLogState from 'hooks/useLogState';
 import Speech from 'speak-tts';
 import Header from 'components/chat-box/Header';
 import Log from 'components/chat-box/log/Log';
 import SuggestionBox from 'components/chat-box/suggestions/SuggestionBox';
 import Form from 'components/chat-box/Form';
 import fetchBotResponse from 'helpers/fetchBotResponse';
+import useLogState from 'hooks/useLogState';
 import speechConfig from 'config/speechOutput';
 import { chatBox } from 'styles/ChatBox.module.css';
 
@@ -39,24 +39,16 @@ export default function ChatBox({ open, toggleChatBox }) {
 		[ speechInput, speechRecognition ]
 	);
 
-	const addMessage = (type, payload, user = 'bot') => {
-		if (user === 'bot') {
-			setTyping(false);
-			if (speechOutput && type !== 'image') speech.speak({ text: payload });
-		}
-		addLog(type, payload, user);
-	};
-
-	const onUserResponse = (userResponse) => {
-		fetchBotResponse(userResponse).then(onBotResponse);
-		addMessage('text', userResponse, 'user');
+	const onUserResponse = (response) => {
+		fetchBotResponse(response).then(onBotResponse);
+		addLog({ texts: [ response ] }, 'user');
 		setTyping(true);
 	};
 
-	const onBotResponse = (botResponse) => {
-		setSuggestions(botResponse.suggestions);
-		botResponse.texts.map((text) => addMessage('text', text));
-		botResponse.images.map((image) => addMessage('image', image));
+	const onBotResponse = (response) => {
+		setSuggestions(response.suggestions);
+		addLog(response, 'bot');
+		setTyping(false);
 	};
 
 	return (
