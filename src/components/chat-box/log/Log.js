@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import Message from 'components/chat-box/log/messages/Message';
 import { logs } from 'styles/Log.module.css';
-import Group from './Group';
+import Group from './MessageGroup';
 
 export default function Log({ log, typing, noSuggestions }) {
 	useEffect(() => end.current.scrollIntoView({ behavior: 'smooth' }));
@@ -14,7 +14,7 @@ export default function Log({ log, typing, noSuggestions }) {
 			{log.map(({ texts, images, user }, i) => (
 				<Group texts={texts} images={images} user={user} key={i} />
 			))}
-			{typing && <Message key="typing" user="bot" typing />}
+			{typing && <Message key="typing" user="bot" typing hasAvatar />}
 			<div ref={end} />
 		</div>
 	);
