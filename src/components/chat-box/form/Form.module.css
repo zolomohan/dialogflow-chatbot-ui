@@ -5,7 +5,6 @@
 	min-width: 390px;
 	align-items: flex-start;
 	overflow: auto;
-	background: #222222;
 }
 
 .input {
@@ -14,10 +13,10 @@
 }
 
 .form textarea {
-	color: #ffffff;
+	background: #222;
+	color: #fff;
 	border: none;
 	padding: 5px 5px 5px 15px;
-	background: #222222;
 	width: 100%;
 	min-height: 5px;
 	border-radius: 20px;

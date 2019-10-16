@@ -6,13 +6,12 @@ import { form, input, formButtons } from './Form.module.css';
 export default function Form({ handleSubmit, speechInput, toggleSpeechInput }) {
 	const [ text, changeText, resetText ] = useInputState();
 
-	function handleChange(event) {
+	const handleChange = (event) =>
 		event.nativeEvent.inputType === 'insertLineBreak'
 			? onSubmit()
 			: changeText(event);
-	}
 
-	function onSubmit() {
+	const onSubmit = () => {
 		if (text.trim() !== '') handleSubmit(text);
 		resetText();
 	}
