@@ -1,7 +1,7 @@
 import React from 'react';
 import useToggleState from 'hooks/useToggleState';
-import Modal from 'components/ui/modal/Modal';
-import { image, imageModal } from './Image.module.css';
+import Modal from 'components/ui/Modal';
+import { image, imageModal } from 'styles/Image.module.css';
 
 export default function Image({ src, alt }) {
 	const [ modal, toggleModal ] = useToggleState();

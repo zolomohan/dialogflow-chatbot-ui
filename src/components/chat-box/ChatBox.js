@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import useToggleState from 'hooks/useToggleState';
 import useLogState from 'hooks/useLogState';
 import Speech from 'speak-tts';
-import Header from 'components/chat-box/header/Header';
+import Header from 'components/chat-box/Header';
 import Log from 'components/chat-box/log/Log';
-import Suggestions from 'components/chat-box//suggestions/Suggestions';
-import Form from 'components/chat-box/form/Form';
+import SuggestionBox from 'components/chat-box/suggestions/SuggestionBox';
+import Form from 'components/chat-box/Form';
 import fetchBotResponse from 'helpers/fetchBotResponse';
 import speechConfig from 'config/speechOutput';
-import { chatBox } from './ChatBox.module.css';
+import { chatBox } from 'styles/ChatBox.module.css';
 
 export default function ChatBox({ open, toggleChatBox }) {
 	const speech = new Speech(),
@@ -67,7 +67,7 @@ export default function ChatBox({ open, toggleChatBox }) {
 				toggleSpeechOutput={toggleSpeechOutput}
 			/>
 			<Log log={log} typing={typing} noSuggestions={suggestions.length === 0} />
-			<Suggestions suggestions={suggestions} handleSubmit={onUserResponse} />
+			<SuggestionBox suggestions={suggestions} handleSubmit={onUserResponse} />
 			<Form
 				speechInput={speechInput}
 				toggleSpeechInput={toggleSpeechInput}

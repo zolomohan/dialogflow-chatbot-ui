@@ -1,6 +1,6 @@
 import React from 'react';
-import Icon from 'components/ui/icon/Icon';
-import { backdrop, close } from './Backdrop.module.css';
+import Icon from 'components/ui/Icon';
+import { backdrop, close } from 'styles/Backdrop.module.css';
 
 export default function Backdrop({ show, closeModal }) {
 	return (

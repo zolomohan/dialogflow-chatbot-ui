@@ -1,4 +1,4 @@
-.suggestionContainer {
+.suggestionBox {
 	display: flex;
 	align-items: center;
 	box-sizing: unset;
@@ -8,6 +8,6 @@
 	padding-bottom: 10px;
 }
 
-.suggestionContainer::-webkit-scrollbar{
+.suggestionBox::-webkit-scrollbar{
 	height: 5px;
 }

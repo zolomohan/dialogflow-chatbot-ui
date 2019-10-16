@@ -1,5 +1,5 @@
 import React from 'react';
-import { container, dot } from './Typing.module.css';
+import { container, dot } from 'styles/Typing.module.css';
 
 export default function TypingIndicator() {
 	return (
