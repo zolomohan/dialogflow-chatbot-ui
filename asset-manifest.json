@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/chat-bot-ui/static/css/main.08205fad.chunk.css",
-    "main.js": "/chat-bot-ui/static/js/main.146f20dd.chunk.js",
-    "main.js.map": "/chat-bot-ui/static/js/main.146f20dd.chunk.js.map",
-    "runtime~main.js": "/chat-bot-ui/static/js/runtime~main.6e6f016c.js",
-    "runtime~main.js.map": "/chat-bot-ui/static/js/runtime~main.6e6f016c.js.map",
-    "static/css/2.933c0310.chunk.css": "/chat-bot-ui/static/css/2.933c0310.chunk.css",
-    "static/js/2.d96a828d.chunk.js": "/chat-bot-ui/static/js/2.d96a828d.chunk.js",
-    "static/js/2.d96a828d.chunk.js.map": "/chat-bot-ui/static/js/2.d96a828d.chunk.js.map",
-    "index.html": "/chat-bot-ui/index.html",
-    "precache-manifest.c3888c7616630455c6c74552e21f47b5.js": "/chat-bot-ui/precache-manifest.c3888c7616630455c6c74552e21f47b5.js",
-    "service-worker.js": "/chat-bot-ui/service-worker.js",
-    "static/css/2.933c0310.chunk.css.map": "/chat-bot-ui/static/css/2.933c0310.chunk.css.map",
-    "static/css/main.08205fad.chunk.css.map": "/chat-bot-ui/static/css/main.08205fad.chunk.css.map",
-    "static/media/all.css": "/chat-bot-ui/static/media/fa-solid-900.c2801fb4.svg"
+    "main.css": "/dialogflow-chatbot-ui/static/css/main.018288b4.chunk.css",
+    "main.js": "/dialogflow-chatbot-ui/static/js/main.ed1cc3bb.chunk.js",
+    "main.js.map": "/dialogflow-chatbot-ui/static/js/main.ed1cc3bb.chunk.js.map",
+    "runtime~main.js": "/dialogflow-chatbot-ui/static/js/runtime~main.545be352.js",
+    "runtime~main.js.map": "/dialogflow-chatbot-ui/static/js/runtime~main.545be352.js.map",
+    "static/css/2.32c26893.chunk.css": "/dialogflow-chatbot-ui/static/css/2.32c26893.chunk.css",
+    "static/js/2.d96a828d.chunk.js": "/dialogflow-chatbot-ui/static/js/2.d96a828d.chunk.js",
+    "static/js/2.d96a828d.chunk.js.map": "/dialogflow-chatbot-ui/static/js/2.d96a828d.chunk.js.map",
+    "index.html": "/dialogflow-chatbot-ui/index.html",
+    "precache-manifest.12e756ce3e147e0e793057e9d871d847.js": "/dialogflow-chatbot-ui/precache-manifest.12e756ce3e147e0e793057e9d871d847.js",
+    "service-worker.js": "/dialogflow-chatbot-ui/service-worker.js",
+    "static/css/2.32c26893.chunk.css.map": "/dialogflow-chatbot-ui/static/css/2.32c26893.chunk.css.map",
+    "static/css/main.018288b4.chunk.css.map": "/dialogflow-chatbot-ui/static/css/main.018288b4.chunk.css.map",
+    "static/media/all.css": "/dialogflow-chatbot-ui/static/media/fa-solid-900.c2801fb4.svg"
   }
 }
