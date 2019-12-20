@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import Message from 'components/chat-box/log/messages/Message';
 import { group } from 'styles/Group.module.css';
 
-export default memo(function MessageGroup({ texts = [], images = [], user = 'bot' }) {
+export default memo(function MessageGroup({ texts = [], images = [], user }) {
 	return (
 		<div className={group}>
 			{texts.map((text, i) => (
