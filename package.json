@@ -1,6 +1,6 @@
 {
   "name": "chat-bot",
-  "homepage": "http://zolomohan.github.io/chat-bot-ui",
+  "homepage": "http://zolomohan.github.io/dialogflow-chatbot-ui",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
