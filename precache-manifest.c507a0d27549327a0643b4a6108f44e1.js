@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "2aa6ce0532d1dfa95ddfef2586fdc6db",
+    "revision": "29fea388e6cdaf9d368599c2992c6ef0",
     "url": "/dialogflow-chatbot-ui/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/dialogflow-chatbot-ui/static/css/2.32c26893.chunk.css"
   },
   {
-    "revision": "c1a681d7a49464aac627",
+    "revision": "418eeac7ef7f7f4dcb84",
     "url": "/dialogflow-chatbot-ui/static/css/main.018288b4.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/dialogflow-chatbot-ui/static/js/2.d96a828d.chunk.js"
   },
   {
-    "revision": "c1a681d7a49464aac627",
-    "url": "/dialogflow-chatbot-ui/static/js/main.ed1cc3bb.chunk.js"
+    "revision": "418eeac7ef7f7f4dcb84",
+    "url": "/dialogflow-chatbot-ui/static/js/main.1c1455f3.chunk.js"
   },
   {
     "revision": "5482c077682d7ed40504",

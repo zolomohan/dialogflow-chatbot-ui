@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/dialogflow-chatbot-ui/precache-manifest.12e756ce3e147e0e793057e9d871d847.js"
+  "/dialogflow-chatbot-ui/precache-manifest.c507a0d27549327a0643b4a6108f44e1.js"
 );
 
 self.addEventListener('message', (event) => {
