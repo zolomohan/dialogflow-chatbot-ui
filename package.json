@@ -4,11 +4,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "dialogflow": "^1.2.0",
+    "google-auth-library": "^6.0.5",
     "jquery": "^3.4.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-scripts": "3.1.1",
-    "speak-tts": "^2.0.8"
+    "speak-tts": "^2.0.8",
+    "uuid": "^8.2.0"
   },
   "scripts": {
     "predeploy": "npm run build",
