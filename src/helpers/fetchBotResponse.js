@@ -16,6 +16,9 @@ export default async (userResponse) => {
   })
     .then((res) => {
       res = res.fulfillmentText;
+      const multiSelect = res.split(new RegExp(resIdentifier.multi));
+      res = multiSelect[0];
+      response.multiSelect = multiSelect.splice(1);
       const suggestions = res.split(new RegExp(resIdentifier.suggestion));
       res = suggestions[0];
       response.suggestions = suggestions.splice(1);

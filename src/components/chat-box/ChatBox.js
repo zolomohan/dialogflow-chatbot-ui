@@ -9,6 +9,7 @@ import fetchBotResponse from 'helpers/fetchBotResponse';
 import useLogState from 'hooks/useLogState';
 import speechConfig from 'config/speechOutput';
 import { chatBox } from 'styles/ChatBox.module.css';
+import MultiSelectBox from './multiselect/MultiSelectBox';
 
 export default function ChatBox({ open, toggleChatBox }) {
 	const speech = new Speech(),
@@ -29,6 +30,7 @@ export default function ChatBox({ open, toggleChatBox }) {
 
 	const [ log, addLog ] = useLogState();
 	const [ suggestions, setSuggestions ] = useState([]);
+	const [ multiSelect, setMultiSelect ] = useState([]);
 	const [ speechInput, toggleSpeechInput ] = useToggleState();
 	const [ typing, setTyping ] = useState(false);
 	const [ speechOutput, toggleSpeechOutput ] = useToggleState(true);
@@ -47,6 +49,7 @@ export default function ChatBox({ open, toggleChatBox }) {
 
 	const onBotResponse = (response) => {
 		setSuggestions(response.suggestions);
+		setMultiSelect(response.multiSelect);
     addLog(response, 'bot');
     if (speechOutput)
       response.texts.map((text) => speech.speak({text}))
@@ -62,6 +65,7 @@ export default function ChatBox({ open, toggleChatBox }) {
 			/>
 			<Log log={log} typing={typing} noSuggestions={suggestions.length === 0} />
 			<SuggestionBox suggestions={suggestions} handleSubmit={onUserResponse} />
+			<MultiSelectBox options={multiSelect} handleSubmit={onUserResponse} />
 			<Form
 				speechInput={speechInput}
 				toggleSpeechInput={toggleSpeechInput}
