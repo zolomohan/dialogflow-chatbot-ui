@@ -15,6 +15,9 @@ export default async (userResponse) => {
     }),
   })
     .then((res) => {
+      if (res.fulfillmentMessages.length > 1)
+        response.carousel = res.fulfillmentMessages[1].payload.fields.card.listValue.values;
+
       res = res.fulfillmentText;
       const multiSelect = res.split(new RegExp(resIdentifier.multi));
       res = multiSelect[0];

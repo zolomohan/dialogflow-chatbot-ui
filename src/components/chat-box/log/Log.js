@@ -11,8 +11,8 @@ export default function Log({ log, typing, noSuggestions }) {
 			className={logs}
 			style={{ height: noSuggestions ? 'calc(70vh + 50px)' : '70vh' }}
 		>
-			{log.map(({ texts, images, user }, i) => (
-				<Group texts={texts} images={images} user={user} key={i} />
+			{log.map(({ texts, images, carousel, user }, i) => (
+				<Group texts={texts} images={images} carousel={carousel} user={user} key={i} />
 			))}
 			{typing && <Message key="typing" user="bot" typing hasAvatar />}
 			<div ref={end} />

@@ -6,7 +6,7 @@ export default (initialState = []) => {
 	const addLog = (response, user) =>
 		setState((state) => [
 			...state,
-			{ texts: response.texts, images: response.images, user}
+			{ texts: response.texts, images: response.images, carousel: response.carousel, user}
 		]);
 	return [ state, addLog ];
 };

@@ -50,7 +50,7 @@ export default function ChatBox({ open, toggleChatBox }) {
 	const onBotResponse = (response) => {
 		setSuggestions(response.suggestions);
 		setMultiSelect(response.multiSelect);
-    addLog(response, 'bot');
+		addLog(response, 'bot');
     if (speechOutput)
       response.texts.map((text) => speech.speak({text}))
 		setTyping(false);
