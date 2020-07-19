@@ -1,12 +1,12 @@
 import React from 'react';
 import Icon from 'components/ui/Icon';
 import bot from 'config/bot';
-import { header, botName } from 'styles/Header.module.css';
+import style from 'styles/Header.module.css';
 
-export default function Header({ toggleChatBox, speechOutput, toggleSpeechOutput }) {
+const Header = ({ toggleChatBox, speechOutput, toggleSpeechOutput }) => {
 	return (
-		<div className={header}>
-			<h4 className={botName}>{bot.name}</h4>
+		<div className={style.header}>
+			<h4 className={style.botName}>{bot.name}</h4>
 			<span>
 				<Icon
 					name={`${speechOutput ? 'volume-up' : 'volume-mute'}`}
@@ -18,3 +18,5 @@ export default function Header({ toggleChatBox, speechOutput, toggleSpeechOutput
 		</div>
 	);
 }
+
+export default Header;

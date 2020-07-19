@@ -1,10 +1,10 @@
 import React, { memo } from 'react';
-import Message from 'components/chat-box/log/messages/Message';
-import { group } from 'styles/Group.module.css';
+import Message from 'components/chat-box/log/Message';
+import style from 'styles/Group.module.css';
 
-export default memo(function MessageGroup({ texts = [], images = [], carousel=[], user }) {
+ const MessageGroup = ({ texts = [], images = [], carousel = [], user }) => {
 	return (
-		<div className={group}>
+		<div className={style.group}>
 			{texts.map((text, i) => (
 				<Message
 					key={i}
@@ -31,4 +31,6 @@ export default memo(function MessageGroup({ texts = [], images = [], carousel=[]
 			))}
 		</div>
 	);
-});
+};
+
+export default memo(MessageGroup);

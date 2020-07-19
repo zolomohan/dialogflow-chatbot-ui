@@ -3,7 +3,7 @@ import useInputState from 'hooks/useInputState';
 import Icon from 'components/ui/Icon';
 import { form, input, formButtons } from 'styles/Form.module.css';
 
-export default function Form({ handleSubmit, speechInput, toggleSpeechInput }) {
+const Input = ({ handleSubmit, speechInput, toggleSpeechInput }) => {
 	const [ text, changeText, resetText ] = useInputState();
 
 	const handleChange = (event) =>
@@ -38,3 +38,5 @@ export default function Form({ handleSubmit, speechInput, toggleSpeechInput }) {
 		</div>
 	);
 }
+
+export default Input;

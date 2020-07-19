@@ -1,19 +1,20 @@
 import React from 'react';
 import useToggleState from 'hooks/useToggleState';
 import Modal from 'components/ui/Modal';
-import { image, imageModal } from 'styles/Image.module.css';
+import style from 'styles/Image.module.css';
 
-export default function Image({ src, alt }) {
+const Image = ({ src, alt }) => {
 	const [ modal, toggleModal ] = useToggleState();
-
 	return (
 		<>
 			{modal && (
 				<Modal show={modal} closeModal={toggleModal}>
-					<img className={imageModal} src={src} alt={alt} />
+					<img className={style.imageModal} src={src} alt={alt} />
 				</Modal>
 			)}
-			<img className={image} src={src} alt={alt} onClick={toggleModal} />
+			<img className={style.image} src={src} alt={alt} onClick={toggleModal} />
 		</>
 	);
 }
+
+export default Image;

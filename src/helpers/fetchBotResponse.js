@@ -19,7 +19,7 @@ export default async (userResponse) => {
         response.carousel = res.fulfillmentMessages[1].payload.fields.card.listValue.values;
 
       res = res.fulfillmentText;
-      const multiSelect = res.split(new RegExp(resIdentifier.multi));
+      const multiSelect = res.split(new RegExp(resIdentifier.multiSelect));
       res = multiSelect[0];
       response.multiSelect = multiSelect.splice(1);
       const suggestions = res.split(new RegExp(resIdentifier.suggestion));

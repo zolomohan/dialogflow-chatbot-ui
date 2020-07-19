@@ -1,11 +1,16 @@
 import React from 'react';
-import { suggestion, suggestionMessage } from 'styles/Suggestion.module.css';
+import style from 'styles/Suggestion.module.css';
 
-export default function Suggestion({ suggestionText, onClick }) {
-	const handleClick = () => onClick(suggestionText);
-	return (
-		<div className={suggestion} onClick={handleClick}>
-			<p className={suggestionMessage}>{suggestionText}</p>
-		</div>
-	);
+const Suggestion = ({ text, selected, multiple, onClick }) => {
+  const handleClick = () => onClick(text);
+  return (
+    <div className={style.suggestion} onClick={handleClick}>
+      <p>{text}</p>
+      {multiple && (
+        <input type='checkbox' checked={selected.includes(text)}></input>
+      )}
+    </div>
+  );
 }
+
+export default Suggestion;

@@ -1,9 +1,9 @@
 import React, { useRef, useEffect } from 'react';
-import Message from 'components/chat-box/log/messages/Message';
+import Message from 'components/chat-box/log/Message';
 import { logs } from 'styles/Log.module.css';
-import Group from 'components/chat-box/log/messages/Group';
+import Group from 'components/chat-box/log/Group';
 
-export default function Log({ log, typing, noSuggestions }) {
+const Log = ({ log, typing, noSuggestions }) => {
 	useEffect(() => end.current.scrollIntoView({ behavior: 'smooth' }));
 	const end = useRef();
 	return (
@@ -19,3 +19,5 @@ export default function Log({ log, typing, noSuggestions }) {
 		</div>
 	);
 }
+
+export default Log;
