@@ -31,6 +31,11 @@ export default async (userResponse) => {
       response.texts = texts.splice(1);
       response.images = res.split(new RegExp(resIdentifier.image)).splice(1);
     })
-    .catch(() => (response.texts = [random(errorMessages)]));
+    .catch(() => {
+      response.texts = [random(errorMessages)];
+      response.suggestions = [];
+      response.multiSelect = [];
+      return response;
+    });
   return response;
 };
