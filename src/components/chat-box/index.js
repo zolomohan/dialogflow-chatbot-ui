@@ -73,7 +73,7 @@ const ChatBox = ({ open, toggleChatBox }) => {
       <Log
         log={log}
         typing={typing}
-        noSuggestions={(suggestions.length || multiSelect.length) === 0}
+        noSuggestions={suggestions || multiSelect}
       />
       <Suggestions
         multiple={multiSelect.length > 0}
