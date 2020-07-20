@@ -7,11 +7,12 @@ export default (initialState = []) => {
     setState((state) => [
       ...state,
       {
+        user,
         texts: response.texts,
+        slider: response.slider,
         images: response.images,
         carousel: response.carousel,
-        slider: response.slider,
-        user,
+        multiSelect: response.multiSelect,
       },
     ]);
   return [state, addLog];

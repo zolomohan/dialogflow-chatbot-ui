@@ -1,31 +1,32 @@
-.suggestion {
+.multiSelectContainer{
+  display: flex;
+	flex-wrap: wrap;
+	padding: 5px;
+	margin-left: 50px;
+}
+
+.option {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	white-space: nowrap;
 	height: 100%;
-	margin-left: 8px;
+	margin: 3px;
 	padding: 0 20px;
 	color: #d3d3d3;
 	background-color: #5f5f5f42;
 	border: 1px solid #5858585d;
 	border-radius: 30px;
 	cursor: pointer;
-}
-
-.multi{
 	padding-right:5px;
+	text-transform: capitalize;
 }
 
-.suggestion p{
+.option p{
 	margin-bottom: 0px !important;
 }
-.suggestion:first-child{
-	margin-left: 20px;
-}
 
-.suggestion:hover {
-	color: #fff;
-	transition: 0.2s all linear;
-	background: #505050c5;
+.submit{
+	border-radius: 30px;
+	margin-top: 10px;;
 }

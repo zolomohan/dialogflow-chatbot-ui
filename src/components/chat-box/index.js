@@ -74,12 +74,10 @@ const ChatBox = ({ open, toggleChatBox }) => {
         log={log}
         typing={typing}
         handleSubmit={onUserResponse}
-        noSuggestions={(suggestions.length || multiSelect.length) === 0}
+        noSuggestions={(suggestions.length  === 0)}
       />
       <Suggestions
-        multiple={multiSelect.length > 0}
         suggestions={suggestions}
-        options={multiSelect}
         handleSubmit={onUserResponse}
       />
       <Input

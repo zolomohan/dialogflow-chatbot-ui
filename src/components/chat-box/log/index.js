@@ -8,7 +8,7 @@ const Log = ({ log, typing, noSuggestions, handleSubmit }) => {
   const end = useRef();
   return (
     <div className={logs} style={{ height: noSuggestions ? 'calc(70vh + 50px)' : '70vh' }}>
-      {log.map(({ texts, images, carousel, slider, user }, i) => (
+      {log.map(({ texts, images, carousel, slider, multiSelect, user }, i) => (
         <Group
           key={i}
           user={user}
@@ -16,6 +16,7 @@ const Log = ({ log, typing, noSuggestions, handleSubmit }) => {
           images={images}
           slider={slider}
           carousel={carousel}
+          multiSelect={multiSelect}
           handleSubmit={handleSubmit}
         />
       ))}
