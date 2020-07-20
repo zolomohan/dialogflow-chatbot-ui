@@ -15,9 +15,15 @@ export default async (userResponse) => {
     }),
   })
     .then((res) => {
-      if (res.fulfillmentMessages.length > 1)
-        response.carousel = res.fulfillmentMessages[1].payload.fields.card.listValue.values;
-
+      if (res.fulfillmentMessages.length > 1){
+        const payload = res.fulfillmentMessages[1].payload.fields;
+        if(payload.card)
+          response.carousel = payload.card.listValue.values;
+        if(payload.slider)
+          response.slider = payload.slider.structValue.fields
+      }
+      
+      
       res = res.fulfillmentText;
       const multiSelect = res.split(new RegExp(resIdentifier.multiSelect));
       res = multiSelect[0];
@@ -35,6 +41,7 @@ export default async (userResponse) => {
       response.texts = [random(errorMessages)];
       response.suggestions = [];
       response.multiSelect = [];
+      response.slider = {};
       return response;
     });
   return response;

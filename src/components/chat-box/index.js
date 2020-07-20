@@ -73,6 +73,7 @@ const ChatBox = ({ open, toggleChatBox }) => {
       <Log
         log={log}
         typing={typing}
+        handleSubmit={onUserResponse}
         noSuggestions={(suggestions.length || multiSelect.length) === 0}
       />
       <Suggestions

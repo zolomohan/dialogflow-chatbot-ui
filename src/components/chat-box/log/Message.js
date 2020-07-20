@@ -4,17 +4,19 @@ import Image from 'components/chat-box/log/responses/Image';
 import Avatar from 'components/chat-box/log/Avatar';
 import Typing from 'components/chat-box/log/responses/Typing';
 import Carousel from 'components/chat-box/log/responses/Carousel';
+import Slider from 'components/chat-box/log/responses/Slider';
 import style from 'styles/Message.module.css';
 
-const Message = ({ text, image, carousel, user, typing, hasAvatar }) => {
+const Message = ({ text, image, carousel, slider, user, typing, hasAvatar, handleSubmit }) => {
   const marginLeft = hasAvatar ? 'none' : '60px';
   return (
     <div className={style.message} style={{ marginLeft }}>
       {hasAvatar && <Avatar />}
-      {text && <Text message={text} user={user} />}
-      {carousel && <Carousel carousel={carousel.fields} user={user} />}
-      {image && <Image src={image} noAvatar={!hasAvatar} />}
       {typing && <Typing />}
+      {text && <Text message={text} user={user} />}
+      {image && <Image src={image} noAvatar={!hasAvatar} />}
+      {carousel && <Carousel carousel={carousel.fields} user={user} />}
+      {slider && <Slider slider={slider} handleSubmit={handleSubmit} />}
     </div>
   );
 };
