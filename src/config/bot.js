@@ -1,4 +1,4 @@
 export default {
-  name: 'natalie',
-  avatar: 'https://i.ibb.co/cDCL67q/bot.png'
+  name: 'Batman',
+  avatar: 'https://i.ibb.co/bvd7R64/pngwave.png'
 }
