@@ -9,7 +9,7 @@ const Log = ({ log, typing, noSuggestions }) => {
 	return (
 		<div
 			className={logs}
-			style={{ height: noSuggestions ? 'calc(70vh + 50px)' : '70vh' }}
+			style={{ height: !noSuggestions ? 'calc(70vh + 50px)' : '70vh' }}
 		>
 			{log.map(({ texts, images, carousel, user }, i) => (
 				<Group texts={texts} images={images} carousel={carousel} user={user} key={i} />

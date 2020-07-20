@@ -6,7 +6,7 @@ import { suggestionBox } from 'styles/SuggestionBox.module.css';
 import { suggestion } from 'styles/Suggestion.module.css';
 
 
-const Suggestions = ({ suggestions, options, handleSubmit, multiple }) => {
+const Suggestions = ({ suggestions, options, handleSubmit, multiple, noSuggestions }) => {
   const [selected, setSelected] = useState([]);
 
   const toggle = (option) => {
@@ -24,9 +24,9 @@ const Suggestions = ({ suggestions, options, handleSubmit, multiple }) => {
   return (
     <div
       className={suggestionBox}
-      style={{ display: (suggestions.length || options.length )=== 0 ? 'none' : 'flex' }}
+      style={{ display: noSuggestions ? 'none' : 'flex' }}
     >
-      {multiple
+      {multiple && noSuggestions
         ? options.map((option, i) => (
             <Suggestion
 							multiple
