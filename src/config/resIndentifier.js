@@ -1,6 +1,6 @@
 export default{
-  text: '<br>',
+  text: '<text>',
   image: '<img>',
-  suggestion: '<ar>',
+  suggestion: '<sug>',
   multiSelect: '<multi>'
 }
